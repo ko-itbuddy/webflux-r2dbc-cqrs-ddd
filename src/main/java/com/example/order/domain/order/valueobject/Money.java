@@ -1,0 +1,82 @@
+package com.example.order.domain.order.valueobject;
+
+import java.math.BigDecimal;
+import java.util.Objects;
+
+public final class Money {
+    private final BigDecimal amount;
+    private final String currency;
+    
+    private Money(BigDecimal amount, String currency) {
+        this.amount = amount;
+        this.currency = currency;
+    }
+    
+    public static Money of(BigDecimal amount, String currency) {
+        Objects.requireNonNull(amount, "Amount cannot be null");
+        Objects.requireNonNull(currency, "Currency cannot be null");
+        if (amount.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Amount cannot be negative");
+        }
+        return new Money(amount, currency);
+    }
+    
+    public static Money of(double amount, String currency) {
+        return of(BigDecimal.valueOf(amount), currency);
+    }
+    
+    public static Money zero(String currency) {
+        return new Money(BigDecimal.ZERO, currency);
+    }
+    
+    public Money add(Money other) {
+        validateCurrency(other);
+        return new Money(this.amount.add(other.amount), this.currency);
+    }
+    
+    public Money multiply(int multiplier) {
+        return new Money(this.amount.multiply(BigDecimal.valueOf(multiplier)), this.currency);
+    }
+    
+    public Money discount(BigDecimal percentage) {
+        BigDecimal discountFactor = BigDecimal.ONE.subtract(percentage);
+        return new Money(this.amount.multiply(discountFactor), this.currency);
+    }
+    
+    public boolean isGreaterThan(Money other) {
+        validateCurrency(other);
+        return this.amount.compareTo(other.amount) > 0;
+    }
+    
+    private void validateCurrency(Money other) {
+        if (!this.currency.equals(other.currency)) {
+            throw new IllegalArgumentException("Currency mismatch");
+        }
+    }
+    
+    public BigDecimal getAmount() {
+        return amount;
+    }
+    
+    public String getCurrency() {
+        return currency;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Money money = (Money) o;
+        return amount.compareTo(money.amount) == 0 && currency.equals(money.currency);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(amount, currency);
+    }
+    
+    @Override
+    public String toString() {
+        return amount + " " + currency;
+    }
+}
