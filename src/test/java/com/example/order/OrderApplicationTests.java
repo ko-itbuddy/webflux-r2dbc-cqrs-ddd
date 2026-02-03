@@ -3,6 +3,7 @@ package com.example.order;
 import com.example.order.application.command.handler.CreateOrderHandler;
 import com.example.order.application.in.command.CreateOrderCommand;
 import com.example.order.domain.order.entity.Order;
+import com.example.order.infrastructure.web.handler.OrderCommandWebHandler.OrderResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
@@ -51,10 +52,10 @@ class OrderApplicationTests {
             .bodyValue(command)
             .exchange()
             .expectStatus().isCreated()
-            .expectBody(Order.class)
+            .expectBody(OrderResponse.class)
             .value(order -> {
-                assertThat(order.getCustomerId()).isEqualTo("customer-001");
-                assertThat(order.getTotalAmount().getAmount()).isEqualTo(new BigDecimal("200.00"));
+                assertThat(order.customerId()).isEqualTo("customer-001");
+                assertThat(order.totalAmount()).isEqualTo(new BigDecimal("200.00"));
             });
     }
 
