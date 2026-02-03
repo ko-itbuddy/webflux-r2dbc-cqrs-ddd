@@ -64,7 +64,7 @@ public class OrderCommandWebHandler {
                 
                 return createOrderHandler.handle(command);
             })
-            .flatMap(order -> ServerResponse.ok().bodyValue(mapToOrderResponse(order)))
+            .flatMap(order -> ServerResponse.status(201).bodyValue(mapToOrderResponse(order)))
             .onErrorResume(e -> ServerResponse.badRequest().bodyValue(new ErrorResponse(e.getMessage())));
     }
     

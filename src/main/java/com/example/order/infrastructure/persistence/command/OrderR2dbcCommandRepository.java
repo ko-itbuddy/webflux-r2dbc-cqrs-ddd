@@ -50,21 +50,34 @@ public class OrderR2dbcCommandRepository implements OrderCommandPort {
     
     private Mono<Order> insertOrder(OrderEntity orderEntity, List<OrderItemEntity> itemEntities) {
         return r2dbcTemplate.insert(orderEntity)
-            .flatMap(savedOrder -> 
+            .flatMap(savedOrder ->
                 saveOrderItems(savedOrder.getId(), itemEntities)
                     .then(Mono.just(savedOrder))
             )
-            .map(saved -> order);
+            .flatMap(savedOrder -> findById(savedOrder.getId()));
     }
     
     private Mono<Order> updateOrder(OrderEntity orderEntity, List<OrderItemEntity> itemEntities) {
         return r2dbcTemplate.update(orderEntity)
-            .flatMap(updatedOrder -> 
+            .flatMap(updatedOrder ->
                 deleteOrderItems(updatedOrder.getId())
                     .then(saveOrderItems(updatedOrder.getId(), itemEntities))
                     .then(Mono.just(updatedOrder))
             )
-            .map(updated -> order);
+            .flatMap(updatedOrder -> findById(updatedOrder.getId()));
+    }
+
+    private Mono<Order> findById(String orderId) {
+        return r2dbcTemplate.selectOne(
+                Query.query(Criteria.where("id").is(orderId)),
+                OrderEntity.class)
+            .flatMap(savedEntity ->
+                r2dbcTemplate.select(
+                        Query.query(Criteria.where("order_id").is(orderId)),
+                        OrderItemEntity.class)
+                    .collectList()
+                    .map(items -> orderMapper.toDomain(savedEntity, items))
+            );
     }
     
     private Mono<Void> saveOrderItems(String orderId, List<OrderItemEntity> items) {

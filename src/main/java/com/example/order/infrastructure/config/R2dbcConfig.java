@@ -22,6 +22,6 @@ public class R2dbcConfig extends AbstractR2dbcConfiguration {
     
     @Override
     protected java.util.List<Object> getCustomConverters() {
-        return List.of();
+        return java.util.List.of();
     }
 }
