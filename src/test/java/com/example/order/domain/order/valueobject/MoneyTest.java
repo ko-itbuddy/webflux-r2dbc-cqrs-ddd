@@ -16,7 +16,7 @@ class MoneyTest {
     void shouldCreateMoneyWithBigDecimal() {
         Money money = Money.of(new BigDecimal("100.00"), "USD");
         
-        assertThat(money.getAmount()).isEqualTo(new BigDecimal("100.00"));
+        assertThat(money.getAmount()).isEqualByComparingTo(new BigDecimal("100.00"));
         assertThat(money.getCurrency()).isEqualTo("USD");
     }
 
@@ -24,7 +24,7 @@ class MoneyTest {
     void shouldCreateMoneyWithDouble() {
         Money money = Money.of(50.5, "USD");
         
-        assertThat(money.getAmount()).isEqualTo(new BigDecimal("50.5"));
+        assertThat(money.getAmount()).isEqualByComparingTo(new BigDecimal("50.5"));
         assertThat(money.getCurrency()).isEqualTo("USD");
     }
 
@@ -32,7 +32,7 @@ class MoneyTest {
     void shouldCreateZeroMoney() {
         Money money = Money.zero("USD");
         
-        assertThat(money.getAmount()).isEqualTo(BigDecimal.ZERO);
+        assertThat(money.getAmount()).isEqualByComparingTo(BigDecimal.ZERO);
         assertThat(money.getCurrency()).isEqualTo("USD");
     }
 

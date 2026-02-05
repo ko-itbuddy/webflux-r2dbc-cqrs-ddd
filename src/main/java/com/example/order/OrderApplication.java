@@ -2,14 +2,12 @@ package com.example.order;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
-/**
- * Main application entry point for the Order Management System.
- * CQRS Hexagonal DDD architecture with WebFlux and R2DBC.
- */
 @SpringBootApplication(scanBasePackages = "com.example.order")
+@EnableScheduling
 public class OrderApplication {
-    
+
     public static void main(String[] args) {
         SpringApplication.run(OrderApplication.class, args);
     }

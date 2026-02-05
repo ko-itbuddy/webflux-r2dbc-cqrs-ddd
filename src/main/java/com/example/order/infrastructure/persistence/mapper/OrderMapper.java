@@ -78,18 +78,18 @@ public class OrderMapper {
         // Calculate potential discount using injected calculator
         BigDecimal calculatedDiscount = discountCalculator.apply(orderData);
         
-        // Create order - Note: We use the factory method but need to adjust state
-        Order order = Order.create(entity.getCustomerId(), customerEmail, items);
-        
-        // Apply discount if it was stored (recreate the discount state)
-        if (entity.getDiscountAmount() != null && 
-            entity.getDiscountAmount().compareTo(entity.getTotalAmount()) < 0) {
-            // Calculate discount percentage from stored amounts
-            BigDecimal discountPercentage = BigDecimal.ONE.subtract(
-                entity.getDiscountAmount().divide(entity.getTotalAmount(), 4, RoundingMode.HALF_UP)
-            );
-            order.applyDiscount(discountPercentage);
-        }
+        // Reconstitute order from database state
+        Order order = Order.reconstitute(
+            entity.getId(),
+            entity.getCustomerId(),
+            customerEmail,
+            entity.getStatus(),
+            items,
+            totalAmount,
+            entity.getDiscountAmount() != null ? Money.of(entity.getDiscountAmount(), entity.getCurrency()) : null,
+            entity.getCreatedAt(),
+            entity.getUpdatedAt()
+        );
         
         return order;
     }

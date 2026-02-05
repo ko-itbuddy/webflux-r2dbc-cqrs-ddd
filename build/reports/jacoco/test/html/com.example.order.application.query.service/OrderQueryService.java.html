@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderQueryService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">webflux-reactive-hibernate</a> &gt; <a href="index.source.html" class="el_package">com.example.order.application.query.service</a> &gt; <span class="el_source">OrderQueryService.java</span></div><h1>OrderQueryService.java</h1><pre class="source lang-java linenums">package com.example.order.application.query.service;
+
+import com.example.order.application.in.query.OrderSummaryQuery;
+import com.example.order.application.query.port.OrderQueryPort;
+import com.example.order.application.query.handler.OrderQueryHandler;
+import com.example.order.application.query.result.CustomerOrderStatsResult;
+import com.example.order.application.query.result.OrderListItemResult;
+import com.example.order.application.query.result.OrderSummaryResult;
+import com.example.order.domain.order.valueobject.OrderStatus;
+import com.example.order.domain.order.entity.Order;
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+/**
+ * Query service implementation that delegates to repository.
+ * Part of CQRS read model.
+ */
+@Service
+public class OrderQueryService implements OrderQueryHandler {
+    
+    private final OrderQueryPort queryPort;
+    
+<span class="fc" id="L24">    public OrderQueryService(OrderQueryPort queryPort) {</span>
+<span class="fc" id="L25">        this.queryPort = queryPort;</span>
+<span class="fc" id="L26">    }</span>
+    
+    @Override
+    public Mono&lt;OrderSummaryResult&gt; handle(OrderSummaryQuery query) {
+<span class="nc" id="L30">        return queryPort.findOrderSummary(query.orderId());</span>
+    }
+    
+    @Override
+    public Mono&lt;Order&gt; findById(String orderId) {
+<span class="nc" id="L35">        return queryPort.findById(orderId);</span>
+    }
+    
+    @Override
+    public Flux&lt;Order&gt; findByCustomerId(String customerId) {
+<span class="nc" id="L40">        return queryPort.findByCustomerId(customerId);</span>
+    }
+    
+    @Override
+    public Flux&lt;Order&gt; findByStatus(OrderStatus status) {
+<span class="nc" id="L45">        return queryPort.findByStatus(status);</span>
+    }
+    
+    @Override
+    public Flux&lt;Order&gt; findAll(int page, int size) {
+<span class="nc" id="L50">        return queryPort.findAll(page, size);</span>
+    }
+    
+    @Override
+    public Mono&lt;Long&gt; count() {
+<span class="nc" id="L55">        return queryPort.count();</span>
+    }
+    
+    @Override
+    public Flux&lt;OrderListItemResult&gt; findOrderList(int page, int size) {
+<span class="nc" id="L60">        return queryPort.findOrderList(page, size);</span>
+    }
+    
+    @Override
+    public Mono&lt;CustomerOrderStatsResult&gt; findCustomerStats(String customerId) {
+<span class="nc" id="L65">        return queryPort.findCustomerStats(customerId);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

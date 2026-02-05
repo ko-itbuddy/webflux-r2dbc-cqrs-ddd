@@ -1,6 +1,6 @@
 package com.example.order.infrastructure.web.handler;
 
-import com.example.order.application.out.query.OrderQueryPort;
+import com.example.order.application.query.port.OrderQueryPort;
 import com.example.order.application.query.result.CustomerOrderStatsResult;
 import com.example.order.application.query.result.OrderListItemResult;
 import com.example.order.application.query.result.OrderSummaryResult;

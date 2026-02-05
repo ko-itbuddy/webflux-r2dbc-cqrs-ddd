@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderQueryWebHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">webflux-reactive-hibernate</a> &gt; <a href="index.source.html" class="el_package">com.example.order.infrastructure.web.handler</a> &gt; <span class="el_source">OrderQueryWebHandler.java</span></div><h1>OrderQueryWebHandler.java</h1><pre class="source lang-java linenums">package com.example.order.infrastructure.web.handler;
+
+import com.example.order.application.query.port.OrderQueryPort;
+import com.example.order.application.query.result.CustomerOrderStatsResult;
+import com.example.order.application.query.result.OrderListItemResult;
+import com.example.order.application.query.result.OrderSummaryResult;
+import com.example.order.domain.order.entity.Order;
+import com.example.order.domain.order.valueobject.OrderStatus;
+import com.example.order.infrastructure.persistence.query.OrderR2dbcQueryRepository;
+import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.server.ServerRequest;
+import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Mono;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+/**
+ * Web handler for order query operations.
+ * Handles GET requests for retrieving order information.
+ */
+@Component
+public class OrderQueryWebHandler {
+    
+    private final OrderQueryPort orderQueryPort;
+    private final OrderR2dbcQueryRepository orderQueryRepository;
+    
+    public OrderQueryWebHandler(
+            OrderQueryPort orderQueryPort,
+<span class="fc" id="L30">            OrderR2dbcQueryRepository orderQueryRepository) {</span>
+<span class="fc" id="L31">        this.orderQueryPort = orderQueryPort;</span>
+<span class="fc" id="L32">        this.orderQueryRepository = orderQueryRepository;</span>
+<span class="fc" id="L33">    }</span>
+    
+    /**
+     * GET /api/orders/{orderId} - Get a specific order.
+     */
+    public Mono&lt;ServerResponse&gt; getOrder(ServerRequest request) {
+<span class="nc" id="L39">        String orderId = request.pathVariable(&quot;orderId&quot;);</span>
+        
+<span class="nc" id="L41">        return orderQueryPort.findById(orderId)</span>
+<span class="nc" id="L42">            .flatMap(order -&gt; ServerResponse.ok().bodyValue(mapToOrderResponse(order)))</span>
+<span class="nc" id="L43">            .switchIfEmpty(ServerResponse.notFound().build());</span>
+    }
+    
+    /**
+     * GET /api/orders/{orderId}/summary - Get detailed order summary.
+     */
+    public Mono&lt;ServerResponse&gt; getOrderSummary(ServerRequest request) {
+<span class="nc" id="L50">        String orderId = request.pathVariable(&quot;orderId&quot;);</span>
+        
+<span class="nc" id="L52">        return orderQueryRepository.findOrderSummary(orderId)</span>
+<span class="nc" id="L53">            .flatMap(summary -&gt; ServerResponse.ok().bodyValue(summary))</span>
+<span class="nc" id="L54">            .switchIfEmpty(ServerResponse.notFound().build());</span>
+    }
+    
+    /**
+     * GET /api/orders - List all orders (paginated).
+     */
+    public Mono&lt;ServerResponse&gt; listOrders(ServerRequest request) {
+<span class="nc" id="L61">        int page = request.queryParam(&quot;page&quot;)</span>
+<span class="nc" id="L62">            .map(Integer::parseInt)</span>
+<span class="nc" id="L63">            .orElse(0);</span>
+<span class="nc" id="L64">        int size = request.queryParam(&quot;size&quot;)</span>
+<span class="nc" id="L65">            .map(Integer::parseInt)</span>
+<span class="nc" id="L66">            .orElse(10);</span>
+        
+<span class="nc" id="L68">        return orderQueryRepository.findOrderList(page, size)</span>
+<span class="nc" id="L69">            .collectList()</span>
+<span class="nc" id="L70">            .flatMap(orders -&gt; ServerResponse.ok().bodyValue(new OrderListResponse(orders, orders.size())));</span>
+    }
+    
+    /**
+     * GET /api/customers/{customerId}/orders - Get orders by customer.
+     */
+    public Mono&lt;ServerResponse&gt; getCustomerOrders(ServerRequest request) {
+<span class="nc" id="L77">        String customerId = request.pathVariable(&quot;customerId&quot;);</span>
+        
+<span class="nc" id="L79">        return orderQueryPort.findByCustomerId(customerId)</span>
+<span class="nc" id="L80">            .collectList()</span>
+<span class="nc" id="L81">            .flatMap(orders -&gt; ServerResponse.ok().bodyValue(</span>
+<span class="nc" id="L82">                orders.stream().map(this::mapToOrderResponse).toList()</span>
+            ));
+    }
+    
+    /**
+     * GET /api/customers/{customerId}/stats - Get customer order statistics.
+     */
+    public Mono&lt;ServerResponse&gt; getCustomerStats(ServerRequest request) {
+<span class="nc" id="L90">        String customerId = request.pathVariable(&quot;customerId&quot;);</span>
+        
+<span class="nc" id="L92">        return orderQueryRepository.findCustomerStats(customerId)</span>
+<span class="nc" id="L93">            .flatMap(stats -&gt; ServerResponse.ok().bodyValue(stats));</span>
+    }
+    
+    /**
+     * GET /api/orders/by-status/{status} - Get orders by status.
+     */
+    public Mono&lt;ServerResponse&gt; getOrdersByStatus(ServerRequest request) {
+<span class="nc" id="L100">        String statusStr = request.pathVariable(&quot;status&quot;);</span>
+<span class="nc" id="L101">        OrderStatus status = OrderStatus.valueOf(statusStr.toUpperCase());</span>
+        
+<span class="nc" id="L103">        return orderQueryPort.findByStatus(status)</span>
+<span class="nc" id="L104">            .collectList()</span>
+<span class="nc" id="L105">            .flatMap(orders -&gt; ServerResponse.ok().bodyValue(</span>
+<span class="nc" id="L106">                orders.stream().map(this::mapToOrderResponse).toList()</span>
+            ));
+    }
+    
+    // Helper methods
+    private OrderResponse mapToOrderResponse(Order order) {
+<span class="nc" id="L112">        return new OrderResponse(</span>
+<span class="nc" id="L113">            order.getId(),</span>
+<span class="nc" id="L114">            order.getCustomerId(),</span>
+<span class="nc" id="L115">            order.getCustomerEmail().getValue(),</span>
+<span class="nc" id="L116">            order.getStatus().name(),</span>
+<span class="nc" id="L117">            order.getTotalAmount().getAmount(),</span>
+<span class="nc" id="L118">            order.getTotalAmount().getCurrency(),</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">            order.getDiscountAmount() != null ? order.getDiscountAmount().getAmount() : null,</span>
+<span class="nc" id="L120">            order.getFinalAmount().getAmount(),</span>
+<span class="nc" id="L121">            order.getCreatedAt(),</span>
+<span class="nc" id="L122">            order.getUpdatedAt()</span>
+        );
+    }
+    
+    // DTO Records
+<span class="nc" id="L127">    public record OrderResponse(</span>
+        String orderId,
+        String customerId,
+        String customerEmail,
+        String status,
+        BigDecimal totalAmount,
+        String currency,
+        BigDecimal discountAmount,
+        BigDecimal finalAmount,
+        java.time.Instant createdAt,
+        java.time.Instant updatedAt
+    ) {
+    }
+    
+<span class="nc" id="L141">    public record OrderListResponse(</span>
+        List&lt;OrderListItemResult&gt; orders,
+        int count
+    ) {
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

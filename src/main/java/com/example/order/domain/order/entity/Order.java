@@ -1,5 +1,9 @@
 package com.example.order.domain.order.entity;
 
+import com.example.order.domain.event.DomainEvent;
+import com.example.order.domain.order.event.OrderCancelledEvent;
+import com.example.order.domain.order.event.OrderConfirmedEvent;
+import com.example.order.domain.order.event.OrderCreatedEvent;
 import com.example.order.domain.order.valueobject.Email;
 import com.example.order.domain.order.valueobject.Money;
 import com.example.order.domain.order.valueobject.OrderStatus;
@@ -22,6 +26,7 @@ public class Order {
     private Money discountAmount;
     private final Instant createdAt;
     private Instant updatedAt;
+    private final List<DomainEvent> domainEvents;
     
     private Order(String id, String customerId, Email customerEmail, List<OrderItem> items) {
         this.id = id;
@@ -31,7 +36,23 @@ public class Order {
         this.status = OrderStatus.PENDING;
         this.createdAt = Instant.now();
         this.updatedAt = this.createdAt;
+        this.domainEvents = new ArrayList<>();
         calculateTotal();
+    }
+
+    private Order(String id, String customerId, Email customerEmail, OrderStatus status,
+                  List<OrderItem> items, Money totalAmount, Money discountAmount,
+                  Instant createdAt, Instant updatedAt) {
+        this.id = id;
+        this.customerId = customerId;
+        this.customerEmail = customerEmail;
+        this.items = new ArrayList<>(items);
+        this.status = status;
+        this.totalAmount = totalAmount;
+        this.discountAmount = discountAmount;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.domainEvents = new ArrayList<>();
     }
     
     public static Order create(String customerId, Email customerEmail, List<OrderItem> items) {
@@ -39,7 +60,27 @@ public class Order {
             throw new BusinessException("ORDER_001", "Order must contain at least one item");
         }
         String orderId = UUID.randomUUID().toString();
-        return new Order(orderId, customerId, customerEmail, items);
+        Order order = new Order(orderId, customerId, customerEmail, items);
+        Money finalAmount = order.getFinalAmount();
+        order.registerEvent(new OrderCreatedEvent(
+                orderId,
+                customerEmail.getValue(),
+                finalAmount,
+                order.getCreatedAt()
+        ));
+        return order;
+    }
+
+    public void registerEvent(DomainEvent event) {
+        this.domainEvents.add(event);
+    }
+
+    public List<DomainEvent> getDomainEvents() {
+        return Collections.unmodifiableList(new ArrayList<>(this.domainEvents));
+    }
+
+    public void clearDomainEvents() {
+        this.domainEvents.clear();
     }
     
     public void applyDiscount(BigDecimal percentage) {
@@ -58,6 +99,7 @@ public class Order {
         }
         this.status = OrderStatus.CONFIRMED;
         this.updatedAt = Instant.now();
+        this.registerEvent(new OrderConfirmedEvent(this.id, this.updatedAt));
     }
     
     public void pay() {
@@ -84,12 +126,13 @@ public class Order {
         this.updatedAt = Instant.now();
     }
     
-    public void cancel() {
+    public void cancel(String reason) {
         if (status == OrderStatus.SHIPPED || status == OrderStatus.DELIVERED) {
             throw new BusinessException("ORDER_008", "Cannot cancel shipped or delivered orders");
         }
         this.status = OrderStatus.CANCELLED;
         this.updatedAt = Instant.now();
+        this.registerEvent(new OrderCancelledEvent(this.id, reason, this.updatedAt));
     }
     
     private void calculateTotal() {
@@ -144,5 +187,13 @@ public class Order {
     
     public Instant getUpdatedAt() {
         return updatedAt;
+    }
+
+    public static Order reconstitute(String id, String customerId, Email customerEmail,
+                                     OrderStatus status, List<OrderItem> items,
+                                     Money totalAmount, Money discountAmount,
+                                     Instant createdAt, Instant updatedAt) {
+        return new Order(id, customerId, customerEmail, status, items,
+                        totalAmount, discountAmount, createdAt, updatedAt);
     }
 }

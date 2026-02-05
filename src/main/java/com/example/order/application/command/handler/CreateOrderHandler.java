@@ -2,11 +2,15 @@ package com.example.order.application.command.handler;
 
 import com.example.order.application.in.command.CreateOrderCommand;
 import com.example.order.application.out.command.OrderCommandPort;
+import com.example.order.application.port.out.DomainEventPublisher;
+import com.example.order.domain.event.DomainEvent;
 import com.example.order.domain.order.entity.Order;
 import com.example.order.domain.order.entity.OrderItem;
 import com.example.order.domain.order.valueobject.Email;
 import com.example.order.domain.order.valueobject.Money;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.reactive.TransactionalOperator;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -15,11 +19,18 @@ import java.util.stream.Collectors;
 @Component
 public class CreateOrderHandler {
     private final OrderCommandPort orderCommandPort;
-    
-    public CreateOrderHandler(OrderCommandPort orderCommandPort) {
+    private final DomainEventPublisher domainEventPublisher;
+    private final TransactionalOperator transactionalOperator;
+
+    public CreateOrderHandler(
+            OrderCommandPort orderCommandPort,
+            DomainEventPublisher domainEventPublisher,
+            TransactionalOperator transactionalOperator) {
         this.orderCommandPort = orderCommandPort;
+        this.domainEventPublisher = domainEventPublisher;
+        this.transactionalOperator = transactionalOperator;
     }
-    
+
     public Mono<Order> handle(CreateOrderCommand command) {
         List<OrderItem> items = command.items().stream()
             .map(item -> OrderItem.of(
@@ -29,13 +40,22 @@ public class CreateOrderHandler {
                 Money.of(item.unitPrice(), item.currency())
             ))
             .collect(Collectors.toList());
-        
+
         Order order = Order.create(
             command.customerId(),
             Email.of(command.customerEmail()),
             items
         );
-        
-        return orderCommandPort.save(order);
+
+        List<DomainEvent> events = order.getDomainEvents();
+        order.clearDomainEvents();
+
+        return orderCommandPort.save(order)
+            .flatMap(savedOrder ->
+                Flux.fromIterable(events)
+                    .flatMap(domainEventPublisher::publish)
+                    .then(Mono.just(savedOrder))
+            )
+            .as(transactionalOperator::transactional);
     }
 }

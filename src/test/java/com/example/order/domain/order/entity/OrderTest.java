@@ -30,7 +30,7 @@ class OrderTest {
     void shouldThrowExceptionWhenCreatingOrderWithoutItems() {
         assertThatThrownBy(() -> Order.create("customer-001", Email.of("test@example.com"), List.of()))
             .isInstanceOf(BusinessException.class)
-            .hasMessageContaining("ORDER_001")
+            .matches(ex -> ((BusinessException) ex).getErrorCode().equals("ORDER_001"))
             .hasMessageContaining("Order must contain at least one item");
     }
 
@@ -58,7 +58,7 @@ class OrderTest {
         
         assertThatThrownBy(() -> order.confirm())
             .isInstanceOf(BusinessException.class)
-            .hasMessageContaining("ORDER_004");
+            .matches(ex -> ((BusinessException) ex).getErrorCode().equals("ORDER_004"));
     }
 
     @Test
@@ -79,7 +79,7 @@ class OrderTest {
         
         assertThatThrownBy(() -> order.pay())
             .isInstanceOf(BusinessException.class)
-            .hasMessageContaining("ORDER_005");
+            .matches(ex -> ((BusinessException) ex).getErrorCode().equals("ORDER_005"));
     }
 
     @Test
@@ -112,8 +112,8 @@ class OrderTest {
         OrderItem item = OrderItem.of("prod-001", "Product A", 1, Money.of(50, "USD"));
         Order order = Order.create("customer-001", Email.of("test@example.com"), List.of(item));
         
-        order.cancel();
-        
+        order.cancel("Test cancellation");
+
         assertThat(order.getStatus()).isEqualTo(OrderStatus.CANCELLED);
     }
 
@@ -122,9 +122,9 @@ class OrderTest {
         OrderItem item = OrderItem.of("prod-001", "Product A", 1, Money.of(50, "USD"));
         Order order = Order.create("customer-001", Email.of("test@example.com"), List.of(item));
         order.confirm();
-        
-        order.cancel();
-        
+
+        order.cancel("Test cancellation");
+
         assertThat(order.getStatus()).isEqualTo(OrderStatus.CANCELLED);
     }
 
@@ -135,10 +135,10 @@ class OrderTest {
         order.confirm();
         order.pay();
         order.ship();
-        
-        assertThatThrownBy(() -> order.cancel())
+
+        assertThatThrownBy(() -> order.cancel("Test cancellation"))
             .isInstanceOf(BusinessException.class)
-            .hasMessageContaining("ORDER_008");
+            .matches(ex -> ((BusinessException) ex).getErrorCode().equals("ORDER_008"));
     }
 
     @Test
@@ -149,10 +149,10 @@ class OrderTest {
         order.pay();
         order.ship();
         order.deliver();
-        
-        assertThatThrownBy(() -> order.cancel())
+
+        assertThatThrownBy(() -> order.cancel("Test cancellation"))
             .isInstanceOf(BusinessException.class)
-            .hasMessageContaining("ORDER_008");
+            .matches(ex -> ((BusinessException) ex).getErrorCode().equals("ORDER_008"));
     }
 
     @Test
@@ -174,7 +174,7 @@ class OrderTest {
         
         assertThatThrownBy(() -> order.applyDiscount(new BigDecimal("0.1")))
             .isInstanceOf(BusinessException.class)
-            .hasMessageContaining("ORDER_002");
+            .matches(ex -> ((BusinessException) ex).getErrorCode().equals("ORDER_002"));
     }
 
     @Test
@@ -184,11 +184,11 @@ class OrderTest {
         
         assertThatThrownBy(() -> order.applyDiscount(new BigDecimal("-0.1")))
             .isInstanceOf(BusinessException.class)
-            .hasMessageContaining("ORDER_003");
+            .matches(ex -> ((BusinessException) ex).getErrorCode().equals("ORDER_003"));
         
         assertThatThrownBy(() -> order.applyDiscount(new BigDecimal("1.5")))
             .isInstanceOf(BusinessException.class)
-            .hasMessageContaining("ORDER_003");
+            .matches(ex -> ((BusinessException) ex).getErrorCode().equals("ORDER_003"));
     }
 
     @Test

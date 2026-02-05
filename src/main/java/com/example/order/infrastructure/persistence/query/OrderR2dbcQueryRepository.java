@@ -1,6 +1,6 @@
 package com.example.order.infrastructure.persistence.query;
 
-import com.example.order.application.out.query.OrderQueryPort;
+import com.example.order.application.query.port.OrderQueryPort;
 import com.example.order.application.query.result.CustomerOrderStatsResult;
 import com.example.order.application.query.result.OrderListItemResult;
 import com.example.order.application.query.result.OrderSummaryResult;
@@ -113,6 +113,7 @@ public class OrderR2dbcQueryRepository implements OrderQueryPort {
     /**
      * Complex query: Find detailed order summary with calculated fields.
      */
+    @Override
     public Mono<OrderSummaryResult> findOrderSummary(String orderId) {
         String sql = """
             SELECT 
@@ -202,6 +203,7 @@ public class OrderR2dbcQueryRepository implements OrderQueryPort {
     /**
      * Complex query: Find simplified order list for list views.
      */
+    @Override
     public Flux<OrderListItemResult> findOrderList(int page, int size) {
         String sql = """
             SELECT 
@@ -245,6 +247,7 @@ public class OrderR2dbcQueryRepository implements OrderQueryPort {
     /**
      * Complex query: Find customer order statistics with aggregations.
      */
+    @Override
     public Mono<CustomerOrderStatsResult> findCustomerStats(String customerId) {
         String sql = """
             SELECT 

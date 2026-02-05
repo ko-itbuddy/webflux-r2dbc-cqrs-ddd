@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderR2dbcQueryRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">webflux-reactive-hibernate</a> &gt; <a href="index.source.html" class="el_package">com.example.order.infrastructure.persistence.query</a> &gt; <span class="el_source">OrderR2dbcQueryRepository.java</span></div><h1>OrderR2dbcQueryRepository.java</h1><pre class="source lang-java linenums">package com.example.order.infrastructure.persistence.query;
+
+import com.example.order.application.query.port.OrderQueryPort;
+import com.example.order.application.query.result.CustomerOrderStatsResult;
+import com.example.order.application.query.result.OrderListItemResult;
+import com.example.order.application.query.result.OrderSummaryResult;
+import com.example.order.domain.order.entity.Order;
+import com.example.order.domain.order.valueobject.OrderStatus;
+import com.example.order.infrastructure.persistence.entity.OrderEntity;
+import com.example.order.infrastructure.persistence.entity.OrderItemEntity;
+import com.example.order.infrastructure.persistence.mapper.OrderMapper;
+import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
+import org.springframework.data.relational.core.query.Criteria;
+import org.springframework.data.relational.core.query.Query;
+import org.springframework.r2dbc.core.DatabaseClient;
+import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+/**
+ * Query repository implementation using R2DBC.
+ * Handles read operations with complex queries for orders.
+ */
+@Repository
+public class OrderR2dbcQueryRepository implements OrderQueryPort {
+    
+    private final R2dbcEntityTemplate r2dbcTemplate;
+    private final DatabaseClient databaseClient;
+    private final OrderMapper orderMapper;
+    
+    public OrderR2dbcQueryRepository(
+            R2dbcEntityTemplate r2dbcTemplate,
+            DatabaseClient databaseClient,
+<span class="fc" id="L40">            OrderMapper orderMapper) {</span>
+<span class="fc" id="L41">        this.r2dbcTemplate = r2dbcTemplate;</span>
+<span class="fc" id="L42">        this.databaseClient = databaseClient;</span>
+<span class="fc" id="L43">        this.orderMapper = orderMapper;</span>
+<span class="fc" id="L44">    }</span>
+    
+    @Override
+    public Mono&lt;Order&gt; findById(String orderId) {
+<span class="nc" id="L48">        return r2dbcTemplate.selectOne(</span>
+<span class="nc" id="L49">                Query.query(Criteria.where(&quot;id&quot;).is(orderId)),</span>
+                OrderEntity.class)
+<span class="nc" id="L51">            .flatMap(orderEntity -&gt; </span>
+<span class="nc" id="L52">                findItemsByOrderId(orderId)</span>
+<span class="nc" id="L53">                    .collectList()</span>
+<span class="nc" id="L54">                    .map(items -&gt; orderMapper.toDomain(orderEntity, items))</span>
+            );
+    }
+    
+    @Override
+    public Flux&lt;Order&gt; findByCustomerId(String customerId) {
+<span class="nc" id="L60">        return r2dbcTemplate.select(</span>
+<span class="nc" id="L61">                Query.query(Criteria.where(&quot;customer_id&quot;).is(customerId)),</span>
+                OrderEntity.class)
+<span class="nc" id="L63">            .flatMap(orderEntity -&gt;</span>
+<span class="nc" id="L64">                findItemsByOrderId(orderEntity.getId())</span>
+<span class="nc" id="L65">                    .collectList()</span>
+<span class="nc" id="L66">                    .map(items -&gt; orderMapper.toDomain(orderEntity, items))</span>
+            );
+    }
+    
+    @Override
+    public Flux&lt;Order&gt; findByStatus(OrderStatus status) {
+<span class="nc" id="L72">        return r2dbcTemplate.select(</span>
+<span class="nc" id="L73">                Query.query(Criteria.where(&quot;status&quot;).is(status)),</span>
+                OrderEntity.class)
+<span class="nc" id="L75">            .flatMap(orderEntity -&gt;</span>
+<span class="nc" id="L76">                findItemsByOrderId(orderEntity.getId())</span>
+<span class="nc" id="L77">                    .collectList()</span>
+<span class="nc" id="L78">                    .map(items -&gt; orderMapper.toDomain(orderEntity, items))</span>
+            );
+    }
+    
+    @Override
+    public Flux&lt;Order&gt; findAll(int page, int size) {
+<span class="nc" id="L84">        return r2dbcTemplate.select(</span>
+<span class="nc" id="L85">                Query.empty()</span>
+<span class="nc" id="L86">                    .offset((long) page * size)</span>
+<span class="nc" id="L87">                    .limit(size),</span>
+                OrderEntity.class)
+<span class="nc" id="L89">            .flatMap(orderEntity -&gt;</span>
+<span class="nc" id="L90">                findItemsByOrderId(orderEntity.getId())</span>
+<span class="nc" id="L91">                    .collectList()</span>
+<span class="nc" id="L92">                    .map(items -&gt; orderMapper.toDomain(orderEntity, items))</span>
+            );
+    }
+    
+    @Override
+    public Mono&lt;Long&gt; count() {
+<span class="nc" id="L98">        return databaseClient.sql(&quot;SELECT COUNT(*) FROM orders&quot;)</span>
+<span class="nc" id="L99">            .map(row -&gt; row.get(0, Long.class))</span>
+<span class="nc" id="L100">            .first();</span>
+    }
+    
+    /**
+     * Find order items by order ID.
+     */
+    private Flux&lt;OrderItemEntity&gt; findItemsByOrderId(String orderId) {
+<span class="nc" id="L107">        return r2dbcTemplate.select(</span>
+<span class="nc" id="L108">            Query.query(Criteria.where(&quot;order_id&quot;).is(orderId)),</span>
+            OrderItemEntity.class
+        );
+    }
+    
+    /**
+     * Complex query: Find detailed order summary with calculated fields.
+     */
+    @Override
+    public Mono&lt;OrderSummaryResult&gt; findOrderSummary(String orderId) {
+<span class="nc" id="L118">        String sql = &quot;&quot;&quot;</span>
+            SELECT 
+                o.id as order_id,
+                o.customer_id,
+                o.customer_email,
+                o.status,
+                o.total_amount,
+                o.currency,
+                o.discount_amount,
+                o.created_at,
+                o.updated_at,
+                oi.product_id,
+                oi.product_name,
+                oi.quantity,
+                oi.unit_price,
+                oi.currency as item_currency
+            FROM orders o
+            LEFT JOIN order_items oi ON o.id = oi.order_id
+            WHERE o.id = :orderId
+            &quot;&quot;&quot;;
+        
+<span class="nc" id="L139">        return databaseClient.sql(sql)</span>
+<span class="nc" id="L140">            .bind(&quot;orderId&quot;, orderId)</span>
+<span class="nc" id="L141">            .map((row, metadata) -&gt; {</span>
+                // Build order summary from row
+<span class="nc" id="L143">                String id = row.get(&quot;order_id&quot;, String.class);</span>
+<span class="nc" id="L144">                String customerId = row.get(&quot;customer_id&quot;, String.class);</span>
+<span class="nc" id="L145">                String customerEmail = row.get(&quot;customer_email&quot;, String.class);</span>
+<span class="nc" id="L146">                OrderStatus status = OrderStatus.valueOf(row.get(&quot;status&quot;, String.class));</span>
+<span class="nc" id="L147">                BigDecimal totalAmount = row.get(&quot;total_amount&quot;, BigDecimal.class);</span>
+<span class="nc" id="L148">                String currency = row.get(&quot;currency&quot;, String.class);</span>
+<span class="nc" id="L149">                BigDecimal discountAmount = row.get(&quot;discount_amount&quot;, BigDecimal.class);</span>
+<span class="nc" id="L150">                Instant createdAt = row.get(&quot;created_at&quot;, Instant.class);</span>
+<span class="nc" id="L151">                Instant updatedAt = row.get(&quot;updated_at&quot;, Instant.class);</span>
+                
+<span class="nc" id="L153">                String productId = row.get(&quot;product_id&quot;, String.class);</span>
+<span class="nc" id="L154">                String productName = row.get(&quot;product_name&quot;, String.class);</span>
+<span class="nc" id="L155">                Integer quantity = row.get(&quot;quantity&quot;, Integer.class);</span>
+<span class="nc" id="L156">                BigDecimal unitPrice = row.get(&quot;unit_price&quot;, BigDecimal.class);</span>
+<span class="nc" id="L157">                String itemCurrency = row.get(&quot;item_currency&quot;, String.class);</span>
+                
+<span class="nc" id="L159">                OrderSummaryResult.OrderItemSummary itemSummary = null;</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">                if (productId != null) {</span>
+<span class="nc" id="L161">                    BigDecimal subtotal = unitPrice.multiply(BigDecimal.valueOf(quantity));</span>
+<span class="nc" id="L162">                    itemSummary = new OrderSummaryResult.OrderItemSummary(</span>
+<span class="nc" id="L163">                        productId, productName, quantity, unitPrice, subtotal</span>
+                    );
+                }
+                
+<span class="nc" id="L167">                return Map.entry(</span>
+                    new OrderSummaryResult(
+                        id, customerId, customerEmail, status, totalAmount, currency,
+<span class="nc bnc" id="L170" title="All 2 branches missed.">                        discountAmount != null ? discountAmount : totalAmount,</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">                        discountAmount != null ? discountAmount : totalAmount,</span>
+                        BigDecimal.ZERO, // calculated discount - will be computed later
+<span class="nc" id="L173">                        0, List.of(), createdAt, updatedAt</span>
+                    ),
+                    itemSummary
+                );
+            })
+<span class="nc" id="L178">            .all()</span>
+<span class="nc" id="L179">            .collectList()</span>
+<span class="nc" id="L180">            .map(entries -&gt; {</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">                if (entries.isEmpty()) {</span>
+<span class="nc" id="L182">                    return null;</span>
+                }
+                
+<span class="nc" id="L185">                OrderSummaryResult first = entries.get(0).getKey();</span>
+<span class="nc" id="L186">                List&lt;OrderSummaryResult.OrderItemSummary&gt; items = entries.stream()</span>
+<span class="nc" id="L187">                    .map(Map.Entry::getValue)</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">                    .filter(item -&gt; item != null)</span>
+<span class="nc" id="L189">                    .toList();</span>
+                
+<span class="nc" id="L191">                int itemCount = items.stream().mapToInt(OrderSummaryResult.OrderItemSummary::quantity).sum();</span>
+                
+<span class="nc" id="L193">                return new OrderSummaryResult(</span>
+<span class="nc" id="L194">                    first.orderId(), first.customerId(), first.customerEmail(),</span>
+<span class="nc" id="L195">                    first.status(), first.totalAmount(), first.currency(),</span>
+<span class="nc" id="L196">                    first.discountAmount(), first.finalAmount(),</span>
+                    BigDecimal.ZERO, itemCount, items,
+<span class="nc" id="L198">                    first.createdAt(), first.updatedAt()</span>
+                );
+            });
+    }
+    
+    /**
+     * Complex query: Find simplified order list for list views.
+     */
+    @Override
+    public Flux&lt;OrderListItemResult&gt; findOrderList(int page, int size) {
+<span class="nc" id="L208">        String sql = &quot;&quot;&quot;</span>
+            SELECT 
+                o.id as order_id,
+                o.customer_id,
+                o.status,
+                o.discount_amount as final_amount,
+                o.total_amount,
+                o.currency,
+                o.created_at,
+                o.updated_at,
+                COUNT(oi.id) as item_count,
+                SUM(oi.quantity) as total_quantity
+            FROM orders o
+            LEFT JOIN order_items oi ON o.id = oi.order_id
+            GROUP BY o.id, o.customer_id, o.status, o.discount_amount, o.total_amount, o.currency, o.created_at, o.updated_at
+            ORDER BY o.created_at DESC
+            LIMIT :limit OFFSET :offset
+            &quot;&quot;&quot;;
+        
+<span class="nc" id="L227">        return databaseClient.sql(sql)</span>
+<span class="nc" id="L228">            .bind(&quot;limit&quot;, size)</span>
+<span class="nc" id="L229">            .bind(&quot;offset&quot;, page * size)</span>
+<span class="nc" id="L230">            .map((row, metadata) -&gt; new OrderListItemResult(</span>
+<span class="nc" id="L231">                row.get(&quot;order_id&quot;, String.class),</span>
+<span class="nc" id="L232">                row.get(&quot;customer_id&quot;, String.class),</span>
+<span class="nc" id="L233">                OrderStatus.valueOf(row.get(&quot;status&quot;, String.class)),</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">                row.get(&quot;final_amount&quot;, BigDecimal.class) != null </span>
+<span class="nc" id="L235">                    ? row.get(&quot;final_amount&quot;, BigDecimal.class) </span>
+<span class="nc" id="L236">                    : row.get(&quot;total_amount&quot;, BigDecimal.class),</span>
+<span class="nc" id="L237">                row.get(&quot;currency&quot;, String.class),</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">                row.get(&quot;total_quantity&quot;, Long.class) != null </span>
+<span class="nc" id="L239">                    ? row.get(&quot;total_quantity&quot;, Long.class).intValue() </span>
+<span class="nc" id="L240">                    : 0,</span>
+<span class="nc" id="L241">                row.get(&quot;created_at&quot;, Instant.class),</span>
+<span class="nc" id="L242">                row.get(&quot;updated_at&quot;, Instant.class)</span>
+            ))
+<span class="nc" id="L244">            .all();</span>
+    }
+    
+    /**
+     * Complex query: Find customer order statistics with aggregations.
+     */
+    @Override
+    public Mono&lt;CustomerOrderStatsResult&gt; findCustomerStats(String customerId) {
+<span class="nc" id="L252">        String sql = &quot;&quot;&quot;</span>
+            SELECT 
+                COUNT(*) as total_orders,
+                SUM(CASE WHEN status IN ('PENDING', 'CONFIRMED', 'PAID') THEN 1 ELSE 0 END) as active_orders,
+                SUM(CASE WHEN status = 'DELIVERED' THEN 1 ELSE 0 END) as completed_orders,
+                SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END) as cancelled_orders,
+                COALESCE(SUM(CASE WHEN discount_amount IS NOT NULL THEN discount_amount ELSE total_amount END), 0) as total_spent,
+                currency,
+                COALESCE(SUM((SELECT SUM(quantity) FROM order_items WHERE order_id = o.id)), 0) as total_items
+            FROM orders o
+            WHERE customer_id = :customerId
+            GROUP BY currency
+            &quot;&quot;&quot;;
+        
+<span class="nc" id="L266">        return databaseClient.sql(sql)</span>
+<span class="nc" id="L267">            .bind(&quot;customerId&quot;, customerId)</span>
+<span class="nc" id="L268">            .map((row, metadata) -&gt; {</span>
+<span class="nc" id="L269">                long totalOrders = row.get(&quot;total_orders&quot;, Long.class);</span>
+<span class="nc" id="L270">                long activeOrders = row.get(&quot;active_orders&quot;, Long.class);</span>
+<span class="nc" id="L271">                long completedOrders = row.get(&quot;completed_orders&quot;, Long.class);</span>
+<span class="nc" id="L272">                long cancelledOrders = row.get(&quot;cancelled_orders&quot;, Long.class);</span>
+<span class="nc" id="L273">                BigDecimal totalSpent = row.get(&quot;total_spent&quot;, BigDecimal.class);</span>
+<span class="nc" id="L274">                String currency = row.get(&quot;currency&quot;, String.class);</span>
+<span class="nc" id="L275">                long totalItems = row.get(&quot;total_items&quot;, Long.class);</span>
+                
+<span class="nc bnc" id="L277" title="All 2 branches missed.">                BigDecimal avgOrderValue = totalOrders &gt; 0 </span>
+<span class="nc" id="L278">                    ? totalSpent.divide(BigDecimal.valueOf(totalOrders), 2, BigDecimal.ROUND_HALF_UP)</span>
+<span class="nc" id="L279">                    : BigDecimal.ZERO;</span>
+                
+<span class="nc" id="L281">                Map&lt;OrderStatus, Long&gt; ordersByStatus = Map.of(</span>
+<span class="nc" id="L282">                    OrderStatus.PENDING, 0L,</span>
+<span class="nc" id="L283">                    OrderStatus.CONFIRMED, 0L,</span>
+<span class="nc" id="L284">                    OrderStatus.PAID, activeOrders,</span>
+<span class="nc" id="L285">                    OrderStatus.SHIPPED, 0L,</span>
+<span class="nc" id="L286">                    OrderStatus.DELIVERED, completedOrders,</span>
+<span class="nc" id="L287">                    OrderStatus.CANCELLED, cancelledOrders</span>
+                );
+                
+<span class="nc" id="L290">                return new CustomerOrderStatsResult(</span>
+                    customerId, totalOrders, activeOrders, completedOrders, cancelledOrders,
+                    totalSpent, avgOrderValue, currency, ordersByStatus, totalItems
+                );
+            })
+<span class="nc" id="L295">            .first()</span>
+<span class="nc" id="L296">            .switchIfEmpty(Mono.just(new CustomerOrderStatsResult(</span>
+                customerId, 0L, 0L, 0L, 0L, BigDecimal.ZERO, BigDecimal.ZERO, &quot;USD&quot;,
+<span class="nc" id="L298">                Map.of(), 0L</span>
+            )));
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

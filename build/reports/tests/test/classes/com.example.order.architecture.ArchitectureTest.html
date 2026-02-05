@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - ArchitectureTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>ArchitectureTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.example.order.architecture.html">com.example.order.architecture</a> &gt; ArchitectureTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">10</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.318s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">applicationShouldNotDependOnInfrastructure()</td>
+<td class="success">0.022s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">applicationShouldNotHaveCycleDependencies()</td>
+<td class="success">0.028s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">architectureRulesVerified()</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">domainShouldNotDependOnInfrastructure()</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">domainShouldNotDependOnR2dbc()</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">domainShouldNotDependOnReactor()</td>
+<td class="success">0.101s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">domainShouldNotDependOnSpringFramework()</td>
+<td class="success">0.003s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">domainShouldNotDependOnWebflux()</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">domainShouldNotHaveCycleDependencies()</td>
+<td class="success">0.079s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">layeredArchitectureShouldBeRespected()</td>
+<td class="success">0.072s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2026-02-05T09:42:46.640+09:00  INFO 237270 --- [order-service] [    Test worker] com.tngtech.archunit.core.PluginLoader   : Detected Java version 21.0.10
+2026-02-05T09:42:48.808+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.808+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@5469cf13 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.812+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT outbox.* FROM outbox WHERE outbox.processed = $1 ORDER BY outbox.created_at ASC {1: FALSE}
+2026-02-05T09:42:48.817+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@73c141c6 columns: 7 rows: 151 pos: -1
+Architecture rules verified - All hexagonal architecture constraints satisfied
+2026-02-05T09:42:48.966+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.966+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@7faef8c9 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.968+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.968+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@76d1d140 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.975+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(1 AS BIGINT)}
+2026-02-05T09:42:48.977+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.977+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@237bebb8 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.978+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.978+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@3731651 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.979+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(2 AS BIGINT)}
+2026-02-05T09:42:48.980+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.980+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@775d2685 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.980+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.980+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@7b7b902d columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.981+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(3 AS BIGINT)}
+2026-02-05T09:42:48.981+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.981+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@576abf16 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.982+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.982+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@1e67fd8c columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.982+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(4 AS BIGINT)}
+2026-02-05T09:42:48.984+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.984+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@3bc0c5ec columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.984+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.984+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@747dbfd9 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.985+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(5 AS BIGINT)}
+2026-02-05T09:42:48.986+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.986+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@72baeb8a columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.986+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.986+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@384fde1 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.987+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(6 AS BIGINT)}
+2026-02-05T09:42:48.988+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.988+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@2ce45062 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.988+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.989+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@628f7754 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.989+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(7 AS BIGINT)}
+2026-02-05T09:42:48.990+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.990+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@5d13260b columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.990+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.990+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@5b22180 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.991+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(8 AS BIGINT)}
+2026-02-05T09:42:48.992+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.992+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@42f677fc columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.992+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.992+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@3cac2f43 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.993+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(9 AS BIGINT)}
+2026-02-05T09:42:48.993+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.994+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@4258d1e8 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.994+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.994+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@2673f6d columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.994+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(10 AS BIGINT)}
+2026-02-05T09:42:48.995+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.995+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@35a8a1f9 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.996+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.996+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@37f55bed columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.997+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(11 AS BIGINT)}
+2026-02-05T09:42:48.998+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.998+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@29ba6798 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.998+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:48.999+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@2ccd4cfa columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:48.999+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(12 AS BIGINT)}
+2026-02-05T09:42:49.000+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.000+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@62791df3 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.001+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.001+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@47945ee5 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.001+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(13 AS BIGINT)}
+2026-02-05T09:42:49.002+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.002+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@5c626fa9 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.003+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.003+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@7b9bd7d1 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.004+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(14 AS BIGINT)}
+2026-02-05T09:42:49.004+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.004+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@3100e3b0 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.005+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.005+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@64e15fea columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.005+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(15 AS BIGINT)}
+2026-02-05T09:42:49.006+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.006+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@2a453da8 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.007+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.007+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@cf64360 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.007+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(16 AS BIGINT)}
+2026-02-05T09:42:49.008+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.008+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@61da82e3 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.009+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.009+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@fa9a067 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.009+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(17 AS BIGINT)}
+2026-02-05T09:42:49.010+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.010+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@5293dbf5 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.011+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.011+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@71a39c0a columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.011+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(18 AS BIGINT)}
+2026-02-05T09:42:49.012+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.012+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@6f0c49f columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.012+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.012+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@53f8151 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.013+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(19 AS BIGINT)}
+2026-02-05T09:42:49.013+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.013+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@48c4d84a columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.013+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.014+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@51e55eb1 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.014+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(20 AS BIGINT)}
+2026-02-05T09:42:49.015+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.015+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@769b77db columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.015+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.016+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@6e852ca9 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.016+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(21 AS BIGINT)}
+2026-02-05T09:42:49.017+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.017+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@44a957ec columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.017+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.018+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@614182eb columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.018+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(22 AS BIGINT)}
+2026-02-05T09:42:49.019+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.019+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@89abb54 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.019+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.019+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@73c69681 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.020+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(23 AS BIGINT)}
+2026-02-05T09:42:49.021+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.021+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@3c19fdbb columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.021+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.021+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@d6cd8e2 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.022+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(24 AS BIGINT)}
+2026-02-05T09:42:49.022+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.022+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@3a7d59a0 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.023+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.023+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@520a93c7 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.023+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(25 AS BIGINT)}
+2026-02-05T09:42:49.024+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.024+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@1f85920b columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.024+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.024+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@778d03b7 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.024+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(26 AS BIGINT)}
+2026-02-05T09:42:49.026+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.026+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@203aa778 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.026+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.026+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@3735676e columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.026+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(27 AS BIGINT)}
+2026-02-05T09:42:49.027+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.027+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@327bff16 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.027+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.027+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@5462692a columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.028+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(28 AS BIGINT)}
+2026-02-05T09:42:49.028+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.028+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@2b7f33d columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.029+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.029+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@eaad30c columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.029+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(29 AS BIGINT)}
+2026-02-05T09:42:49.029+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.029+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@15d2f5b2 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.030+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.030+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@32c08cb5 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.032+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(30 AS BIGINT)}
+2026-02-05T09:42:49.033+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.033+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@16f6da12 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.033+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.033+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@1af70c76 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.034+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(31 AS BIGINT)}
+2026-02-05T09:42:49.034+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.034+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@70a29242 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.035+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.035+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@5abb4c36 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.035+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(32 AS BIGINT)}
+2026-02-05T09:42:49.036+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.036+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@499c7012 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.036+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.036+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@5a07055e columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.036+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(33 AS BIGINT)}
+2026-02-05T09:42:49.037+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.037+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@1b2998ab columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.037+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.037+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@4a4e9d7a columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.038+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(34 AS BIGINT)}
+2026-02-05T09:42:49.038+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.038+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@57b39691 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.039+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.039+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@4b0db57b columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.039+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(35 AS BIGINT)}
+2026-02-05T09:42:49.040+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.040+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@45db994e columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.041+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.042+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@2495e07c columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.042+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(36 AS BIGINT)}
+2026-02-05T09:42:49.043+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.043+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@f308814 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.044+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.044+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@2fca2cd7 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.044+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(37 AS BIGINT)}
+2026-02-05T09:42:49.047+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.047+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@714f17e2 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.047+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.047+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@1622ac01 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.048+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(38 AS BIGINT)}
+2026-02-05T09:42:49.048+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.048+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@4733f061 columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.049+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.049+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@2824c8eb columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.049+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  UPDATE outbox SET processed = $1 WHERE outbox.ID = $2 {1: TRUE, 2: CAST(39 AS BIGINT)}
+2026-02-05T09:42:49.050+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.050+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@6e6a5d8d columns: 1 rows: 1 pos: -1
+2026-02-05T09:42:49.050+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-05T09:42:49.050+09:00 DEBUG 237270 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@6239a9a8 columns: 1 rows: 1 pos: -1
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.5</a> at 2026. 2. 5. 오전 9:42:49</p>
+</div>
+</div>
+</body>
+</html>

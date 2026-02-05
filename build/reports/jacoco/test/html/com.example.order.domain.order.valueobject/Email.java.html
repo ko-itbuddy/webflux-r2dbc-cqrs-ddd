@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Email.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">webflux-reactive-hibernate</a> &gt; <a href="index.source.html" class="el_package">com.example.order.domain.order.valueobject</a> &gt; <span class="el_source">Email.java</span></div><h1>Email.java</h1><pre class="source lang-java linenums">package com.example.order.domain.order.valueobject;
+
+import java.util.Objects;
+import java.util.regex.Pattern;
+
+public final class Email {
+<span class="fc" id="L7">    private static final Pattern EMAIL_PATTERN = Pattern.compile(</span>
+        &quot;^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$&quot;
+    );
+    
+    private final String value;
+    
+<span class="fc" id="L13">    private Email(String value) {</span>
+<span class="fc" id="L14">        this.value = value;</span>
+<span class="fc" id="L15">    }</span>
+    
+    public static Email of(String email) {
+<span class="fc" id="L18">        Objects.requireNonNull(email, &quot;Email cannot be null&quot;);</span>
+<span class="fc bfc" id="L19" title="All 2 branches covered.">        if (!EMAIL_PATTERN.matcher(email).matches()) {</span>
+<span class="fc" id="L20">            throw new IllegalArgumentException(&quot;Invalid email format: &quot; + email);</span>
+        }
+<span class="fc" id="L22">        return new Email(email.toLowerCase());</span>
+    }
+    
+    public String getValue() {
+<span class="fc" id="L26">        return value;</span>
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+<span class="pc bpc" id="L31" title="1 of 2 branches missed.">        if (this == o) return true;</span>
+<span class="pc bpc" id="L32" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="fc" id="L33">        Email email = (Email) o;</span>
+<span class="fc" id="L34">        return value.equals(email.value);</span>
+    }
+    
+    @Override
+    public int hashCode() {
+<span class="fc" id="L39">        return Objects.hash(value);</span>
+    }
+    
+    @Override
+    public String toString() {
+<span class="fc" id="L44">        return value;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

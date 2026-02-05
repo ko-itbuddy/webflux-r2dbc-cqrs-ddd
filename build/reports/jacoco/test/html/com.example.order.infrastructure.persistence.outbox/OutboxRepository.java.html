@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OutboxRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">webflux-reactive-hibernate</a> &gt; <a href="index.source.html" class="el_package">com.example.order.infrastructure.persistence.outbox</a> &gt; <span class="el_source">OutboxRepository.java</span></div><h1>OutboxRepository.java</h1><pre class="source lang-java linenums">package com.example.order.infrastructure.persistence.outbox;
+
+import com.example.order.infrastructure.persistence.outbox.OutboxEvent;
+import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
+import org.springframework.data.relational.core.query.Criteria;
+import org.springframework.data.relational.core.query.Query;
+import org.springframework.data.relational.core.query.Update;
+import org.springframework.r2dbc.core.DatabaseClient;
+import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+@Repository
+public class OutboxRepository {
+
+    private final R2dbcEntityTemplate r2dbcTemplate;
+    private final DatabaseClient databaseClient;
+
+<span class="fc" id="L19">    public OutboxRepository(R2dbcEntityTemplate r2dbcTemplate, DatabaseClient databaseClient) {</span>
+<span class="fc" id="L20">        this.r2dbcTemplate = r2dbcTemplate;</span>
+<span class="fc" id="L21">        this.databaseClient = databaseClient;</span>
+<span class="fc" id="L22">    }</span>
+
+    public Mono&lt;OutboxEvent&gt; save(OutboxEvent event) {
+<span class="fc" id="L25">        return r2dbcTemplate.insert(event);</span>
+    }
+
+    public Flux&lt;OutboxEvent&gt; findByProcessedFalse() {
+<span class="fc" id="L29">        return r2dbcTemplate.select(</span>
+<span class="fc" id="L30">                Query.query(Criteria.where(&quot;processed&quot;).is(false))</span>
+<span class="fc" id="L31">                        .sort(org.springframework.data.domain.Sort.by(&quot;created_at&quot;).ascending()),</span>
+                OutboxEvent.class);
+    }
+
+    public Mono&lt;Void&gt; markAsProcessed(Long id) {
+<span class="fc" id="L36">        return r2dbcTemplate.update(</span>
+<span class="fc" id="L37">                        Query.query(Criteria.where(&quot;id&quot;).is(id)),</span>
+<span class="fc" id="L38">                        Update.update(&quot;processed&quot;, true),</span>
+                        OutboxEvent.class)
+<span class="fc" id="L40">                .then();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

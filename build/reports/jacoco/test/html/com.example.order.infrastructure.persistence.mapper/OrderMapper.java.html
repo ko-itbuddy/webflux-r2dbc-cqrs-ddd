@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">webflux-reactive-hibernate</a> &gt; <a href="index.source.html" class="el_package">com.example.order.infrastructure.persistence.mapper</a> &gt; <span class="el_source">OrderMapper.java</span></div><h1>OrderMapper.java</h1><pre class="source lang-java linenums">package com.example.order.infrastructure.persistence.mapper;
+
+import com.example.order.application.service.DiscountCalculationService;
+import com.example.order.application.service.OrderData;
+import com.example.order.application.service.PriceValidationService;
+import com.example.order.domain.order.entity.Order;
+import com.example.order.domain.order.entity.OrderItem;
+import com.example.order.domain.order.valueobject.Email;
+import com.example.order.domain.order.valueobject.Money;
+import com.example.order.infrastructure.persistence.entity.OrderEntity;
+import com.example.order.infrastructure.persistence.entity.OrderItemEntity;
+import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+/**
+ * Mapper for converting between Order domain objects and OrderEntity persistence objects.
+ * Business logic is injected via application services (Strategy pattern).
+ */
+@Component
+public class OrderMapper {
+    
+    private final Function&lt;OrderData, BigDecimal&gt; discountCalculator;
+    private final Predicate&lt;Money&gt; priceValidator;
+    private final OrderItemMapper itemMapper;
+    
+    /**
+     * Constructor with injected application services.
+     * Services provide business logic through function interfaces.
+     */
+    public OrderMapper(
+            DiscountCalculationService discountService,
+            PriceValidationService priceService,
+<span class="fc" id="L38">            OrderItemMapper itemMapper) {</span>
+<span class="fc" id="L39">        this.discountCalculator = discountService.getDiscountCalculator();</span>
+<span class="fc" id="L40">        this.priceValidator = priceService.getPriceValidator();</span>
+<span class="fc" id="L41">        this.itemMapper = itemMapper;</span>
+<span class="fc" id="L42">    }</span>
+    
+    /**
+     * Convert OrderEntity and OrderItemEntities to domain Order object.
+     * Validates prices and calculates discount using injected business logic.
+     */
+    public Order toDomain(OrderEntity entity, List&lt;OrderItemEntity&gt; itemEntities) {
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">        if (entity == null) {</span>
+<span class="nc" id="L50">            return null;</span>
+        }
+        
+        // Convert items using injected item mapper
+<span class="fc" id="L54">        List&lt;OrderItem&gt; items = itemMapper.toDomainList(itemEntities);</span>
+        
+        // Create email value object
+<span class="fc" id="L57">        Email customerEmail = Email.of(entity.getCustomerEmail());</span>
+        
+        // Create the domain order (reconstructs from database state)
+<span class="fc" id="L60">        Money totalAmount = Money.of(entity.getTotalAmount(), entity.getCurrency());</span>
+        
+        // Validate price using injected validator
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">        if (!priceValidator.test(totalAmount)) {</span>
+<span class="nc" id="L64">            throw new IllegalStateException(&quot;Invalid price stored in database for order: &quot; + entity.getId());</span>
+        }
+        
+        // Create OrderData for discount calculation
+<span class="fc" id="L68">        int itemCount = items.stream().mapToInt(OrderItem::getQuantity).sum();</span>
+<span class="fc" id="L69">        OrderData orderData = new OrderData(</span>
+<span class="fc" id="L70">            entity.getId(),</span>
+<span class="fc" id="L71">            entity.getCustomerId(),</span>
+<span class="fc" id="L72">            entity.getTotalAmount(),</span>
+            itemCount,
+<span class="fc" id="L74">            entity.getStatus(),</span>
+<span class="fc" id="L75">            entity.getCreatedAt()</span>
+        );
+        
+        // Calculate potential discount using injected calculator
+<span class="fc" id="L79">        BigDecimal calculatedDiscount = discountCalculator.apply(orderData);</span>
+        
+        // Reconstitute order from database state
+<span class="fc" id="L82">        Order order = Order.reconstitute(</span>
+<span class="fc" id="L83">            entity.getId(),</span>
+<span class="fc" id="L84">            entity.getCustomerId(),</span>
+            customerEmail,
+<span class="fc" id="L86">            entity.getStatus(),</span>
+            items,
+            totalAmount,
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">            entity.getDiscountAmount() != null ? Money.of(entity.getDiscountAmount(), entity.getCurrency()) : null,</span>
+<span class="fc" id="L90">            entity.getCreatedAt(),</span>
+<span class="fc" id="L91">            entity.getUpdatedAt()</span>
+        );
+        
+<span class="fc" id="L94">        return order;</span>
+    }
+    
+    /**
+     * Convert domain Order to OrderEntity for persistence.
+     */
+    public OrderEntity toEntity(Order order) {
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">        if (order == null) {</span>
+<span class="nc" id="L102">            return null;</span>
+        }
+        
+<span class="fc" id="L105">        Money finalAmount = order.getFinalAmount();</span>
+<span class="fc" id="L106">        Money totalAmount = order.getTotalAmount();</span>
+        
+<span class="fc" id="L108">        OrderEntity entity = new OrderEntity();</span>
+<span class="fc" id="L109">        entity.setId(order.getId());</span>
+<span class="fc" id="L110">        entity.setCustomerId(order.getCustomerId());</span>
+<span class="fc" id="L111">        entity.setCustomerEmail(order.getCustomerEmail().getValue());</span>
+<span class="fc" id="L112">        entity.setStatus(order.getStatus());</span>
+<span class="fc" id="L113">        entity.setTotalAmount(totalAmount.getAmount());</span>
+<span class="fc" id="L114">        entity.setCurrency(totalAmount.getCurrency());</span>
+        
+        // Store discount amount if applied
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        if (!finalAmount.equals(totalAmount)) {</span>
+<span class="nc" id="L118">            entity.setDiscountAmount(finalAmount.getAmount());</span>
+        }
+        
+<span class="fc" id="L121">        entity.setCreatedAt(order.getCreatedAt());</span>
+<span class="fc" id="L122">        entity.setUpdatedAt(order.getUpdatedAt());</span>
+        
+<span class="fc" id="L124">        return entity;</span>
+    }
+    
+    /**
+     * Extract items from a domain order as entities.
+     */
+    public List&lt;OrderItemEntity&gt; extractItemEntities(Order order) {
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">        if (order == null) {</span>
+<span class="nc" id="L132">            return List.of();</span>
+        }
+        
+<span class="fc" id="L135">        return itemMapper.toEntityList(order.getItems(), order.getId());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

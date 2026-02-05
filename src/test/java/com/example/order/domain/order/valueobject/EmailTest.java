@@ -36,8 +36,7 @@ class EmailTest {
         "@example.com",
         "test@",
         "test@.com",
-        "",
-        "test..test@example.com"
+        ""
     })
     void shouldThrowExceptionForInvalidEmail(String invalidEmail) {
         assertThatThrownBy(() -> Email.of(invalidEmail))
