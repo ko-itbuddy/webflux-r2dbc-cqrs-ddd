@@ -143,10 +143,4 @@ class ArchitectureTest {
                 .check(importedClasses);
     }
 
-    @Test
-    void architectureRulesVerified() {
-        // 이 테스트는 모든 아키텍처 규칙이 통과했음을 명시적으로 나타냄
-        // 실패 시 이 메시지는 출력되지 않음
-        System.out.println("Architecture rules verified - All hexagonal architecture constraints satisfied");
-    }
 }

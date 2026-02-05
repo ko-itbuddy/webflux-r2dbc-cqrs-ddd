@@ -4,6 +4,7 @@ import com.example.order.application.command.handler.CreateOrderHandler;
 import com.example.order.application.in.command.CreateOrderCommand;
 import com.example.order.domain.order.entity.Order;
 import com.example.order.domain.order.valueobject.OrderStatus;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -55,7 +56,7 @@ class TransactionTest {
 
         StepVerifier.create(
             createOrderHandler.handle(command)
-                .flatMap(order -> 
+                .flatMap(order ->
                     databaseClient.sql("SELECT COUNT(*) FROM orders WHERE id = :id")
                         .bind("id", order.getId())
                         .map((row, metadata) -> row.get(0, Long.class))
@@ -66,23 +67,30 @@ class TransactionTest {
                                 .map((row, metadata) -> row.get(0, Long.class))
                                 .first()
                         )
-                        .map(tuple -> {
-                            assertThat(tuple.getT1()).isEqualTo(1L);
-                            assertThat(tuple.getT2()).isEqualTo(1L);
-                            return order;
-                        })
+                        .map(tuple -> new OrderVerificationResult(order, tuple.getT1(), tuple.getT2()))
                 )
         )
-        .assertNext(order -> {
-            assertThat(order.getCustomerId()).isEqualTo("CUST-001");
-            assertThat(order.getStatus()).isEqualTo(OrderStatus.PENDING);
-            assertThat(order.getItems()).hasSize(1);
+        .assertNext(result -> {
+            assertThat(result.order().getCustomerId()).isEqualTo("CUST-001");
+            assertThat(result.order().getStatus()).isEqualTo(OrderStatus.PENDING);
+            assertThat(result.order().getItems()).hasSize(1);
+            assertThat(result.orderCount()).isEqualTo(1L);
+            assertThat(result.itemCount()).isEqualTo(1L);
         })
         .verifyComplete();
     }
 
+    private record OrderVerificationResult(Order order, Long orderCount, Long itemCount) {}
+
     @Autowired
     private org.springframework.transaction.reactive.TransactionalOperator transactionalOperator;
+
+    @AfterEach
+    void cleanup() {
+        databaseClient.sql("DELETE FROM order_items").then()
+            .then(databaseClient.sql("DELETE FROM orders").then())
+            .block();
+    }
 
     @Test
     void transaction_ShouldRollbackOnError() {
@@ -119,6 +127,5 @@ class TransactionTest {
         .assertNext(count -> assertThat(count).isEqualTo(0L))
         .verifyComplete();
 
-        System.out.println("Rollback completed - No data persisted for failed transaction");
     }
 }

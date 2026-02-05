@@ -37,7 +37,9 @@ class OrderTest {
     @Test
     void shouldThrowExceptionWhenCreatingOrderWithNullItems() {
         assertThatThrownBy(() -> Order.create("customer-001", Email.of("test@example.com"), null))
-            .isInstanceOf(BusinessException.class);
+            .isInstanceOf(BusinessException.class)
+            .matches(ex -> ((BusinessException) ex).getErrorCode().equals("ORDER_001"))
+            .hasMessageContaining("Order must contain at least one item");
     }
 
     @Test

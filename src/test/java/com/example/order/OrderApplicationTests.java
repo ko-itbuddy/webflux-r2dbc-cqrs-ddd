@@ -13,14 +13,12 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.transaction.RabbitTransactionManager;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -46,6 +44,8 @@ class OrderApplicationTests {
 
     @Test
     void contextLoads() {
+        assertThat(createOrderHandler).isNotNull();
+        assertThat(webTestClient).isNotNull();
     }
 
     @Test
@@ -72,47 +72,31 @@ class OrderApplicationTests {
     }
 
     @Test
-    void shouldHandleConcurrentRequestsWithoutBlocking() throws InterruptedException {
-        int requestCount = 100; // Reduced for faster tests
-        CountDownLatch latch = new CountDownLatch(requestCount);
-        AtomicInteger successCount = new AtomicInteger(0);
-        AtomicInteger errorCount = new AtomicInteger(0);
+    void shouldHandleConcurrentRequestsWithoutBlocking() {
+        int requestCount = 100;
 
-        long startTime = System.currentTimeMillis();
-
-        IntStream.range(0, requestCount).forEach(i -> {
-            CreateOrderCommand command = new CreateOrderCommand(
-                "customer-" + i,
-                "test" + i + "@example.com",
-                List.of(new CreateOrderCommand.OrderItemCommand(
-                    "prod-001", "Product A", 1, new BigDecimal("50.00"), "USD"
-                ))
-            );
-
-            createOrderHandler.handle(command)
-                .doFinally(signal -> latch.countDown())
-                .subscribe(
-                    order -> successCount.incrementAndGet(),
-                    error -> {
-                        errorCount.incrementAndGet();
-                        System.err.println("Error: " + error.getMessage());
-                    }
+        List<Mono<com.example.order.domain.order.entity.Order>> requests = IntStream.range(0, requestCount)
+            .mapToObj(i -> {
+                CreateOrderCommand command = new CreateOrderCommand(
+                    "customer-" + i,
+                    "test" + i + "@example.com",
+                    List.of(new CreateOrderCommand.OrderItemCommand(
+                        "prod-001", "Product A", 1, new BigDecimal("50.00"), "USD"
+                    ))
                 );
-        });
+                return createOrderHandler.handle(command);
+            })
+            .toList();
 
-        boolean completed = latch.await(30, TimeUnit.SECONDS);
-        long endTime = System.currentTimeMillis();
-
-        System.out.println("=== Concurrent Test Results ===");
-        System.out.println("Total requests: " + requestCount);
-        System.out.println("Success: " + successCount.get());
-        System.out.println("Errors: " + errorCount.get());
-        System.out.println("Time: " + (endTime - startTime) + "ms");
-        System.out.println("Completed within timeout: " + completed);
-
-        assertThat(completed).isTrue();
-        assertThat(successCount.get()).isEqualTo(requestCount);
-        assertThat(errorCount.get()).isEqualTo(0);
+        StepVerifier.create(
+            Flux.merge(requests)
+                .collectList()
+        )
+        .assertNext(orders -> {
+            assertThat(orders).hasSize(requestCount);
+            assertThat(orders).allMatch(order -> order.getCustomerId().startsWith("customer-"));
+        })
+        .verifyComplete();
     }
 
     @Test
@@ -138,11 +122,6 @@ class OrderApplicationTests {
             Mono.zip(requests, objects -> objects.length)
         )
         .assertNext(count -> {
-            long endTime = System.currentTimeMillis();
-            System.out.println("=== High Load Test ===");
-            System.out.println("Concurrent requests: " + concurrentRequests);
-            System.out.println("Completed: " + count);
-            System.out.println("Time: " + (endTime - startTime) + "ms");
             assertThat(count).isEqualTo(concurrentRequests);
         })
         .verifyComplete();
