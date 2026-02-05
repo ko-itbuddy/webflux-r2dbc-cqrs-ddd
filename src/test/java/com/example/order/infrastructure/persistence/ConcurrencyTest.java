@@ -1,0 +1,398 @@
+package com.example.order.infrastructure.persistence;
+
+import com.example.order.application.command.handler.ApplyDiscountHandler;
+import com.example.order.application.command.handler.ConfirmOrderHandler;
+import com.example.order.application.command.handler.CreateOrderHandler;
+import com.example.order.application.command.handler.PayOrderHandler;
+import com.example.order.application.in.command.ApplyDiscountCommand;
+import com.example.order.application.in.command.ConfirmOrderCommand;
+import com.example.order.application.in.command.CreateOrderCommand;
+import com.example.order.application.in.command.PayOrderCommand;
+import com.example.order.domain.order.entity.Order;
+import com.example.order.domain.order.valueobject.OrderStatus;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.transaction.RabbitTransactionManager;
+import org.springframework.r2dbc.core.DatabaseClient;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+@SpringBootTest
+class ConcurrencyTest {
+
+    @Autowired
+    private CreateOrderHandler createOrderHandler;
+
+    @Autowired
+    private ConfirmOrderHandler confirmOrderHandler;
+
+    @Autowired
+    private ApplyDiscountHandler applyDiscountHandler;
+
+    @Autowired
+    private PayOrderHandler payOrderHandler;
+
+    @Autowired
+    private DatabaseClient databaseClient;
+
+    @MockBean(name = "rabbitConnectionFactory")
+    private ConnectionFactory connectionFactory;
+
+    @MockBean(name = "amqpTemplate")
+    private AmqpTemplate amqpTemplate;
+
+    @MockBean(name = "rabbitTransactionManager")
+    private RabbitTransactionManager rabbitTransactionManager;
+
+    @Test
+    void shouldHandleConcurrentOrderCreations() {
+        int concurrentRequests = 50;
+        List<String> orderIds = new CopyOnWriteArrayList<>();
+
+        var createRequests = Flux.range(0, concurrentRequests)
+            .flatMap(i -> {
+                var item = new CreateOrderCommand.OrderItemCommand(
+                    "PROD-" + i,
+                    "Product " + i,
+                    1,
+                    new BigDecimal("10.00"),
+                    "USD"
+                );
+                var command = new CreateOrderCommand(
+                    "CUST-CONCURRENT-" + (i % 5),
+                    "customer" + i + "@example.com",
+                    List.of(item)
+                );
+                return createOrderHandler.handle(command)
+                    .doOnNext(order -> orderIds.add(order.getId()));
+            });
+
+        StepVerifier.create(
+            createRequests
+                .collectList()
+                .flatMap(orders -> 
+                    databaseClient.sql("SELECT COUNT(*) FROM orders")
+                        .map((row, metadata) -> row.get(0, Long.class))
+                        .first()
+                        .map(count -> new ConcurrencyResult(orders.size(), count))
+                )
+        )
+        .assertNext(result -> {
+            assertThat(result.createdCount()).isEqualTo(concurrentRequests);
+            assertThat(result.dbCount()).isEqualTo(concurrentRequests);
+            assertThat(orderIds).hasSize(concurrentRequests);
+        })
+        .verifyComplete();
+    }
+
+    @Test
+    void shouldPreventConcurrentDiscountApplications() {
+        var item = new CreateOrderCommand.OrderItemCommand(
+            "PROD-001",
+            "Test Product",
+            2,
+            new BigDecimal("100.00"),
+            "USD"
+        );
+        var command = new CreateOrderCommand(
+            "CUST-DISCOUNT",
+            "discount@example.com",
+            List.of(item)
+        );
+
+        StepVerifier.create(
+            createOrderHandler.handle(command)
+                .flatMap(order -> {
+                    String orderId = order.getId();
+
+                    var discountCommands = Flux.merge(
+                        applyDiscountHandler.handle(new ApplyDiscountCommand(orderId, new BigDecimal("0.10")))
+                            .onErrorResume(e -> Mono.empty()),
+                        applyDiscountHandler.handle(new ApplyDiscountCommand(orderId, new BigDecimal("0.20")))
+                            .onErrorResume(e -> Mono.empty()),
+                        applyDiscountHandler.handle(new ApplyDiscountCommand(orderId, new BigDecimal("0.15")))
+                            .onErrorResume(e -> Mono.empty())
+                    );
+
+                    return discountCommands
+                        .collectList()
+                        .flatMap(discountedOrders ->
+                            databaseClient.sql("SELECT discount_amount FROM orders WHERE id = :id")
+                                .bind("id", orderId)
+                                .map((row, metadata) -> row.get(0, BigDecimal.class))
+                                .first()
+                                .map(discount -> new DiscountResult(discountedOrders.size(), discount))
+                        );
+                })
+        )
+        .assertNext(result -> {
+            assertThat(result.successfulDiscounts()).isLessThanOrEqualTo(3);
+            assertThat(result.finalDiscount()).isNotNull();
+        })
+        .verifyComplete();
+    }
+
+    @Test
+    void shouldHandleConcurrentStatusUpdates() {
+        var item = new CreateOrderCommand.OrderItemCommand(
+            "PROD-STATUS",
+            "Status Test Product",
+            1,
+            new BigDecimal("50.00"),
+            "USD"
+        );
+        var command = new CreateOrderCommand(
+            "CUST-STATUS",
+            "status@example.com",
+            List.of(item)
+        );
+
+        AtomicInteger successCount = new AtomicInteger(0);
+        AtomicInteger errorCount = new AtomicInteger(0);
+
+        StepVerifier.create(
+            createOrderHandler.handle(command)
+                .flatMap(order -> {
+                    String orderId = order.getId();
+
+                    var statusUpdates = Flux.merge(
+                        confirmOrderHandler.handle(new ConfirmOrderCommand(orderId))
+                            .doOnSuccess(o -> successCount.incrementAndGet())
+                            .onErrorResume(e -> {
+                                errorCount.incrementAndGet();
+                                return Mono.empty();
+                            }),
+                        confirmOrderHandler.handle(new ConfirmOrderCommand(orderId))
+                            .doOnSuccess(o -> successCount.incrementAndGet())
+                            .onErrorResume(e -> {
+                                errorCount.incrementAndGet();
+                                return Mono.empty();
+                            }),
+                        confirmOrderHandler.handle(new ConfirmOrderCommand(orderId))
+                            .doOnSuccess(o -> successCount.incrementAndGet())
+                            .onErrorResume(e -> {
+                                errorCount.incrementAndGet();
+                                return Mono.empty();
+                            })
+                    );
+
+                    return statusUpdates
+                        .collectList()
+                        .flatMap(updates ->
+                            databaseClient.sql("SELECT status FROM orders WHERE id = :id")
+                                .bind("id", orderId)
+                                .map((row, metadata) -> row.get(0, String.class))
+                                .first()
+                                .map(status -> new StatusResult(successCount.get(), errorCount.get(), status))
+                        );
+                })
+        )
+        .assertNext(result -> {
+            assertThat(result.successCount() + result.errorCount()).isEqualTo(3);
+            assertThat(result.finalStatus()).isIn("CONFIRMED", "PENDING");
+        })
+        .verifyComplete();
+    }
+
+    @Test
+    void shouldMaintainConsistencyUnderLoad() {
+        int operationCount = 100;
+        AtomicInteger successfulCreates = new AtomicInteger(0);
+
+        var mixedOperations = Flux.range(0, operationCount)
+            .flatMap(i -> {
+                var item = new CreateOrderCommand.OrderItemCommand(
+                    "PROD-" + i,
+                    "Product " + i,
+                    1,
+                    new BigDecimal("10.00"),
+                    "USD"
+                );
+                var command = new CreateOrderCommand(
+                    "CUST-LOAD-" + (i % 10),
+                    "load" + i + "@example.com",
+                    List.of(item)
+                );
+                return createOrderHandler.handle(command)
+                    .doOnSuccess(o -> successfulCreates.incrementAndGet())
+                    .onErrorResume(e -> Mono.empty());
+            });
+
+        StepVerifier.create(
+            mixedOperations
+                .collectList()
+                .flatMap(orders ->
+                    Mono.zip(
+                        databaseClient.sql("SELECT COUNT(*) FROM orders")
+                            .map((row, metadata) -> row.get(0, Long.class))
+                            .first(),
+                        databaseClient.sql("SELECT COUNT(*) FROM order_items")
+                            .map((row, metadata) -> row.get(0, Long.class))
+                            .first()
+                    )
+                    .map(tuple -> new ConsistencyResult(
+                        successfulCreates.get(),
+                        tuple.getT1(),
+                        tuple.getT2()
+                    ))
+                )
+        )
+        .assertNext(result -> {
+            assertThat(result.successfulCreates()).isEqualTo(operationCount);
+            assertThat(result.orderCount()).isEqualTo(operationCount);
+            assertThat(result.itemCount()).isEqualTo(operationCount);
+        })
+        .verifyComplete();
+    }
+
+    @Test
+    void shouldHandleConcurrentConfirmAndPay() {
+        var item = new CreateOrderCommand.OrderItemCommand(
+            "PROD-CONCURRENT",
+            "Concurrent Test Product",
+            1,
+            new BigDecimal("100.00"),
+            "USD"
+        );
+        var command = new CreateOrderCommand(
+            "CUST-CP",
+            "concurrentpay@example.com",
+            List.of(item)
+        );
+
+        AtomicInteger confirmAttempts = new AtomicInteger(0);
+        AtomicInteger payAttempts = new AtomicInteger(0);
+        List<String> errors = new CopyOnWriteArrayList<>();
+
+        StepVerifier.create(
+            createOrderHandler.handle(command)
+                .flatMap(order -> {
+                    String orderId = order.getId();
+
+                    var concurrentOps = Flux.merge(
+                        confirmOrderHandler.handle(new ConfirmOrderCommand(orderId))
+                            .doOnSuccess(o -> confirmAttempts.incrementAndGet())
+                            .onErrorResume(e -> {
+                                errors.add("Confirm: " + e.getMessage());
+                                return Mono.empty();
+                            }),
+                        payOrderHandler.handle(new PayOrderCommand(orderId))
+                            .doOnSuccess(o -> payAttempts.incrementAndGet())
+                            .onErrorResume(e -> {
+                                errors.add("Pay: " + e.getMessage());
+                                return Mono.empty();
+                            }),
+                        confirmOrderHandler.handle(new ConfirmOrderCommand(orderId))
+                            .onErrorResume(e -> {
+                                errors.add("Confirm2: " + e.getMessage());
+                                return Mono.empty();
+                            }),
+                        payOrderHandler.handle(new PayOrderCommand(orderId))
+                            .onErrorResume(e -> {
+                                errors.add("Pay2: " + e.getMessage());
+                                return Mono.empty();
+                            })
+                    );
+
+                    return concurrentOps
+                        .collectList()
+                        .flatMap(results ->
+                            databaseClient.sql("SELECT status FROM orders WHERE id = :id")
+                                .bind("id", orderId)
+                                .map((row, metadata) -> row.get(0, String.class))
+                                .first()
+                                .map(status -> new ConcurrentOperationResult(
+                                    confirmAttempts.get(),
+                                    payAttempts.get(),
+                                    status,
+                                    errors
+                                ))
+                        );
+                })
+        )
+        .assertNext(result -> {
+            assertThat(result.confirmAttempts()).isLessThanOrEqualTo(1);
+            assertThat(result.payAttempts()).isLessThanOrEqualTo(1);
+            assertThat(result.finalStatus()).isIn("PENDING", "CONFIRMED", "PAID");
+            assertThat(result.errors()).isNotEmpty();
+        })
+        .verifyComplete();
+    }
+
+    @Test
+    void shouldPreventLostUpdates() {
+        var item = new CreateOrderCommand.OrderItemCommand(
+            "PROD-LOSTUPDATE",
+            "Lost Update Test Product",
+            1,
+            new BigDecimal("100.00"),
+            "USD"
+        );
+        var command = new CreateOrderCommand(
+            "CUST-LU",
+            "lostupdate@example.com",
+            List.of(item)
+        );
+
+        StepVerifier.create(
+            createOrderHandler.handle(command)
+                .flatMap(order -> {
+                    String orderId = order.getId();
+
+                    var concurrentUpdates = Flux.merge(
+                        applyDiscountHandler.handle(new ApplyDiscountCommand(orderId, new BigDecimal("0.10"))),
+                        applyDiscountHandler.handle(new ApplyDiscountCommand(orderId, new BigDecimal("0.20"))),
+                        applyDiscountHandler.handle(new ApplyDiscountCommand(orderId, new BigDecimal("0.30")))
+                    );
+
+                    return concurrentUpdates
+                        .collectList()
+                        .flatMap(updates ->
+                            databaseClient.sql("SELECT status, discount_amount FROM orders WHERE id = :id")
+                                .bind("id", orderId)
+                                .map((row, metadata) -> {
+                                    String statusStr = row.get("status", String.class);
+                                    String discountAmount = row.get("discount_amount", BigDecimal.class) != null
+                                        ? row.get("discount_amount", BigDecimal.class).toString()
+                                        : null;
+                                    return new LostUpdateResult(statusStr, discountAmount, updates.size());
+                                })
+                                .first()
+                        );
+                })
+        )
+        .assertNext(result -> {
+            assertThat(result.successfulUpdates()).isEqualTo(3);
+            assertThat(result.status()).isEqualTo("PENDING");
+            assertThat(result.discountAmount()).isNotNull();
+        })
+        .verifyComplete();
+    }
+
+    private record ConcurrencyResult(int createdCount, Long dbCount) {}
+    private record DiscountResult(int successfulDiscounts, BigDecimal finalDiscount) {}
+    private record StatusResult(int successCount, int errorCount, String finalStatus) {}
+    private record ConsistencyResult(int successfulCreates, Long orderCount, Long itemCount) {}
+    private record ConcurrentOperationResult(int confirmAttempts, int payAttempts, String finalStatus, List<String> errors) {}
+    private record LostUpdateResult(String status, String discountAmount, int successfulUpdates) {}
+
+    @AfterEach
+    void cleanup() {
+        databaseClient.sql("DELETE FROM order_items").then()
+            .then(databaseClient.sql("DELETE FROM orders").then())
+            .block();
+    }
+}
