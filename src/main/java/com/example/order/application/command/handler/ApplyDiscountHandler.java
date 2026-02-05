@@ -4,6 +4,7 @@ import com.example.order.application.in.command.ApplyDiscountCommand;
 import com.example.order.application.out.command.OrderCommandPort;
 import com.example.order.application.query.port.OrderQueryPort;
 import com.example.order.domain.order.entity.Order;
+import com.example.order.domain.shared.BusinessException;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -11,14 +12,15 @@ import reactor.core.publisher.Mono;
 public class ApplyDiscountHandler {
     private final OrderCommandPort commandPort;
     private final OrderQueryPort queryPort;
-    
+
     public ApplyDiscountHandler(OrderCommandPort commandPort, OrderQueryPort queryPort) {
         this.commandPort = commandPort;
         this.queryPort = queryPort;
     }
-    
+
     public Mono<Order> handle(ApplyDiscountCommand command) {
         return queryPort.findById(command.orderId())
+            .switchIfEmpty(Mono.error(new BusinessException("ORDER_006", "Order not found: " + command.orderId())))
             .flatMap(order -> {
                 order.applyDiscount(command.discountPercentage());
                 return commandPort.save(order);

@@ -4,6 +4,7 @@ import com.example.order.application.in.command.CancelOrderCommand;
 import com.example.order.application.out.command.OrderCommandPort;
 import com.example.order.application.query.port.OrderQueryPort;
 import com.example.order.domain.order.entity.Order;
+import com.example.order.domain.shared.BusinessException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.reactive.TransactionalOperator;
 import reactor.core.publisher.Mono;
@@ -23,6 +24,7 @@ public class CancelOrderHandler {
 
     public Mono<Order> handle(CancelOrderCommand command) {
         return queryPort.findById(command.orderId())
+            .switchIfEmpty(Mono.error(new BusinessException("ORDER_006", "Order not found: " + command.orderId())))
             .flatMap(order -> {
                 order.cancel(command.reason());
                 return commandPort.save(order);

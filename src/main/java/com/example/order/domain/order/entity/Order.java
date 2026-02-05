@@ -4,6 +4,7 @@ import com.example.order.domain.event.DomainEvent;
 import com.example.order.domain.order.event.OrderCancelledEvent;
 import com.example.order.domain.order.event.OrderConfirmedEvent;
 import com.example.order.domain.order.event.OrderCreatedEvent;
+import com.example.order.domain.order.event.OrderPaidEvent;
 import com.example.order.domain.order.valueobject.Email;
 import com.example.order.domain.order.valueobject.Money;
 import com.example.order.domain.order.valueobject.OrderStatus;
@@ -108,6 +109,7 @@ public class Order {
         }
         this.status = OrderStatus.PAID;
         this.updatedAt = Instant.now();
+        this.registerEvent(new OrderPaidEvent(this.id, this.updatedAt));
     }
     
     public void ship() {
