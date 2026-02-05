@@ -20,25 +20,25 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">142</div>
+<div class="counter">125</div>
 <p>tests</p>
 </div>
 </td>
 <td>
 <div class="infoBox" id="failures">
-<div class="counter">0</div>
+<div class="counter">25</div>
 <p>failures</p>
 </div>
 </td>
 <td>
 <div class="infoBox" id="ignored">
-<div class="counter">2</div>
+<div class="counter">0</div>
 <p>ignored</p>
 </div>
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">4.167s</div>
+<div class="counter">0.300s</div>
 <p>duration</p>
 </div>
 </td>
@@ -47,8 +47,8 @@
 </div>
 </td>
 <td>
-<div class="infoBox skipped" id="successRate">
-<div class="percent">100%</div>
+<div class="infoBox failures" id="successRate">
+<div class="percent">80%</div>
 <p>successful</p>
 </div>
 </td>
@@ -58,7 +58,7 @@
 <div id="tabs">
 <ul class="tabLinks">
 <li>
-<a href="#tab0">Ignored tests</a>
+<a href="#tab0">Failed tests</a>
 </li>
 <li>
 <a href="#tab1">Packages</a>
@@ -68,15 +68,107 @@
 </li>
 </ul>
 <div id="tab0" class="tab">
-<h2>Ignored tests</h2>
+<h2>Failed tests</h2>
 <ul class="linkList">
 <li>
-<a href="classes/com.example.order.adapter.out.persistence.query.OrderR2dbcQueryRepositoryTest.html">OrderR2dbcQueryRepositoryTest</a>.
-<a href="classes/com.example.order.adapter.out.persistence.query.OrderR2dbcQueryRepositoryTest.html#shouldFindCustomerStats()">shouldFindCustomerStats()</a>
+<a href="classes/com.example.order.OrderApplicationTests.html">OrderApplicationTests</a>.
+<a href="classes/com.example.order.OrderApplicationTests.html#contextLoads()">contextLoads()</a>
 </li>
 <li>
-<a href="classes/com.example.order.adapter.out.persistence.query.OrderR2dbcQueryRepositoryTest.html">OrderR2dbcQueryRepositoryTest</a>.
-<a href="classes/com.example.order.adapter.out.persistence.query.OrderR2dbcQueryRepositoryTest.html#shouldFindOrderSummary()">shouldFindOrderSummary()</a>
+<a href="classes/com.example.order.OrderApplicationTests.html">OrderApplicationTests</a>.
+<a href="classes/com.example.order.OrderApplicationTests.html#shouldCreateOrder()">shouldCreateOrder()</a>
+</li>
+<li>
+<a href="classes/com.example.order.OrderApplicationTests.html">OrderApplicationTests</a>.
+<a href="classes/com.example.order.OrderApplicationTests.html#shouldHandleConcurrentRequestsWithoutBlocking()">shouldHandleConcurrentRequestsWithoutBlocking()</a>
+</li>
+<li>
+<a href="classes/com.example.order.OrderApplicationTests.html">OrderApplicationTests</a>.
+<a href="classes/com.example.order.OrderApplicationTests.html#shouldNotBlockOnHighLoad()">shouldNotBlockOnHighLoad()</a>
+</li>
+<li>
+<a href="classes/com.example.order.adapter.in.web.handler.OrderCommandWebHandlerTest.html">OrderCommandWebHandlerTest</a>.
+<a href="classes/com.example.order.adapter.in.web.handler.OrderCommandWebHandlerTest.html#shouldApplyDiscountSuccessfully()">shouldApplyDiscountSuccessfully()</a>
+</li>
+<li>
+<a href="classes/com.example.order.adapter.in.web.handler.OrderCommandWebHandlerTest.html">OrderCommandWebHandlerTest</a>.
+<a href="classes/com.example.order.adapter.in.web.handler.OrderCommandWebHandlerTest.html#shouldCancelOrderSuccessfully()">shouldCancelOrderSuccessfully()</a>
+</li>
+<li>
+<a href="classes/com.example.order.adapter.in.web.handler.OrderCommandWebHandlerTest.html">OrderCommandWebHandlerTest</a>.
+<a href="classes/com.example.order.adapter.in.web.handler.OrderCommandWebHandlerTest.html#shouldConfirmOrderSuccessfully()">shouldConfirmOrderSuccessfully()</a>
+</li>
+<li>
+<a href="classes/com.example.order.adapter.in.web.handler.OrderCommandWebHandlerTest.html">OrderCommandWebHandlerTest</a>.
+<a href="classes/com.example.order.adapter.in.web.handler.OrderCommandWebHandlerTest.html#shouldCreateOrder()">shouldCreateOrder()</a>
+</li>
+<li>
+<a href="classes/com.example.order.adapter.in.web.handler.OrderCommandWebHandlerTest.html">OrderCommandWebHandlerTest</a>.
+<a href="classes/com.example.order.adapter.in.web.handler.OrderCommandWebHandlerTest.html#shouldPayOrderSuccessfully()">shouldPayOrderSuccessfully()</a>
+</li>
+<li>
+<a href="classes/com.example.order.adapter.in.web.handler.OrderCommandWebHandlerTest.html">OrderCommandWebHandlerTest</a>.
+<a href="classes/com.example.order.adapter.in.web.handler.OrderCommandWebHandlerTest.html#shouldReturn400ForInvalidRequest()">shouldReturn400ForInvalidRequest()</a>
+</li>
+<li>
+<a href="classes/com.example.order.adapter.in.web.handler.OrderCommandWebHandlerTest.html">OrderCommandWebHandlerTest</a>.
+<a href="classes/com.example.order.adapter.in.web.handler.OrderCommandWebHandlerTest.html#shouldReturn400ForMalformedJson()">shouldReturn400ForMalformedJson()</a>
+</li>
+<li>
+<a href="classes/com.example.order.adapter.in.web.handler.OrderCommandWebHandlerTest.html">OrderCommandWebHandlerTest</a>.
+<a href="classes/com.example.order.adapter.in.web.handler.OrderCommandWebHandlerTest.html#shouldReturn404WhenOrderNotFoundForConfirm()">shouldReturn404WhenOrderNotFoundForConfirm()</a>
+</li>
+<li>
+<a href="classes/com.example.order.adapter.in.web.handler.OrderQueryWebHandlerTest.html">OrderQueryWebHandlerTest</a>.
+<a href="classes/com.example.order.adapter.in.web.handler.OrderQueryWebHandlerTest.html#shouldGetCustomerStats()">shouldGetCustomerStats()</a>
+</li>
+<li>
+<a href="classes/com.example.order.adapter.in.web.handler.OrderQueryWebHandlerTest.html">OrderQueryWebHandlerTest</a>.
+<a href="classes/com.example.order.adapter.in.web.handler.OrderQueryWebHandlerTest.html#shouldGetOrderById()">shouldGetOrderById()</a>
+</li>
+<li>
+<a href="classes/com.example.order.adapter.in.web.handler.OrderQueryWebHandlerTest.html">OrderQueryWebHandlerTest</a>.
+<a href="classes/com.example.order.adapter.in.web.handler.OrderQueryWebHandlerTest.html#shouldGetOrderSummary()">shouldGetOrderSummary()</a>
+</li>
+<li>
+<a href="classes/com.example.order.adapter.in.web.handler.OrderQueryWebHandlerTest.html">OrderQueryWebHandlerTest</a>.
+<a href="classes/com.example.order.adapter.in.web.handler.OrderQueryWebHandlerTest.html#shouldGetOrdersByCustomer()">shouldGetOrdersByCustomer()</a>
+</li>
+<li>
+<a href="classes/com.example.order.adapter.in.web.handler.OrderQueryWebHandlerTest.html">OrderQueryWebHandlerTest</a>.
+<a href="classes/com.example.order.adapter.in.web.handler.OrderQueryWebHandlerTest.html#shouldGetOrdersByStatus()">shouldGetOrdersByStatus()</a>
+</li>
+<li>
+<a href="classes/com.example.order.adapter.in.web.handler.OrderQueryWebHandlerTest.html">OrderQueryWebHandlerTest</a>.
+<a href="classes/com.example.order.adapter.in.web.handler.OrderQueryWebHandlerTest.html#shouldListOrders()">shouldListOrders()</a>
+</li>
+<li>
+<a href="classes/com.example.order.adapter.in.web.handler.OrderQueryWebHandlerTest.html">OrderQueryWebHandlerTest</a>.
+<a href="classes/com.example.order.adapter.in.web.handler.OrderQueryWebHandlerTest.html#shouldReturn404ForNonExistentOrderSummary()">shouldReturn404ForNonExistentOrderSummary()</a>
+</li>
+<li>
+<a href="classes/com.example.order.adapter.in.web.handler.OrderQueryWebHandlerTest.html">OrderQueryWebHandlerTest</a>.
+<a href="classes/com.example.order.adapter.in.web.handler.OrderQueryWebHandlerTest.html#shouldReturn404WhenOrderNotFound()">shouldReturn404WhenOrderNotFound()</a>
+</li>
+<li>
+<a href="classes/com.example.order.performance.PerformanceTest.html">PerformanceTest</a>.
+<a href="classes/com.example.order.performance.PerformanceTest.html#shouldHandleBurstTraffic()">shouldHandleBurstTraffic()</a>
+</li>
+<li>
+<a href="classes/com.example.order.performance.PerformanceTest.html">PerformanceTest</a>.
+<a href="classes/com.example.order.performance.PerformanceTest.html#shouldHandleHighThroughputOrderCreation()">shouldHandleHighThroughputOrderCreation()</a>
+</li>
+<li>
+<a href="classes/com.example.order.performance.PerformanceTest.html">PerformanceTest</a>.
+<a href="classes/com.example.order.performance.PerformanceTest.html#shouldMaintainResponseTimeUnderLoad()">shouldMaintainResponseTimeUnderLoad()</a>
+</li>
+<li>
+<a href="classes/com.example.order.performance.PerformanceTest.html">PerformanceTest</a>.
+<a href="classes/com.example.order.performance.PerformanceTest.html#shouldNotExceedMemoryThreshold()">shouldNotExceedMemoryThreshold()</a>
+</li>
+<li>
+<a href="classes/com.example.order.performance.PerformanceTest.html">PerformanceTest</a>.
+<a href="classes/com.example.order.performance.PerformanceTest.html#shouldRecoverAfterStress()">shouldRecoverAfterStress()</a>
 </li>
 </ul>
 </div>
@@ -101,57 +193,37 @@
 <td>31</td>
 <td>0</td>
 <td>0</td>
-<td>0.070s</td>
+<td>0.016s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
-<td class="success">
+<td class="failures">
 <a href="packages/com.example.order.html">com.example.order</a>
 </td>
 <td>4</td>
+<td>4</td>
 <td>0</td>
-<td>0</td>
-<td>0.745s</td>
-<td class="success">100%</td>
+<td>0.006s</td>
+<td class="failures">0%</td>
 </tr>
 <tr>
-<td class="success">
+<td class="failures">
 <a href="packages/com.example.order.adapter.in.web.handler.html">com.example.order.adapter.in.web.handler</a>
 </td>
 <td>16</td>
+<td>16</td>
 <td>0</td>
-<td>0</td>
-<td>0.126s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="packages/com.example.order.adapter.out.persistence.html">com.example.order.adapter.out.persistence</a>
-</td>
-<td>8</td>
-<td>0</td>
-<td>0</td>
-<td>0.401s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="skipped">
-<a href="packages/com.example.order.adapter.out.persistence.query.html">com.example.order.adapter.out.persistence.query</a>
-</td>
-<td>8</td>
-<td>0</td>
-<td>2</td>
-<td>0.042s</td>
-<td class="skipped">100%</td>
+<td>0.004s</td>
+<td class="failures">0%</td>
 </tr>
 <tr>
 <td class="success">
 <a href="packages/com.example.order.application.service.html">com.example.order.application.service</a>
 </td>
-<td>26</td>
+<td>25</td>
 <td>0</td>
 <td>0</td>
-<td>0.104s</td>
+<td>0.157s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
@@ -161,7 +233,7 @@
 <td>6</td>
 <td>0</td>
 <td>0</td>
-<td>0.102s</td>
+<td>0.105s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
@@ -171,18 +243,18 @@
 <td>38</td>
 <td>0</td>
 <td>0</td>
-<td>0.005s</td>
+<td>0.010s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
-<td class="success">
+<td class="failures">
 <a href="packages/com.example.order.performance.html">com.example.order.performance</a>
 </td>
 <td>5</td>
+<td>5</td>
 <td>0</td>
-<td>0</td>
-<td>2.572s</td>
-<td class="success">100%</td>
+<td>0.002s</td>
+<td class="failures">0%</td>
 </tr>
 </tbody>
 </table>
@@ -208,7 +280,7 @@
 <td>16</td>
 <td>0</td>
 <td>0</td>
-<td>0.061s</td>
+<td>0.011s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
@@ -218,68 +290,38 @@
 <td>15</td>
 <td>0</td>
 <td>0</td>
-<td>0.009s</td>
+<td>0.005s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
-<td class="success">
+<td class="failures">
 <a href="classes/com.example.order.OrderApplicationTests.html">com.example.order.OrderApplicationTests</a>
 </td>
 <td>4</td>
+<td>4</td>
 <td>0</td>
-<td>0</td>
-<td>0.745s</td>
-<td class="success">100%</td>
+<td>0.006s</td>
+<td class="failures">0%</td>
 </tr>
 <tr>
-<td class="success">
+<td class="failures">
 <a href="classes/com.example.order.adapter.in.web.handler.OrderCommandWebHandlerTest.html">com.example.order.adapter.in.web.handler.OrderCommandWebHandlerTest</a>
 </td>
 <td>8</td>
+<td>8</td>
 <td>0</td>
-<td>0</td>
-<td>0.057s</td>
-<td class="success">100%</td>
+<td>0.002s</td>
+<td class="failures">0%</td>
 </tr>
 <tr>
-<td class="success">
+<td class="failures">
 <a href="classes/com.example.order.adapter.in.web.handler.OrderQueryWebHandlerTest.html">com.example.order.adapter.in.web.handler.OrderQueryWebHandlerTest</a>
 </td>
 <td>8</td>
-<td>0</td>
-<td>0</td>
-<td>0.069s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="classes/com.example.order.adapter.out.persistence.ConcurrencyTest.html">com.example.order.adapter.out.persistence.ConcurrencyTest</a>
-</td>
-<td>6</td>
-<td>0</td>
-<td>0</td>
-<td>0.386s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="classes/com.example.order.adapter.out.persistence.TransactionTest.html">com.example.order.adapter.out.persistence.TransactionTest</a>
-</td>
-<td>2</td>
-<td>0</td>
-<td>0</td>
-<td>0.015s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="skipped">
-<a href="classes/com.example.order.adapter.out.persistence.query.OrderR2dbcQueryRepositoryTest.html">com.example.order.adapter.out.persistence.query.OrderR2dbcQueryRepositoryTest</a>
-</td>
 <td>8</td>
 <td>0</td>
-<td>2</td>
-<td>0.042s</td>
-<td class="skipped">100%</td>
+<td>0.002s</td>
+<td class="failures">0%</td>
 </tr>
 <tr>
 <td class="success">
@@ -288,7 +330,7 @@
 <td>4</td>
 <td>0</td>
 <td>0</td>
-<td>0.041s</td>
+<td>0.131s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
@@ -298,7 +340,7 @@
 <td>5</td>
 <td>0</td>
 <td>0</td>
-<td>0.031s</td>
+<td>0.005s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
@@ -308,7 +350,7 @@
 <td>3</td>
 <td>0</td>
 <td>0</td>
-<td>0.024s</td>
+<td>0.003s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
@@ -318,14 +360,14 @@
 <td>10</td>
 <td>0</td>
 <td>0</td>
-<td>0.005s</td>
+<td>0.015s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
 <td class="success">
 <a href="classes/com.example.order.application.service.PayOrderHandlerTest.html">com.example.order.application.service.PayOrderHandlerTest</a>
 </td>
-<td>4</td>
+<td>3</td>
 <td>0</td>
 <td>0</td>
 <td>0.003s</td>
@@ -338,7 +380,7 @@
 <td>6</td>
 <td>0</td>
 <td>0</td>
-<td>0.102s</td>
+<td>0.105s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
@@ -358,7 +400,7 @@
 <td>5</td>
 <td>0</td>
 <td>0</td>
-<td>0.001s</td>
+<td>0.002s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
@@ -378,18 +420,18 @@
 <td>19</td>
 <td>0</td>
 <td>0</td>
-<td>0.001s</td>
+<td>0.005s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
-<td class="success">
+<td class="failures">
 <a href="classes/com.example.order.performance.PerformanceTest.html">com.example.order.performance.PerformanceTest</a>
 </td>
 <td>5</td>
+<td>5</td>
 <td>0</td>
-<td>0</td>
-<td>2.572s</td>
-<td class="success">100%</td>
+<td>0.002s</td>
+<td class="failures">0%</td>
 </tr>
 </tbody>
 </table>
@@ -402,7 +444,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.5</a> at 2026. 2. 6. 오전 12:02:27</p>
+<a href="http://www.gradle.org">Gradle 8.5</a> at 2026. 2. 6. 오전 12:52:16</p>
 </div>
 </div>
 </body>

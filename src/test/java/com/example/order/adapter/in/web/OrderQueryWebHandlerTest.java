@@ -8,7 +8,6 @@ import com.example.order.application.port.out.OrderQueryPort;
 import com.example.order.application.dto.CustomerOrderStatsResult;
 import com.example.order.application.dto.OrderListItemResult;
 import com.example.order.application.dto.OrderSummaryResult;
-import com.example.order.adapter.out.persistence.query.OrderR2dbcQueryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -27,8 +26,6 @@ import java.time.Instant;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -38,8 +35,8 @@ class OrderQueryWebHandlerTest {
     @Autowired
     private WebTestClient webTestClient;
 
-    @MockBean(name = "orderR2dbcQueryRepository")
-    private OrderR2dbcQueryRepository orderQueryRepository;
+    @MockBean
+    private OrderQueryPort orderQueryPort;
 
     @MockBean(name = "rabbitConnectionFactory")
     private ConnectionFactory connectionFactory;
@@ -70,7 +67,7 @@ class OrderQueryWebHandlerTest {
 
     @Test
     void shouldGetOrderById() {
-        when(orderQueryRepository.findById(testOrderId)).thenReturn(Mono.just(testOrder));
+        when(orderQueryPort.findById(testOrderId)).thenReturn(Mono.just(testOrder));
 
         webTestClient.get()
             .uri("/api/orders/" + testOrderId)
@@ -82,13 +79,13 @@ class OrderQueryWebHandlerTest {
                 assertThat(response.customerId()).isEqualTo("customer-001");
                 assertThat(response.customerEmail()).isEqualTo("test@example.com");
                 assertThat(response.status()).isEqualTo(OrderStatus.PENDING.name());
-                assertThat(response.totalAmount()).isEqualTo(BigDecimal.valueOf(200));
+                assertThat(response.totalAmount().compareTo(BigDecimal.valueOf(200))).isEqualTo(0);
             });
     }
 
     @Test
     void shouldReturn404WhenOrderNotFound() {
-        when(orderQueryRepository.findById("non-existent")).thenReturn(Mono.empty());
+        when(orderQueryPort.findById("non-existent")).thenReturn(Mono.empty());
 
         webTestClient.get()
             .uri("/api/orders/non-existent")
@@ -120,7 +117,7 @@ class OrderQueryWebHandlerTest {
             Instant.now()
         );
 
-        when(orderQueryRepository.findOrderList(0, 10))
+        when(orderQueryPort.findOrderList(0, 10))
             .thenReturn(Flux.just(item1, item2));
 
         webTestClient.get()
@@ -136,7 +133,7 @@ class OrderQueryWebHandlerTest {
 
     @Test
     void shouldGetOrdersByCustomer() {
-        when(orderQueryRepository.findByCustomerId("customer-001"))
+        when(orderQueryPort.findByCustomerId("customer-001"))
             .thenReturn(Flux.just(testOrder));
 
         webTestClient.get()
@@ -152,7 +149,7 @@ class OrderQueryWebHandlerTest {
 
     @Test
     void shouldGetOrdersByStatus() {
-        when(orderQueryRepository.findByStatus(OrderStatus.PENDING))
+        when(orderQueryPort.findByStatus(OrderStatus.PENDING))
             .thenReturn(Flux.just(testOrder));
 
         webTestClient.get()
@@ -194,7 +191,7 @@ class OrderQueryWebHandlerTest {
             testOrder.getUpdatedAt()
         );
 
-        when(orderQueryRepository.findOrderSummary(testOrderId))
+        when(orderQueryPort.findOrderSummary(testOrderId))
             .thenReturn(Mono.just(summary));
 
         webTestClient.get()
@@ -230,7 +227,7 @@ class OrderQueryWebHandlerTest {
             10
         );
 
-        when(orderQueryRepository.findCustomerStats("customer-001"))
+        when(orderQueryPort.findCustomerStats("customer-001"))
             .thenReturn(Mono.just(stats));
 
         webTestClient.get()
@@ -241,14 +238,14 @@ class OrderQueryWebHandlerTest {
             .value(response -> {
                 assertThat(response.customerId()).isEqualTo("customer-001");
                 assertThat(response.totalOrders()).isEqualTo(5);
-                assertThat(response.totalSpent()).isEqualTo(BigDecimal.valueOf(1000));
-                assertThat(response.averageOrderValue()).isEqualTo(BigDecimal.valueOf(200));
+                assertThat(response.totalSpent().compareTo(BigDecimal.valueOf(1000))).isEqualTo(0);
+                assertThat(response.averageOrderValue().compareTo(BigDecimal.valueOf(200))).isEqualTo(0);
             });
     }
 
     @Test
     void shouldReturn404ForNonExistentOrderSummary() {
-        when(orderQueryRepository.findOrderSummary("non-existent"))
+        when(orderQueryPort.findOrderSummary("non-existent"))
             .thenReturn(Mono.empty());
 
         webTestClient.get()

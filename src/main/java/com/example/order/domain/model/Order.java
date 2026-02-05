@@ -8,8 +8,11 @@ import com.example.order.domain.event.OrderPaidEvent;
 import com.example.common.domain.valueobject.Email;
 import com.example.common.domain.valueobject.Money;
 import com.example.order.domain.exception.BusinessException;
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.AccessLevel;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -18,30 +21,63 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
+@Table(name = "orders")
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
+    @Id
     @EqualsAndHashCode.Include
-    private final String id;
-    private final String customerId;
-    private final Email customerEmail;
-    private final List<OrderItem> items;
+    private String id;
+
+    @Column(name = "customer_id")
+    private String customerId;
+
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "value", column = @Column(name = "customer_email"))
+    })
+    private Email customerEmail;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> items = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "amount", column = @Column(name = "total_amount")),
+        @AttributeOverride(name = "currency", column = @Column(name = "currency"))
+    })
     private Money totalAmount;
+
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "amount", column = @Column(name = "discount_amount")),
+        @AttributeOverride(name = "currency", column = @Column(name = "discount_currency"))
+    })
     private Money discountAmount;
-    private final Instant createdAt;
+
+    @Column(name = "created_at")
+    private Instant createdAt;
+
+    @Column(name = "updated_at")
     private Instant updatedAt;
-    private final List<DomainEvent> domainEvents;
+
+    @Transient // Not persisted in DB
+    private final List<DomainEvent> domainEvents = new ArrayList<>();
     
     private Order(String id, String customerId, Email customerEmail, List<OrderItem> items) {
         this.id = id;
         this.customerId = customerId;
         this.customerEmail = customerEmail;
         this.items = new ArrayList<>(items);
+        this.items.forEach(item -> item.setOrder(this));
         this.status = OrderStatus.PENDING;
         this.createdAt = Instant.now();
         this.updatedAt = this.createdAt;
-        this.domainEvents = new ArrayList<>();
         calculateTotal();
     }
 
@@ -51,13 +87,13 @@ public class Order {
         this.id = id;
         this.customerId = customerId;
         this.customerEmail = customerEmail;
-        this.items = new ArrayList<>(items);
         this.status = status;
+        this.items = new ArrayList<>(items);
+        this.items.forEach(item -> item.setOrder(this));
         this.totalAmount = totalAmount;
         this.discountAmount = discountAmount;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.domainEvents = new ArrayList<>();
     }
     
     public static Order create(String customerId, Email customerEmail, List<OrderItem> items) {

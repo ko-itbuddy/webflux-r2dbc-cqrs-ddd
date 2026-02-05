@@ -3,27 +3,20 @@ package com.example.order.architecture;
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
 import com.tngtech.archunit.core.importer.ImportOption;
-import com.tngtech.archunit.lang.ArchRule;
-import com.tngtech.archunit.lang.syntax.ArchRuleDefinition;
 import com.tngtech.archunit.library.Architectures;
 import com.tngtech.archunit.library.dependencies.SlicesRuleDefinition;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
 /**
- * ArchUnit 테스트 - 헥사고날 아키텍처 규칙 검증
- *
+ * ArchUnit 테스트 - 헥사고날 아키텍처 규칙 검증 (Practical Hexagonal)
+ * 
  * 레이어 의존성 규칙:
- * - Domain은 어디에도 의존하지 않음 (순수 비즈니스 로직)
- * - Application은 Domain에만 의존
- * - Infrastructure는 Domain과 Application에 의존
- *
- * 패키지 의존성 규칙:
- * - Domain 패키지는 Spring Framework 의존 금지
- * - Application 패키지는 Infrastructure 직접 참조 금지
+ * - Domain: 핵심 비즈니스 로직. JPA 어노테이션 허용 (Practical approach).
+ * - Application: 비즈니스 유스케이스 및 조율.
+ * - Adapter (In/Out): 외부 시스템과의 연동.
  */
 class ArchitectureTest {
 
@@ -64,30 +57,28 @@ class ArchitectureTest {
                 .should()
                 .dependOnClassesThat()
                 .resideInAnyPackage("org.springframework..")
-                // Allow spring annotation for specific purposes if needed, 
-                // but generally it should be framework-free.
                 .check(importedClasses);
     }
 
     @Test
-    void domainShouldNotDependOnInfrastructure() {
+    void domainShouldNotDependOnAdapters() {
         noClasses()
                 .that()
                 .resideInAPackage("..domain..")
                 .should()
                 .dependOnClassesThat()
-                .resideInAPackage("..infrastructure..")
+                .resideInAPackage("..adapter..")
                 .check(importedClasses);
     }
 
     @Test
-    void applicationShouldNotDependOnInfrastructure() {
+    void applicationShouldNotDependOnAdapters() {
         noClasses()
                 .that()
                 .resideInAPackage("..application..")
                 .should()
                 .dependOnClassesThat()
-                .resideInAPackage("..infrastructure..")
+                .resideInAPackage("..adapter..")
                 .allowEmptyShould(true)
                 .check(importedClasses);
     }

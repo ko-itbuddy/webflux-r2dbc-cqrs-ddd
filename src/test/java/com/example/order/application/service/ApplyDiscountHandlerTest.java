@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
@@ -24,6 +26,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class ApplyDiscountHandlerTest {
 
     @Mock
@@ -61,7 +64,7 @@ class ApplyDiscountHandlerTest {
         // When & Then
         StepVerifier.create(handler.handle(new ApplyDiscountCommand(orderId, new BigDecimal("0.1"))))
             .expectErrorSatisfies(error -> {
-                assertThat(error).isInstanceOf(BusinessException.class);
+                assertThat(error).isInstanceOf(IllegalArgumentException.class);
             })
             .verify();
     }

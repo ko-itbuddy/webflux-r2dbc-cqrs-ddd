@@ -2,10 +2,8 @@ package com.example.common.domain.valueobject;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import jakarta.persistence.Embeddable;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -13,9 +11,11 @@ import java.util.Objects;
 @Getter
 @EqualsAndHashCode
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // JPA requires
+@Embeddable
 public final class Money {
-    private final BigDecimal amount;
-    private final String currency;
+    private BigDecimal amount;
+    private String currency;
 
     @JsonCreator
     public static Money of(@JsonProperty("amount") Object amount, @JsonProperty("currency") String currency) {

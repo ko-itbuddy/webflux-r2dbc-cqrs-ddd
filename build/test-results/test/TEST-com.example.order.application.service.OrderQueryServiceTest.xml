@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.example.order.application.service.OrderQueryServiceTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-02-05T15:02:24" hostname="MacBook-Pro-3.local" time="0.006">
+<testsuite name="com.example.order.application.service.OrderQueryServiceTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-02-05T15:52:15" hostname="MacBook-Pro-3.local" time="0.018">
   <properties/>
-  <testcase name="shouldCountOrders()" classname="com.example.order.application.service.OrderQueryServiceTest" time="0.0"/>
+  <testcase name="shouldCountOrders()" classname="com.example.order.application.service.OrderQueryServiceTest" time="0.003"/>
   <testcase name="shouldFindOrderById()" classname="com.example.order.application.service.OrderQueryServiceTest" time="0.001"/>
-  <testcase name="shouldFindOrderList()" classname="com.example.order.application.service.OrderQueryServiceTest" time="0.001"/>
-  <testcase name="shouldFindOrdersByStatus()" classname="com.example.order.application.service.OrderQueryServiceTest" time="0.0"/>
-  <testcase name="shouldFindCustomerStats()" classname="com.example.order.application.service.OrderQueryServiceTest" time="0.001"/>
+  <testcase name="shouldFindOrderList()" classname="com.example.order.application.service.OrderQueryServiceTest" time="0.006"/>
+  <testcase name="shouldFindOrdersByStatus()" classname="com.example.order.application.service.OrderQueryServiceTest" time="0.001"/>
+  <testcase name="shouldFindCustomerStats()" classname="com.example.order.application.service.OrderQueryServiceTest" time="0.0"/>
   <testcase name="shouldFindOrderSummary()" classname="com.example.order.application.service.OrderQueryServiceTest" time="0.0"/>
-  <testcase name="shouldReturnEmptyFluxWhenCustomerHasNoOrders()" classname="com.example.order.application.service.OrderQueryServiceTest" time="0.001"/>
-  <testcase name="shouldFindOrdersByCustomerId()" classname="com.example.order.application.service.OrderQueryServiceTest" time="0.0"/>
-  <testcase name="shouldFindAllOrdersWithPagination()" classname="com.example.order.application.service.OrderQueryServiceTest" time="0.0"/>
+  <testcase name="shouldReturnEmptyFluxWhenCustomerHasNoOrders()" classname="com.example.order.application.service.OrderQueryServiceTest" time="0.0"/>
+  <testcase name="shouldFindOrdersByCustomerId()" classname="com.example.order.application.service.OrderQueryServiceTest" time="0.002"/>
+  <testcase name="shouldFindAllOrdersWithPagination()" classname="com.example.order.application.service.OrderQueryServiceTest" time="0.001"/>
   <testcase name="shouldReturnEmptyWhenOrderNotFound()" classname="com.example.order.application.service.OrderQueryServiceTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

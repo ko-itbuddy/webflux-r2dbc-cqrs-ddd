@@ -1,25 +1,36 @@
 package com.example.user.domain.model;
 
 import com.example.common.domain.valueobject.Email;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.Instant;
 import java.util.UUID;
 
+@Entity
+@Table(name = "users")
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class User {
+    @Id
     @EqualsAndHashCode.Include
-    private final String id;
-    private final String name;
-    private final Email email;
-    private final String password; // Encrypted in a real app
-    private final Instant createdAt;
-    private final Instant updatedAt;
+    private String id;
+    
+    private String name;
+    
+    @Embedded
+    private Email email;
+    
+    private String password; // Encrypted in a real app
+    
+    @Column(name = "created_at")
+    private Instant createdAt;
+    
+    @Column(name = "updated_at")
+    private Instant updatedAt;
 
     public static User create(String name, Email email, String password) {
         String id = UUID.randomUUID().toString();

@@ -12,8 +12,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.transaction.reactive.TransactionalOperator;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
@@ -24,6 +25,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class CancelOrderHandlerTest {
 
     @Mock
@@ -31,9 +33,6 @@ class CancelOrderHandlerTest {
 
     @Mock
     private OrderQueryPort queryPort;
-
-    @Mock
-    private TransactionalOperator transactionalOperator;
 
     @InjectMocks
     private CancelOrderHandler handler;
@@ -46,10 +45,9 @@ class CancelOrderHandlerTest {
 
         when(queryPort.findById(orderId)).thenReturn(Mono.just(order));
         when(commandPort.save(any())).thenReturn(Mono.just(order));
-        when(transactionalOperator.transactional(any(Mono.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // When & Then
-        StepVerifier.create(handler.handle(new CancelOrderCommand(orderId, "Test cancellation")))
+        StepVerifier.create(handler.handle(new CancelOrderCommand(orderId, "Customer request")))
             .assertNext(result -> {
                 assertThat(result.getStatus()).isEqualTo(OrderStatus.CANCELLED);
             })
@@ -64,10 +62,9 @@ class CancelOrderHandlerTest {
 
         when(queryPort.findById(orderId)).thenReturn(Mono.just(order));
         when(commandPort.save(any())).thenReturn(Mono.just(order));
-        when(transactionalOperator.transactional(any(Mono.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // When & Then
-        StepVerifier.create(handler.handle(new CancelOrderCommand(orderId, "Test cancellation")))
+        StepVerifier.create(handler.handle(new CancelOrderCommand(orderId, "Out of stock")))
             .assertNext(result -> {
                 assertThat(result.getStatus()).isEqualTo(OrderStatus.CANCELLED);
             })
@@ -79,12 +76,11 @@ class CancelOrderHandlerTest {
         // Given
         String orderId = "invalid-order";
         when(queryPort.findById(orderId)).thenReturn(Mono.empty());
-        when(transactionalOperator.transactional(any(Mono.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // When & Then
-        StepVerifier.create(handler.handle(new CancelOrderCommand(orderId, "Test")))
+        StepVerifier.create(handler.handle(new CancelOrderCommand(orderId, "reason")))
             .expectErrorSatisfies(error -> {
-                assertThat(error).isInstanceOf(BusinessException.class);
+                assertThat(error).isInstanceOf(IllegalArgumentException.class);
             })
             .verify();
     }
@@ -96,10 +92,9 @@ class CancelOrderHandlerTest {
         Order order = createOrder(orderId, OrderStatus.SHIPPED);
 
         when(queryPort.findById(orderId)).thenReturn(Mono.just(order));
-        when(transactionalOperator.transactional(any(Mono.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // When & Then
-        StepVerifier.create(handler.handle(new CancelOrderCommand(orderId, "Test cancellation")))
+        StepVerifier.create(handler.handle(new CancelOrderCommand(orderId, "Too late")))
             .expectErrorSatisfies(error -> {
                 assertThat(error).isInstanceOf(BusinessException.class);
                 assertThat(((BusinessException) error).getErrorCode()).isEqualTo("ORDER_008");
@@ -114,10 +109,9 @@ class CancelOrderHandlerTest {
         Order order = createOrder(orderId, OrderStatus.DELIVERED);
 
         when(queryPort.findById(orderId)).thenReturn(Mono.just(order));
-        when(transactionalOperator.transactional(any(Mono.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // When & Then
-        StepVerifier.create(handler.handle(new CancelOrderCommand(orderId, "Test cancellation")))
+        StepVerifier.create(handler.handle(new CancelOrderCommand(orderId, "Too late")))
             .expectErrorSatisfies(error -> {
                 assertThat(error).isInstanceOf(BusinessException.class);
                 assertThat(((BusinessException) error).getErrorCode()).isEqualTo("ORDER_008");

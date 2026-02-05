@@ -4,8 +4,6 @@ import com.example.order.application.port.out.OrderQueryPort;
 import com.example.order.application.dto.CustomerOrderStatsResult;
 import com.example.order.application.dto.OrderListItemResult;
 import com.example.order.application.dto.OrderSummaryResult;
-import com.example.order.adapter.out.persistence.entity.OrderEntity;
-import com.example.order.adapter.out.persistence.mapper.OrderMapper;
 import com.example.order.domain.model.Order;
 import com.example.order.domain.model.OrderStatus;
 import io.smallrye.mutiny.converters.uni.UniReactorConverters;
@@ -21,57 +19,51 @@ import java.util.List;
 public class OrderR2dbcQueryRepository implements OrderQueryPort {
 
     private final Mutiny.SessionFactory sessionFactory;
-    private final OrderMapper orderMapper;
 
-    public OrderR2dbcQueryRepository(Mutiny.SessionFactory sessionFactory, OrderMapper orderMapper) {
+    public OrderR2dbcQueryRepository(Mutiny.SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
-        this.orderMapper = orderMapper;
     }
 
     @Override
     public Mono<Order> findById(String orderId) {
         return sessionFactory.withSession(session -> 
-                session.find(OrderEntity.class, orderId))
-                .map(entity -> entity == null ? null : orderMapper.toDomain(entity))
+                session.find(Order.class, orderId))
                 .convert().with(UniReactorConverters.toMono());
     }
 
     @Override
     public Flux<Order> findByCustomerId(String customerId) {
-        String hql = "from OrderEntity where customerId = :customerId";
+        String hql = "from Order where customerId = :customerId";
         return sessionFactory.withSession(session -> 
-                session.createQuery(hql, OrderEntity.class).setParameter("customerId", customerId).getResultList())
+                session.createQuery(hql, Order.class).setParameter("customerId", customerId).getResultList())
                 .onItem().transformToMulti(list -> io.smallrye.mutiny.Multi.createFrom().iterable(list))
-                .map(orderMapper::toDomain)
                 .convert().with(io.smallrye.mutiny.converters.multi.MultiReactorConverters.toFlux());
     }
 
     @Override
     public Flux<Order> findByStatus(OrderStatus status) {
-        String hql = "from OrderEntity where status = :status";
+        String hql = "from Order where status = :status";
         return sessionFactory.withSession(session -> 
-                session.createQuery(hql, OrderEntity.class).setParameter("status", status).getResultList())
+                session.createQuery(hql, Order.class).setParameter("status", status).getResultList())
                 .onItem().transformToMulti(list -> io.smallrye.mutiny.Multi.createFrom().iterable(list))
-                .map(orderMapper::toDomain)
                 .convert().with(io.smallrye.mutiny.converters.multi.MultiReactorConverters.toFlux());
     }
 
     @Override
     public Flux<Order> findAll(int page, int size) {
-        String hql = "from OrderEntity order by createdAt desc";
+        String hql = "from Order order by createdAt desc";
         return sessionFactory.withSession(session -> 
-                session.createQuery(hql, OrderEntity.class)
+                session.createQuery(hql, Order.class)
                        .setFirstResult(page * size)
                        .setMaxResults(size)
                        .getResultList())
                 .onItem().transformToMulti(list -> io.smallrye.mutiny.Multi.createFrom().iterable(list))
-                .map(orderMapper::toDomain)
                 .convert().with(io.smallrye.mutiny.converters.multi.MultiReactorConverters.toFlux());
     }
 
     @Override
     public Mono<Long> count() {
-        String hql = "select count(o) from OrderEntity o";
+        String hql = "select count(o) from Order o";
         return sessionFactory.withSession(session -> 
                 session.createQuery(hql, Long.class).getSingleResult())
                 .convert().with(UniReactorConverters.toMono());
@@ -79,10 +71,10 @@ public class OrderR2dbcQueryRepository implements OrderQueryPort {
 
     @Override
     public Mono<OrderSummaryResult> findOrderSummary(String orderId) {
-        String hql = "select o from OrderEntity o left join fetch o.items where o.id = :id";
+        String hql = "select o from Order o left join fetch o.items where o.id = :id";
         return sessionFactory.withSession(session -> 
-                session.createQuery(hql, OrderEntity.class).setParameter("id", orderId).getSingleResultOrNull())
-                .map(entity -> entity == null ? null : toSummaryResult(orderMapper.toDomain(entity)))
+                session.createQuery(hql, Order.class).setParameter("id", orderId).getSingleResultOrNull())
+                .map(entity -> entity == null ? null : toSummaryResult(entity))
                 .convert().with(UniReactorConverters.toMono());
     }
 
@@ -97,7 +89,7 @@ public class OrderR2dbcQueryRepository implements OrderQueryPort {
 
     @Override
     public Mono<CustomerOrderStatsResult> findCustomerStats(String customerId) {
-        String hql = "select count(o), sum(o.totalAmount) from OrderEntity o where o.customerId = :customerId";
+        String hql = "select count(o), sum(o.totalAmount.amount) from Order o where o.customerId = :customerId";
         return sessionFactory.withSession(session -> 
                 session.createQuery(hql, Object[].class).setParameter("customerId", customerId).getSingleResult())
                 .map(row -> {

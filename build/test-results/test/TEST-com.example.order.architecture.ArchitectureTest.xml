@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.example.order.architecture.ArchitectureTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-02-05T15:02:24" hostname="MacBook-Pro-3.local" time="0.102">
+<testsuite name="com.example.order.architecture.ArchitectureTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-02-05T15:52:16" hostname="MacBook-Pro-3.local" time="0.107">
   <properties/>
-  <testcase name="domainShouldNotDependOnSpringFramework()" classname="com.example.order.architecture.ArchitectureTest" time="0.03"/>
-  <testcase name="applicationShouldNotDependOnInfrastructure()" classname="com.example.order.architecture.ArchitectureTest" time="0.006"/>
-  <testcase name="layeredArchitectureShouldBeRespected()" classname="com.example.order.architecture.ArchitectureTest" time="0.035"/>
-  <testcase name="domainShouldNotHaveCycleDependencies()" classname="com.example.order.architecture.ArchitectureTest" time="0.024"/>
+  <testcase name="domainShouldNotDependOnSpringFramework()" classname="com.example.order.architecture.ArchitectureTest" time="0.04"/>
+  <testcase name="applicationShouldNotDependOnAdapters()" classname="com.example.order.architecture.ArchitectureTest" time="0.005"/>
+  <testcase name="layeredArchitectureShouldBeRespected()" classname="com.example.order.architecture.ArchitectureTest" time="0.025"/>
+  <testcase name="domainShouldNotHaveCycleDependencies()" classname="com.example.order.architecture.ArchitectureTest" time="0.027"/>
+  <testcase name="domainShouldNotDependOnAdapters()" classname="com.example.order.architecture.ArchitectureTest" time="0.002"/>
   <testcase name="applicationShouldNotHaveCycleDependencies()" classname="com.example.order.architecture.ArchitectureTest" time="0.006"/>
-  <testcase name="domainShouldNotDependOnInfrastructure()" classname="com.example.order.architecture.ArchitectureTest" time="0.001"/>
-  <system-out><![CDATA[2026-02-06T00:02:24.135+09:00  INFO 58699 --- [order-service] [    Test worker] com.tngtech.archunit.core.PluginLoader   : Detected Java version 21.0.2
+  <system-out><![CDATA[2026-02-06T00:52:15.287+09:00  INFO 61694 --- [order-service] [    Test worker] com.tngtech.archunit.core.PluginLoader   : Detected Java version 21.0.2
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

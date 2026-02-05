@@ -7,15 +7,17 @@
     <persistence-unit name="order-service">
         <provider>org.hibernate.reactive.provider.ReactivePersistenceProvider</provider>
         
-        <class>com.example.user.adapter.out.persistence.entity.UserEntity</class>
-        <class>com.example.order.adapter.out.persistence.entity.OrderEntity</class>
-        <class>com.example.order.adapter.out.persistence.entity.OrderItemEntity</class>
+        <class>com.example.user.domain.model.User</class>
+        <class>com.example.order.domain.model.Order</class>
+        <class>com.example.order.domain.model.OrderItem</class>
+        <class>com.example.order.adapter.out.persistence.outbox.OutboxEvent</class>
 
         <properties>
-            <!-- Hibernate Reactive requires specific connection properties -->
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/orders"/>
             <property name="hibernate.connection.user" value="user"/>
             <property name="hibernate.connection.password" value="password"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>

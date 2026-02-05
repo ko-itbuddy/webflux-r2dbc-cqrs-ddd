@@ -1,29 +1,29 @@
 package com.example.order.application.service;
 
 import com.example.order.application.dto.PayOrderCommand;
-import com.example.order.domain.port.OrderRepository;
 import com.example.order.application.port.out.OrderQueryPort;
 import com.example.order.domain.model.Order;
-import com.example.order.domain.exception.BusinessException;
-import org.springframework.stereotype.Component;
+import com.example.order.domain.port.OrderRepository;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-@Component
+@Service
 public class PayOrderHandler {
-    private final OrderRepository commandPort;
+
+    private final OrderRepository orderRepository;
     private final OrderQueryPort queryPort;
 
-    public PayOrderHandler(OrderRepository commandPort, OrderQueryPort queryPort) {
-        this.commandPort = commandPort;
+    public PayOrderHandler(OrderRepository orderRepository, OrderQueryPort queryPort) {
+        this.orderRepository = orderRepository;
         this.queryPort = queryPort;
     }
 
     public Mono<Order> handle(PayOrderCommand command) {
         return queryPort.findById(command.orderId())
-            .switchIfEmpty(Mono.error(new BusinessException("ORDER_006", "Order not found: " + command.orderId())))
-            .flatMap(order -> {
-                order.pay();
-                return commandPort.save(order);
-            });
+                .switchIfEmpty(Mono.error(new IllegalArgumentException("Order not found: " + command.orderId())))
+                .flatMap(order -> {
+                    order.pay();
+                    return orderRepository.save(order);
+                });
     }
 }
