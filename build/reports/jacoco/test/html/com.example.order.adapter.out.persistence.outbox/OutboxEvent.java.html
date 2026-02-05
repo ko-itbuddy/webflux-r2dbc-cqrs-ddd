@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OutboxEvent.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">webflux-reactive-hibernate</a> &gt; <a href="index.source.html" class="el_package">com.example.order.adapter.out.persistence.outbox</a> &gt; <span class="el_source">OutboxEvent.java</span></div><h1>OutboxEvent.java</h1><pre class="source lang-java linenums">package com.example.order.adapter.out.persistence.outbox;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
+
+import java.time.Instant;
+
+@Table(&quot;outbox&quot;)
+public class OutboxEvent {
+
+    @Id
+    private Long id;
+
+    @Column(&quot;aggregate_type&quot;)
+    private String aggregateType;
+
+    @Column(&quot;aggregate_id&quot;)
+    private String aggregateId;
+
+    @Column(&quot;event_type&quot;)
+    private String eventType;
+
+    @Column(&quot;payload&quot;)
+    private String payload;
+
+    @Column(&quot;created_at&quot;)
+    private Instant createdAt;
+
+    @Column(&quot;processed&quot;)
+    private boolean processed;
+
+<span class="fc" id="L33">    public OutboxEvent() {</span>
+<span class="fc" id="L34">    }</span>
+
+<span class="fc" id="L36">    public OutboxEvent(String aggregateType, String aggregateId, String eventType, String payload) {</span>
+<span class="fc" id="L37">        this.aggregateType = aggregateType;</span>
+<span class="fc" id="L38">        this.aggregateId = aggregateId;</span>
+<span class="fc" id="L39">        this.eventType = eventType;</span>
+<span class="fc" id="L40">        this.payload = payload;</span>
+<span class="fc" id="L41">        this.createdAt = Instant.now();</span>
+<span class="fc" id="L42">        this.processed = false;</span>
+<span class="fc" id="L43">    }</span>
+    public Long getId() {
+<span class="fc" id="L45">        return id;</span>
+    }
+
+    public void setId(Long id) {
+<span class="nc" id="L49">        this.id = id;</span>
+<span class="nc" id="L50">    }</span>
+
+    public String getAggregateType() {
+<span class="nc" id="L53">        return aggregateType;</span>
+    }
+
+    public void setAggregateType(String aggregateType) {
+<span class="nc" id="L57">        this.aggregateType = aggregateType;</span>
+<span class="nc" id="L58">    }</span>
+
+    public String getAggregateId() {
+<span class="nc" id="L61">        return aggregateId;</span>
+    }
+
+    public void setAggregateId(String aggregateId) {
+<span class="nc" id="L65">        this.aggregateId = aggregateId;</span>
+<span class="nc" id="L66">    }</span>
+
+    public String getEventType() {
+<span class="fc" id="L69">        return eventType;</span>
+    }
+
+    public void setEventType(String eventType) {
+<span class="nc" id="L73">        this.eventType = eventType;</span>
+<span class="nc" id="L74">    }</span>
+
+    public String getPayload() {
+<span class="fc" id="L77">        return payload;</span>
+    }
+
+    public void setPayload(String payload) {
+<span class="nc" id="L81">        this.payload = payload;</span>
+<span class="nc" id="L82">    }</span>
+
+    public Instant getCreatedAt() {
+<span class="nc" id="L85">        return createdAt;</span>
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+<span class="nc" id="L89">        this.createdAt = createdAt;</span>
+<span class="nc" id="L90">    }</span>
+
+    public boolean isProcessed() {
+<span class="nc" id="L93">        return processed;</span>
+    }
+
+    public void setProcessed(boolean processed) {
+<span class="nc" id="L97">        this.processed = processed;</span>
+<span class="nc" id="L98">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

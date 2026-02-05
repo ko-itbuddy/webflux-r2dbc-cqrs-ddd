@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserR2dbcRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">webflux-reactive-hibernate</a> &gt; <a href="index.source.html" class="el_package">com.example.user.infrastructure.persistence.adapter</a> &gt; <span class="el_source">UserR2dbcRepository.java</span></div><h1>UserR2dbcRepository.java</h1><pre class="source lang-java linenums">package com.example.user.infrastructure.persistence.adapter;
+
+import com.example.user.domain.port.UserRepository;
+import com.example.user.domain.model.User;
+import com.example.user.infrastructure.persistence.entity.UserEntity;
+import com.example.user.infrastructure.persistence.mapper.UserMapper;
+import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
+import org.springframework.data.relational.core.query.Criteria;
+import org.springframework.data.relational.core.query.Query;
+import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Mono;
+
+@Repository
+public class UserR2dbcRepository implements UserRepository {
+    private final R2dbcEntityTemplate r2dbcTemplate;
+    private final UserMapper userMapper;
+
+<span class="fc" id="L18">    public UserR2dbcRepository(R2dbcEntityTemplate r2dbcTemplate, UserMapper userMapper) {</span>
+<span class="fc" id="L19">        this.r2dbcTemplate = r2dbcTemplate;</span>
+<span class="fc" id="L20">        this.userMapper = userMapper;</span>
+<span class="fc" id="L21">    }</span>
+
+    @Override
+    public Mono&lt;User&gt; save(User user) {
+<span class="nc" id="L25">        UserEntity entity = userMapper.toEntity(user);</span>
+<span class="nc" id="L26">        return r2dbcTemplate.selectOne(</span>
+<span class="nc" id="L27">                Query.query(Criteria.where(&quot;id&quot;).is(user.getId())),</span>
+                UserEntity.class)
+<span class="nc" id="L29">            .flatMap(existing -&gt; r2dbcTemplate.update(entity))</span>
+<span class="nc" id="L30">            .switchIfEmpty(r2dbcTemplate.insert(entity))</span>
+<span class="nc" id="L31">            .map(userMapper::toDomain);</span>
+    }
+
+    @Override
+    public Mono&lt;User&gt; findById(String id) {
+<span class="nc" id="L36">        return r2dbcTemplate.selectOne(</span>
+<span class="nc" id="L37">                Query.query(Criteria.where(&quot;id&quot;).is(id)),</span>
+                UserEntity.class)
+<span class="nc" id="L39">            .map(userMapper::toDomain);</span>
+    }
+
+    @Override
+    public Mono&lt;User&gt; findByEmail(String email) {
+<span class="nc" id="L44">        return r2dbcTemplate.selectOne(</span>
+<span class="nc" id="L45">                Query.query(Criteria.where(&quot;email&quot;).is(email)),</span>
+                UserEntity.class)
+<span class="nc" id="L47">            .map(userMapper::toDomain);</span>
+    }
+
+    @Override
+    public Mono&lt;Boolean&gt; existsByEmail(String email) {
+<span class="nc" id="L52">        return r2dbcTemplate.exists(</span>
+<span class="nc" id="L53">                Query.query(Criteria.where(&quot;email&quot;).is(email)),</span>
+                UserEntity.class);
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

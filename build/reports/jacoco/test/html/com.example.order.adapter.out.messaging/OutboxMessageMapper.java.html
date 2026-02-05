@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OutboxMessageMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">webflux-reactive-hibernate</a> &gt; <a href="index.source.html" class="el_package">com.example.order.adapter.out.messaging</a> &gt; <span class="el_source">OutboxMessageMapper.java</span></div><h1>OutboxMessageMapper.java</h1><pre class="source lang-java linenums">package com.example.order.adapter.out.messaging;
+
+import org.springframework.stereotype.Component;
+
+@Component
+<span class="fc" id="L6">public class OutboxMessageMapper {</span>
+
+    public String toRoutingKey(String eventType) {
+<span class="pc bpc" id="L9" title="3 of 4 branches missed.">        return switch (eventType) {</span>
+<span class="fc" id="L10">            case &quot;OrderCreatedEvent&quot; -&gt; &quot;order.created&quot;;</span>
+<span class="nc" id="L11">            case &quot;OrderConfirmedEvent&quot; -&gt; &quot;order.confirmed&quot;;</span>
+<span class="nc" id="L12">            case &quot;OrderCancelledEvent&quot; -&gt; &quot;order.cancelled&quot;;</span>
+<span class="nc" id="L13">            default -&gt; &quot;order.events&quot;;</span>
+        };
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

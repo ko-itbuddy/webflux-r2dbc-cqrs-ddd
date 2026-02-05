@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.order.application.service.CancelOrderHandlerTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-02-05T15:02:24" hostname="MacBook-Pro-3.local" time="0.031">
+  <properties/>
+  <testcase name="shouldCancelConfirmedOrder()" classname="com.example.order.application.service.CancelOrderHandlerTest" time="0.027"/>
+  <testcase name="shouldCancelPendingOrder()" classname="com.example.order.application.service.CancelOrderHandlerTest" time="0.001"/>
+  <testcase name="shouldThrowExceptionWhenCancellingShippedOrder()" classname="com.example.order.application.service.CancelOrderHandlerTest" time="0.001"/>
+  <testcase name="shouldThrowExceptionWhenCancellingDeliveredOrder()" classname="com.example.order.application.service.CancelOrderHandlerTest" time="0.001"/>
+  <testcase name="shouldThrowExceptionWhenOrderNotFound()" classname="com.example.order.application.service.CancelOrderHandlerTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

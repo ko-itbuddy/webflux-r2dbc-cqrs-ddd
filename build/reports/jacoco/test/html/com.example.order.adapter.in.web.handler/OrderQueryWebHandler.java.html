@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderQueryWebHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">webflux-reactive-hibernate</a> &gt; <a href="index.source.html" class="el_package">com.example.order.adapter.in.web.handler</a> &gt; <span class="el_source">OrderQueryWebHandler.java</span></div><h1>OrderQueryWebHandler.java</h1><pre class="source lang-java linenums">package com.example.order.adapter.in.web.handler;
+
+import com.example.order.application.port.out.OrderQueryPort;
+import com.example.order.application.dto.CustomerOrderStatsResult;
+import com.example.order.application.dto.OrderListItemResult;
+import com.example.order.application.dto.OrderSummaryResult;
+import com.example.order.domain.model.Order;
+import com.example.order.domain.model.OrderStatus;
+import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.server.ServerRequest;
+import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Mono;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+/**
+ * Web handler for order query operations.
+ * Handles GET requests for retrieving order information.
+ */
+@Component
+public class OrderQueryWebHandler {
+    
+    private final OrderQueryPort orderQueryPort;
+    
+<span class="fc" id="L26">    public OrderQueryWebHandler(OrderQueryPort orderQueryPort) {</span>
+<span class="fc" id="L27">        this.orderQueryPort = orderQueryPort;</span>
+<span class="fc" id="L28">    }</span>
+    
+    /**
+     * GET /api/orders/{orderId} - Get a specific order.
+     */
+    public Mono&lt;ServerResponse&gt; getOrder(ServerRequest request) {
+<span class="fc" id="L34">        String orderId = request.pathVariable(&quot;orderId&quot;);</span>
+        
+<span class="fc" id="L36">        return orderQueryPort.findById(orderId)</span>
+<span class="fc" id="L37">            .flatMap(order -&gt; ServerResponse.ok().bodyValue(mapToOrderResponse(order)))</span>
+<span class="fc" id="L38">            .switchIfEmpty(ServerResponse.notFound().build());</span>
+    }
+    
+    /**
+     * GET /api/orders/{orderId}/summary - Get detailed order summary.
+     */
+    public Mono&lt;ServerResponse&gt; getOrderSummary(ServerRequest request) {
+<span class="fc" id="L45">        String orderId = request.pathVariable(&quot;orderId&quot;);</span>
+        
+<span class="fc" id="L47">        return orderQueryPort.findOrderSummary(orderId)</span>
+<span class="fc" id="L48">            .flatMap(summary -&gt; ServerResponse.ok().bodyValue(summary))</span>
+<span class="fc" id="L49">            .switchIfEmpty(ServerResponse.notFound().build());</span>
+    }
+    
+    /**
+     * GET /api/orders - List all orders (paginated).
+     */
+    public Mono&lt;ServerResponse&gt; listOrders(ServerRequest request) {
+<span class="fc" id="L56">        int page = request.queryParam(&quot;page&quot;)</span>
+<span class="fc" id="L57">            .map(Integer::parseInt)</span>
+<span class="fc" id="L58">            .orElse(0);</span>
+<span class="fc" id="L59">        int size = request.queryParam(&quot;size&quot;)</span>
+<span class="fc" id="L60">            .map(Integer::parseInt)</span>
+<span class="fc" id="L61">            .orElse(10);</span>
+        
+<span class="fc" id="L63">        return orderQueryPort.findOrderList(page, size)</span>
+<span class="fc" id="L64">            .collectList()</span>
+<span class="fc" id="L65">            .flatMap(orders -&gt; ServerResponse.ok().bodyValue(new OrderListResponse(orders, orders.size())));</span>
+    }
+    
+    /**
+     * GET /api/customers/{customerId}/orders - Get orders by customer.
+     */
+    public Mono&lt;ServerResponse&gt; getCustomerOrders(ServerRequest request) {
+<span class="fc" id="L72">        String customerId = request.pathVariable(&quot;customerId&quot;);</span>
+        
+<span class="fc" id="L74">        return orderQueryPort.findByCustomerId(customerId)</span>
+<span class="fc" id="L75">            .collectList()</span>
+<span class="fc" id="L76">            .flatMap(orders -&gt; ServerResponse.ok().bodyValue(</span>
+<span class="fc" id="L77">                orders.stream().map(this::mapToOrderResponse).toList()</span>
+            ));
+    }
+    
+    /**
+     * GET /api/customers/{customerId}/stats - Get customer order statistics.
+     */
+    public Mono&lt;ServerResponse&gt; getCustomerStats(ServerRequest request) {
+<span class="fc" id="L85">        String customerId = request.pathVariable(&quot;customerId&quot;);</span>
+        
+<span class="fc" id="L87">        return orderQueryPort.findCustomerStats(customerId)</span>
+<span class="fc" id="L88">            .flatMap(stats -&gt; ServerResponse.ok().bodyValue(stats));</span>
+    }
+    
+    /**
+     * GET /api/orders/by-status/{status} - Get orders by status.
+     */
+    public Mono&lt;ServerResponse&gt; getOrdersByStatus(ServerRequest request) {
+<span class="fc" id="L95">        String statusStr = request.pathVariable(&quot;status&quot;);</span>
+<span class="fc" id="L96">        OrderStatus status = OrderStatus.valueOf(statusStr.toUpperCase());</span>
+        
+<span class="fc" id="L98">        return orderQueryPort.findByStatus(status)</span>
+<span class="fc" id="L99">            .collectList()</span>
+<span class="fc" id="L100">            .flatMap(orders -&gt; ServerResponse.ok().bodyValue(</span>
+<span class="fc" id="L101">                orders.stream().map(this::mapToOrderResponse).toList()</span>
+            ));
+    }
+    
+    // Helper methods
+    private OrderResponse mapToOrderResponse(Order order) {
+<span class="fc" id="L107">        return new OrderResponse(</span>
+<span class="fc" id="L108">            order.getId(),</span>
+<span class="fc" id="L109">            order.getCustomerId(),</span>
+<span class="fc" id="L110">            order.getCustomerEmail().getValue(),</span>
+<span class="fc" id="L111">            order.getStatus().name(),</span>
+<span class="fc" id="L112">            order.getTotalAmount().getAmount(),</span>
+<span class="fc" id="L113">            order.getTotalAmount().getCurrency(),</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">            order.getDiscountAmount() != null ? order.getDiscountAmount().getAmount() : null,</span>
+<span class="fc" id="L115">            order.getFinalAmount().getAmount(),</span>
+<span class="fc" id="L116">            order.getCreatedAt(),</span>
+<span class="fc" id="L117">            order.getUpdatedAt()</span>
+        );
+    }
+    
+    // DTO Records
+<span class="fc" id="L122">    public record OrderResponse(</span>
+        String orderId,
+        String customerId,
+        String customerEmail,
+        String status,
+        BigDecimal totalAmount,
+        String currency,
+        BigDecimal discountAmount,
+        BigDecimal finalAmount,
+        java.time.Instant createdAt,
+        java.time.Instant updatedAt
+    ) {
+    }
+    
+<span class="fc" id="L136">    public record OrderListResponse(</span>
+        List&lt;OrderListItemResult&gt; orders,
+        int count
+    ) {
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

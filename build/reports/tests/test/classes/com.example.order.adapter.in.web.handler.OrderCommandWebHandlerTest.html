@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - OrderCommandWebHandlerTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>OrderCommandWebHandlerTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.example.order.adapter.in.web.handler.html">com.example.order.adapter.in.web.handler</a> &gt; OrderCommandWebHandlerTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">8</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.057s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">shouldApplyDiscountSuccessfully()</td>
+<td class="success">0.014s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">shouldCancelOrderSuccessfully()</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">shouldConfirmOrderSuccessfully()</td>
+<td class="success">0.004s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">shouldCreateOrder()</td>
+<td class="success">0.006s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">shouldPayOrderSuccessfully()</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">shouldReturn400ForInvalidRequest()</td>
+<td class="success">0.004s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">shouldReturn400ForMalformedJson()</td>
+<td class="success">0.006s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">shouldReturn404WhenOrderNotFoundForConfirm()</td>
+<td class="success">0.013s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2026-02-06T00:02:22.327+09:00  INFO 58699 --- [order-service] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.order.adapter.in.web.handler.OrderCommandWebHandlerTest]: OrderCommandWebHandlerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-02-06T00:02:22.336+09:00  INFO 58699 --- [order-service] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.order.OrderApplication for test class com.example.order.adapter.in.web.handler.OrderCommandWebHandlerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.0)
+
+2026-02-06T00:02:22.352+09:00  INFO 58699 --- [order-service] [    Test worker] c.e.o.a.i.w.h.OrderCommandWebHandlerTest : Starting OrderCommandWebHandlerTest using Java 21.0.2 with PID 58699 (started by itbuddy in /Users/itbuddy/github/webflux-r2dbc-cqrs-ddd)
+2026-02-06T00:02:22.352+09:00  INFO 58699 --- [order-service] [    Test worker] c.e.o.a.i.w.h.OrderCommandWebHandlerTest : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2026-02-06T00:02:22.438+09:00  INFO 58699 --- [order-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2026-02-06T00:02:22.439+09:00  INFO 58699 --- [order-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 R2DBC repository interfaces.
+2026-02-06T00:02:22.469+09:00  INFO 58699 --- [order-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2026-02-06T00:02:22.473+09:00  INFO 58699 --- [order-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 0 R2DBC repository interfaces.
+2026-02-06T00:02:22.672+09:00  INFO 58699 --- [order-service] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2026-02-06T00:02:22.702+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Request:  CALL H2VERSION()
+2026-02-06T00:02:22.702+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@7f7127a0 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:22.703+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:22.703+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@3fceb353 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:22.703+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Request:  CALL H2VERSION()
+2026-02-06T00:02:22.703+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@791a9ad1 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:22.704+09:00 DEBUG 58699 --- [order-service] [       Thread-6] io.r2dbc.h2.client.SessionClient         : Request:  DROP TABLE IF EXISTS order_items
+2026-02-06T00:02:22.704+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Request:  CALL H2VERSION()
+2026-02-06T00:02:22.704+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@f20fe75 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:22.705+09:00 DEBUG 58699 --- [order-service] [       Thread-6] io.r2dbc.h2.client.SessionClient         : Request:  DROP TABLE IF EXISTS outbox
+2026-02-06T00:02:22.705+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Request:  CALL H2VERSION()
+2026-02-06T00:02:22.705+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@1e361229 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:22.706+09:00 DEBUG 58699 --- [order-service] [       Thread-6] io.r2dbc.h2.client.SessionClient         : Request:  DROP TABLE IF EXISTS orders
+2026-02-06T00:02:22.706+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Request:  CALL H2VERSION()
+2026-02-06T00:02:22.706+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@54286e97 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:22.706+09:00 DEBUG 58699 --- [order-service] [       Thread-6] io.r2dbc.h2.client.SessionClient         : Request:  DROP TABLE IF EXISTS users
+2026-02-06T00:02:22.706+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Request:  CALL H2VERSION()
+2026-02-06T00:02:22.706+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@7949bad1 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:22.707+09:00 DEBUG 58699 --- [order-service] [       Thread-6] io.r2dbc.h2.client.SessionClient         : Request:  CREATE TABLE users ( id VARCHAR(36) PRIMARY KEY, name VARCHAR(255) NOT NULL, email VARCHAR(255) UNIQUE NOT NULL, password VARCHAR(255) NOT NULL, created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP )
+2026-02-06T00:02:22.707+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Request:  CALL H2VERSION()
+2026-02-06T00:02:22.707+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@719220db columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:22.707+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Request:  CALL H2VERSION()
+2026-02-06T00:02:22.707+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@5f9bc39a columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:22.707+09:00 DEBUG 58699 --- [order-service] [       Thread-6] io.r2dbc.h2.client.SessionClient         : Request:  CREATE TABLE orders ( id VARCHAR(36) PRIMARY KEY, customer_id VARCHAR(255) NOT NULL, customer_email VARCHAR(255) NOT NULL, status VARCHAR(20) NOT NULL, total_amount DECIMAL(19, 2) NOT NULL, currency VARCHAR(3) NOT NULL DEFAULT 'USD', discount_amount DECIMAL(19, 2), created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP )
+2026-02-06T00:02:22.707+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Request:  CALL H2VERSION()
+2026-02-06T00:02:22.707+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@48d04228 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:22.708+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Request:  CALL H2VERSION()
+2026-02-06T00:02:22.708+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@7cfbe6d1 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:22.708+09:00 DEBUG 58699 --- [order-service] [       Thread-6] io.r2dbc.h2.client.SessionClient         : Request:  CREATE TABLE order_items ( id BIGINT AUTO_INCREMENT PRIMARY KEY, order_id VARCHAR(36) NOT NULL, product_id VARCHAR(255) NOT NULL, product_name VARCHAR(255) NOT NULL, quantity INT NOT NULL, unit_price DECIMAL(19, 2) NOT NULL, currency VARCHAR(3) NOT NULL DEFAULT 'USD', FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE )
+2026-02-06T00:02:22.709+09:00 DEBUG 58699 --- [order-service] [       Thread-6] io.r2dbc.h2.client.SessionClient         : Request:  CREATE TABLE outbox ( id BIGINT AUTO_INCREMENT PRIMARY KEY, aggregate_type VARCHAR(255) NOT NULL, aggregate_id VARCHAR(255) NOT NULL, event_type VARCHAR(255) NOT NULL, payload CLOB NOT NULL, created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, processed BOOLEAN NOT NULL DEFAULT FALSE )
+2026-02-06T00:02:22.709+09:00 DEBUG 58699 --- [order-service] [       Thread-6] io.r2dbc.h2.client.SessionClient         : Request:  CREATE INDEX idx_orders_customer_id ON orders(customer_id)
+2026-02-06T00:02:22.709+09:00 DEBUG 58699 --- [order-service] [       Thread-6] io.r2dbc.h2.client.SessionClient         : Request:  CREATE INDEX idx_orders_status ON orders(status)
+2026-02-06T00:02:22.709+09:00 DEBUG 58699 --- [order-service] [       Thread-6] io.r2dbc.h2.client.SessionClient         : Request:  CREATE INDEX idx_orders_created_at ON orders(created_at)
+2026-02-06T00:02:22.709+09:00 DEBUG 58699 --- [order-service] [       Thread-6] io.r2dbc.h2.client.SessionClient         : Request:  CREATE INDEX idx_order_items_order_id ON order_items(order_id)
+2026-02-06T00:02:22.709+09:00 DEBUG 58699 --- [order-service] [       Thread-6] io.r2dbc.h2.client.SessionClient         : Request:  CREATE INDEX idx_order_items_product_id ON order_items(product_id)
+2026-02-06T00:02:22.711+09:00 DEBUG 58699 --- [order-service] [       Thread-6] io.r2dbc.h2.client.SessionClient         : Request:  CREATE INDEX idx_outbox_processed ON outbox(processed)
+2026-02-06T00:02:22.711+09:00 DEBUG 58699 --- [order-service] [       Thread-6] io.r2dbc.h2.client.SessionClient         : Request:  CREATE INDEX idx_outbox_created_at ON outbox(created_at)
+2026-02-06T00:02:22.711+09:00 DEBUG 58699 --- [order-service] [       Thread-6] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:22.711+09:00 DEBUG 58699 --- [order-service] [       Thread-6] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@70d4a6a3 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:22.724+09:00  INFO 58699 --- [order-service] [    Test worker] c.e.o.a.i.w.h.OrderCommandWebHandlerTest : Started OrderCommandWebHandlerTest in 0.386 seconds (process running for 5.118)
+2026-02-06T00:02:22.725+09:00 DEBUG 58699 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:22.725+09:00 DEBUG 58699 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@6e79bd07 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:22.725+09:00 DEBUG 58699 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT outbox.* FROM outbox WHERE outbox.processed = $1 ORDER BY outbox.created_at ASC {1: FALSE}
+2026-02-06T00:02:22.725+09:00 DEBUG 58699 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@5f02b columns: 7 rows: 0 pos: -1
+2026-02-06T00:02:22.725+09:00 DEBUG 58699 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:22.726+09:00 DEBUG 58699 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@51d13f55 columns: 1 rows: 1 pos: -1
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.5</a> at 2026. 2. 6. 오전 12:02:27</p>
+</div>
+</div>
+</body>
+</html>

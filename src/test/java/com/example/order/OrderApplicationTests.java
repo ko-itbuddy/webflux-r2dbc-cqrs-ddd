@@ -1,8 +1,8 @@
 package com.example.order;
 
-import com.example.order.application.command.handler.CreateOrderHandler;
-import com.example.order.application.in.command.CreateOrderCommand;
-import com.example.order.infrastructure.web.handler.OrderCommandWebHandler.OrderResponse;
+import com.example.order.application.service.CreateOrderHandler;
+import com.example.order.application.dto.CreateOrderCommand;
+import com.example.order.adapter.in.web.handler.OrderCommandWebHandler.OrderResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
@@ -75,7 +75,7 @@ class OrderApplicationTests {
     void shouldHandleConcurrentRequestsWithoutBlocking() {
         int requestCount = 100;
 
-        List<Mono<com.example.order.domain.order.entity.Order>> requests = IntStream.range(0, requestCount)
+        List<Mono<com.example.order.domain.model.Order>> requests = IntStream.range(0, requestCount)
             .mapToObj(i -> {
                 CreateOrderCommand command = new CreateOrderCommand(
                     "customer-" + i,
@@ -103,7 +103,7 @@ class OrderApplicationTests {
     void shouldNotBlockOnHighLoad() {
         int concurrentRequests = 50; // Reduced for faster tests
 
-        List<Mono<com.example.order.domain.order.entity.Order>> requests = IntStream.range(0, concurrentRequests)
+        List<Mono<com.example.order.domain.model.Order>> requests = IntStream.range(0, concurrentRequests)
             .mapToObj(i -> {
                 CreateOrderCommand command = new CreateOrderCommand(
                     "customer-" + i,

@@ -20,7 +20,7 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">71</div>
+<div class="counter">142</div>
 <p>tests</p>
 </div>
 </td>
@@ -32,13 +32,13 @@
 </td>
 <td>
 <div class="infoBox" id="ignored">
-<div class="counter">0</div>
+<div class="counter">2</div>
 <p>ignored</p>
 </div>
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">2.807s</div>
+<div class="counter">4.167s</div>
 <p>duration</p>
 </div>
 </td>
@@ -47,7 +47,7 @@
 </div>
 </td>
 <td>
-<div class="infoBox success" id="successRate">
+<div class="infoBox skipped" id="successRate">
 <div class="percent">100%</div>
 <p>successful</p>
 </div>
@@ -58,13 +58,29 @@
 <div id="tabs">
 <ul class="tabLinks">
 <li>
-<a href="#tab0">Packages</a>
+<a href="#tab0">Ignored tests</a>
 </li>
 <li>
-<a href="#tab1">Classes</a>
+<a href="#tab1">Packages</a>
+</li>
+<li>
+<a href="#tab2">Classes</a>
 </li>
 </ul>
 <div id="tab0" class="tab">
+<h2>Ignored tests</h2>
+<ul class="linkList">
+<li>
+<a href="classes/com.example.order.adapter.out.persistence.query.OrderR2dbcQueryRepositoryTest.html">OrderR2dbcQueryRepositoryTest</a>.
+<a href="classes/com.example.order.adapter.out.persistence.query.OrderR2dbcQueryRepositoryTest.html#shouldFindCustomerStats()">shouldFindCustomerStats()</a>
+</li>
+<li>
+<a href="classes/com.example.order.adapter.out.persistence.query.OrderR2dbcQueryRepositoryTest.html">OrderR2dbcQueryRepositoryTest</a>.
+<a href="classes/com.example.order.adapter.out.persistence.query.OrderR2dbcQueryRepositoryTest.html#shouldFindOrderSummary()">shouldFindOrderSummary()</a>
+</li>
+</ul>
+</div>
+<div id="tab1" class="tab">
 <h2>Packages</h2>
 <table>
 <thead>
@@ -80,58 +96,98 @@
 <tbody>
 <tr>
 <td class="success">
+<a href="packages/com.example.common.domain.valueobject.html">com.example.common.domain.valueobject</a>
+</td>
+<td>31</td>
+<td>0</td>
+<td>0</td>
+<td>0.070s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
 <a href="packages/com.example.order.html">com.example.order</a>
 </td>
 <td>4</td>
 <td>0</td>
 <td>0</td>
-<td>1.811s</td>
+<td>0.745s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="packages/com.example.order.adapter.in.web.handler.html">com.example.order.adapter.in.web.handler</a>
+</td>
+<td>16</td>
+<td>0</td>
+<td>0</td>
+<td>0.126s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="packages/com.example.order.adapter.out.persistence.html">com.example.order.adapter.out.persistence</a>
+</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>0.401s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="skipped">
+<a href="packages/com.example.order.adapter.out.persistence.query.html">com.example.order.adapter.out.persistence.query</a>
+</td>
+<td>8</td>
+<td>0</td>
+<td>2</td>
+<td>0.042s</td>
+<td class="skipped">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="packages/com.example.order.application.service.html">com.example.order.application.service</a>
+</td>
+<td>26</td>
+<td>0</td>
+<td>0</td>
+<td>0.104s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
 <td class="success">
 <a href="packages/com.example.order.architecture.html">com.example.order.architecture</a>
 </td>
-<td>10</td>
+<td>6</td>
 <td>0</td>
 <td>0</td>
-<td>0.318s</td>
+<td>0.102s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
 <td class="success">
-<a href="packages/com.example.order.domain.order.entity.html">com.example.order.domain.order.entity</a>
+<a href="packages/com.example.order.domain.model.html">com.example.order.domain.model</a>
 </td>
-<td>24</td>
+<td>38</td>
 <td>0</td>
 <td>0</td>
-<td>0.034s</td>
+<td>0.005s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
 <td class="success">
-<a href="packages/com.example.order.domain.order.valueobject.html">com.example.order.domain.order.valueobject</a>
+<a href="packages/com.example.order.performance.html">com.example.order.performance</a>
 </td>
-<td>31</td>
+<td>5</td>
 <td>0</td>
 <td>0</td>
-<td>0.050s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="packages/com.example.order.infrastructure.persistence.html">com.example.order.infrastructure.persistence</a>
-</td>
-<td>2</td>
-<td>0</td>
-<td>0</td>
-<td>0.594s</td>
+<td>2.572s</td>
 <td class="success">100%</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="tab1" class="tab">
+<div id="tab2" class="tab">
 <h2>Classes</h2>
 <table>
 <thead>
@@ -147,72 +203,192 @@
 <tbody>
 <tr>
 <td class="success">
+<a href="classes/com.example.common.domain.valueobject.EmailTest.html">com.example.common.domain.valueobject.EmailTest</a>
+</td>
+<td>16</td>
+<td>0</td>
+<td>0</td>
+<td>0.061s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.example.common.domain.valueobject.MoneyTest.html">com.example.common.domain.valueobject.MoneyTest</a>
+</td>
+<td>15</td>
+<td>0</td>
+<td>0</td>
+<td>0.009s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
 <a href="classes/com.example.order.OrderApplicationTests.html">com.example.order.OrderApplicationTests</a>
 </td>
 <td>4</td>
 <td>0</td>
 <td>0</td>
-<td>1.811s</td>
+<td>0.745s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.example.order.adapter.in.web.handler.OrderCommandWebHandlerTest.html">com.example.order.adapter.in.web.handler.OrderCommandWebHandlerTest</a>
+</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>0.057s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.example.order.adapter.in.web.handler.OrderQueryWebHandlerTest.html">com.example.order.adapter.in.web.handler.OrderQueryWebHandlerTest</a>
+</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>0.069s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.example.order.adapter.out.persistence.ConcurrencyTest.html">com.example.order.adapter.out.persistence.ConcurrencyTest</a>
+</td>
+<td>6</td>
+<td>0</td>
+<td>0</td>
+<td>0.386s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.example.order.adapter.out.persistence.TransactionTest.html">com.example.order.adapter.out.persistence.TransactionTest</a>
+</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0.015s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="skipped">
+<a href="classes/com.example.order.adapter.out.persistence.query.OrderR2dbcQueryRepositoryTest.html">com.example.order.adapter.out.persistence.query.OrderR2dbcQueryRepositoryTest</a>
+</td>
+<td>8</td>
+<td>0</td>
+<td>2</td>
+<td>0.042s</td>
+<td class="skipped">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.example.order.application.service.ApplyDiscountHandlerTest.html">com.example.order.application.service.ApplyDiscountHandlerTest</a>
+</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0.041s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.example.order.application.service.CancelOrderHandlerTest.html">com.example.order.application.service.CancelOrderHandlerTest</a>
+</td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+<td>0.031s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.example.order.application.service.ConfirmOrderHandlerTest.html">com.example.order.application.service.ConfirmOrderHandlerTest</a>
+</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0.024s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.example.order.application.service.OrderQueryServiceTest.html">com.example.order.application.service.OrderQueryServiceTest</a>
+</td>
+<td>10</td>
+<td>0</td>
+<td>0</td>
+<td>0.005s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.example.order.application.service.PayOrderHandlerTest.html">com.example.order.application.service.PayOrderHandlerTest</a>
+</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0.003s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
 <td class="success">
 <a href="classes/com.example.order.architecture.ArchitectureTest.html">com.example.order.architecture.ArchitectureTest</a>
 </td>
-<td>10</td>
+<td>6</td>
 <td>0</td>
 <td>0</td>
-<td>0.318s</td>
+<td>0.102s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
 <td class="success">
-<a href="classes/com.example.order.domain.order.entity.OrderItemTest.html">com.example.order.domain.order.entity.OrderItemTest</a>
+<a href="classes/com.example.order.domain.model.OrderDomainEventsTest.html">com.example.order.domain.model.OrderDomainEventsTest</a>
+</td>
+<td>7</td>
+<td>0</td>
+<td>0</td>
+<td>0.002s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.example.order.domain.model.OrderItemTest.html">com.example.order.domain.model.OrderItemTest</a>
 </td>
 <td>5</td>
 <td>0</td>
 <td>0</td>
-<td>0.008s</td>
+<td>0.001s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
 <td class="success">
-<a href="classes/com.example.order.domain.order.entity.OrderTest.html">com.example.order.domain.order.entity.OrderTest</a>
+<a href="classes/com.example.order.domain.model.OrderReconstituteTest.html">com.example.order.domain.model.OrderReconstituteTest</a>
+</td>
+<td>7</td>
+<td>0</td>
+<td>0</td>
+<td>0.001s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.example.order.domain.model.OrderTest.html">com.example.order.domain.model.OrderTest</a>
 </td>
 <td>19</td>
 <td>0</td>
 <td>0</td>
-<td>0.026s</td>
+<td>0.001s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
 <td class="success">
-<a href="classes/com.example.order.domain.order.valueobject.EmailTest.html">com.example.order.domain.order.valueobject.EmailTest</a>
+<a href="classes/com.example.order.performance.PerformanceTest.html">com.example.order.performance.PerformanceTest</a>
 </td>
-<td>16</td>
+<td>5</td>
 <td>0</td>
 <td>0</td>
-<td>0.032s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="classes/com.example.order.domain.order.valueobject.MoneyTest.html">com.example.order.domain.order.valueobject.MoneyTest</a>
-</td>
-<td>15</td>
-<td>0</td>
-<td>0</td>
-<td>0.018s</td>
-<td class="success">100%</td>
-</tr>
-<tr>
-<td class="success">
-<a href="classes/com.example.order.infrastructure.persistence.TransactionTest.html">com.example.order.infrastructure.persistence.TransactionTest</a>
-</td>
-<td>2</td>
-<td>0</td>
-<td>0</td>
-<td>0.594s</td>
+<td>2.572s</td>
 <td class="success">100%</td>
 </tr>
 </tbody>
@@ -226,7 +402,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.5</a> at 2026. 2. 5. 오전 9:42:49</p>
+<a href="http://www.gradle.org">Gradle 8.5</a> at 2026. 2. 6. 오전 12:02:27</p>
 </div>
 </div>
 </body>

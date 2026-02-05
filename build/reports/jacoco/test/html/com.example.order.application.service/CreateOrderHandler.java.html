@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CreateOrderHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">webflux-reactive-hibernate</a> &gt; <a href="index.source.html" class="el_package">com.example.order.application.service</a> &gt; <span class="el_source">CreateOrderHandler.java</span></div><h1>CreateOrderHandler.java</h1><pre class="source lang-java linenums">package com.example.order.application.service;
+
+import com.example.order.application.dto.CreateOrderCommand;
+import com.example.order.application.port.in.CreateOrderUseCase;
+import com.example.order.domain.port.OrderRepository;
+import com.example.order.domain.port.DomainEventPublisher;
+import com.example.order.domain.event.DomainEvent;
+import com.example.order.domain.model.Order;
+import com.example.order.domain.model.OrderItem;
+import com.example.common.domain.valueobject.Email;
+import com.example.common.domain.valueobject.Money;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.reactive.TransactionalOperator;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Component
+public class CreateOrderHandler implements CreateOrderUseCase {
+    private final OrderRepository orderRepository;
+    private final DomainEventPublisher domainEventPublisher;
+    private final TransactionalOperator transactionalOperator;
+
+    public CreateOrderHandler(
+            OrderRepository orderRepository,
+            DomainEventPublisher domainEventPublisher,
+<span class="fc" id="L29">            TransactionalOperator transactionalOperator) {</span>
+<span class="fc" id="L30">        this.orderRepository = orderRepository;</span>
+<span class="fc" id="L31">        this.domainEventPublisher = domainEventPublisher;</span>
+<span class="fc" id="L32">        this.transactionalOperator = transactionalOperator;</span>
+<span class="fc" id="L33">    }</span>
+
+    public Mono&lt;Order&gt; handle(CreateOrderCommand command) {
+<span class="fc" id="L36">        List&lt;OrderItem&gt; items = command.items().stream()</span>
+<span class="fc" id="L37">            .map(item -&gt; OrderItem.of(</span>
+<span class="fc" id="L38">                item.productId(),</span>
+<span class="fc" id="L39">                item.productName(),</span>
+<span class="fc" id="L40">                item.quantity(),</span>
+<span class="fc" id="L41">                Money.of(item.unitPrice(), item.currency())</span>
+            ))
+<span class="fc" id="L43">            .collect(Collectors.toList());</span>
+
+<span class="fc" id="L45">        Order order = Order.create(</span>
+<span class="fc" id="L46">            command.customerId(),</span>
+<span class="fc" id="L47">            Email.of(command.customerEmail()),</span>
+            items
+        );
+
+<span class="fc" id="L51">        List&lt;DomainEvent&gt; events = order.getDomainEvents();</span>
+<span class="fc" id="L52">        order.clearDomainEvents();</span>
+
+<span class="fc" id="L54">        return orderRepository.save(order)</span>
+<span class="fc" id="L55">            .flatMap(savedOrder -&gt;</span>
+<span class="fc" id="L56">                Flux.fromIterable(events)</span>
+<span class="fc" id="L57">                    .flatMap(domainEventPublisher::publish)</span>
+<span class="fc" id="L58">                    .then(Mono.just(savedOrder))</span>
+            )
+<span class="fc" id="L60">            .as(transactionalOperator::transactional);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

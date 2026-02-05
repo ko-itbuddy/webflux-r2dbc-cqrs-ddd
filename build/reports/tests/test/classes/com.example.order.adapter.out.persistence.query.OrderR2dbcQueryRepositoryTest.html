@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - OrderR2dbcQueryRepositoryTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>OrderR2dbcQueryRepositoryTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.example.order.adapter.out.persistence.query.html">com.example.order.adapter.out.persistence.query</a> &gt; OrderR2dbcQueryRepositoryTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">8</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">2</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.042s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox skipped" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">shouldCountOrders()</td>
+<td class="success">0.006s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">shouldFindAllOrdersWithPagination()</td>
+<td class="success">0.009s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="skipped">shouldFindCustomerStats()</td>
+<td class="skipped">-</td>
+<td class="skipped">ignored</td>
+</tr>
+<tr>
+<td class="success">shouldFindOrderById()</td>
+<td class="success">0.014s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="skipped">shouldFindOrderSummary()</td>
+<td class="skipped">-</td>
+<td class="skipped">ignored</td>
+</tr>
+<tr>
+<td class="success">shouldFindOrdersByCustomerId()</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">shouldFindOrdersByStatus()</td>
+<td class="success">0.006s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">shouldReturnEmptyWhenOrderNotFound()</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2026-02-06T00:02:23.749+09:00  INFO 58699 --- [order-service] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.order.adapter.out.persistence.query.OrderR2dbcQueryRepositoryTest]: OrderR2dbcQueryRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-02-06T00:02:23.755+09:00  INFO 58699 --- [order-service] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.order.OrderApplication for test class com.example.order.adapter.out.persistence.query.OrderR2dbcQueryRepositoryTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.0)
+
+2026-02-06T00:02:23.766+09:00  INFO 58699 --- [order-service] [    Test worker] .o.a.o.p.q.OrderR2dbcQueryRepositoryTest : Starting OrderR2dbcQueryRepositoryTest using Java 21.0.2 with PID 58699 (started by itbuddy in /Users/itbuddy/github/webflux-r2dbc-cqrs-ddd)
+2026-02-06T00:02:23.766+09:00  INFO 58699 --- [order-service] [    Test worker] .o.a.o.p.q.OrderR2dbcQueryRepositoryTest : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2026-02-06T00:02:23.819+09:00  INFO 58699 --- [order-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2026-02-06T00:02:23.820+09:00  INFO 58699 --- [order-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 R2DBC repository interfaces.
+2026-02-06T00:02:23.837+09:00  INFO 58699 --- [order-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2026-02-06T00:02:23.840+09:00  INFO 58699 --- [order-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2 ms. Found 0 R2DBC repository interfaces.
+2026-02-06T00:02:23.903+09:00 DEBUG 58699 --- [order-service] [    Test worker] o.s.a.r.c.CachingConnectionFactory       : Using hostname [MacBook-Pro-3.local] for hostname.
+2026-02-06T00:02:23.938+09:00  INFO 58699 --- [order-service] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2026-02-06T00:02:23.957+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Request:  CALL H2VERSION()
+2026-02-06T00:02:23.957+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@219e9b5b columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.957+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.957+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@443fed2 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.958+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Request:  CALL H2VERSION()
+2026-02-06T00:02:23.958+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@4cfa1f50 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.958+09:00 DEBUG 58699 --- [order-service] [       Thread-7] io.r2dbc.h2.client.SessionClient         : Request:  DROP TABLE IF EXISTS order_items
+2026-02-06T00:02:23.958+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Request:  CALL H2VERSION()
+2026-02-06T00:02:23.958+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@196b11d7 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.959+09:00 DEBUG 58699 --- [order-service] [       Thread-7] io.r2dbc.h2.client.SessionClient         : Request:  DROP TABLE IF EXISTS outbox
+2026-02-06T00:02:23.959+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Request:  CALL H2VERSION()
+2026-02-06T00:02:23.959+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@667b9351 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.959+09:00 DEBUG 58699 --- [order-service] [       Thread-7] io.r2dbc.h2.client.SessionClient         : Request:  DROP TABLE IF EXISTS orders
+2026-02-06T00:02:23.959+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Request:  CALL H2VERSION()
+2026-02-06T00:02:23.959+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@7d555422 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.959+09:00 DEBUG 58699 --- [order-service] [       Thread-7] io.r2dbc.h2.client.SessionClient         : Request:  DROP TABLE IF EXISTS users
+2026-02-06T00:02:23.959+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Request:  CALL H2VERSION()
+2026-02-06T00:02:23.959+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@61c9c447 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.959+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Request:  CALL H2VERSION()
+2026-02-06T00:02:23.959+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@20ed9400 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.959+09:00 DEBUG 58699 --- [order-service] [       Thread-7] io.r2dbc.h2.client.SessionClient         : Request:  CREATE TABLE users ( id VARCHAR(36) PRIMARY KEY, name VARCHAR(255) NOT NULL, email VARCHAR(255) UNIQUE NOT NULL, password VARCHAR(255) NOT NULL, created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP )
+2026-02-06T00:02:23.960+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Request:  CALL H2VERSION()
+2026-02-06T00:02:23.960+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@1a366a57 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.960+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Request:  CALL H2VERSION()
+2026-02-06T00:02:23.960+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@4d15d977 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.960+09:00 DEBUG 58699 --- [order-service] [       Thread-7] io.r2dbc.h2.client.SessionClient         : Request:  CREATE TABLE orders ( id VARCHAR(36) PRIMARY KEY, customer_id VARCHAR(255) NOT NULL, customer_email VARCHAR(255) NOT NULL, status VARCHAR(20) NOT NULL, total_amount DECIMAL(19, 2) NOT NULL, currency VARCHAR(3) NOT NULL DEFAULT 'USD', discount_amount DECIMAL(19, 2), created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP )
+2026-02-06T00:02:23.960+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Request:  CALL H2VERSION()
+2026-02-06T00:02:23.960+09:00 DEBUG 58699 --- [order-service] [       single-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@6251d76e columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.960+09:00 DEBUG 58699 --- [order-service] [       Thread-7] io.r2dbc.h2.client.SessionClient         : Request:  CREATE TABLE order_items ( id BIGINT AUTO_INCREMENT PRIMARY KEY, order_id VARCHAR(36) NOT NULL, product_id VARCHAR(255) NOT NULL, product_name VARCHAR(255) NOT NULL, quantity INT NOT NULL, unit_price DECIMAL(19, 2) NOT NULL, currency VARCHAR(3) NOT NULL DEFAULT 'USD', FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE )
+2026-02-06T00:02:23.961+09:00 DEBUG 58699 --- [order-service] [       Thread-7] io.r2dbc.h2.client.SessionClient         : Request:  CREATE TABLE outbox ( id BIGINT AUTO_INCREMENT PRIMARY KEY, aggregate_type VARCHAR(255) NOT NULL, aggregate_id VARCHAR(255) NOT NULL, event_type VARCHAR(255) NOT NULL, payload CLOB NOT NULL, created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, processed BOOLEAN NOT NULL DEFAULT FALSE )
+2026-02-06T00:02:23.961+09:00 DEBUG 58699 --- [order-service] [       Thread-7] io.r2dbc.h2.client.SessionClient         : Request:  CREATE INDEX idx_orders_customer_id ON orders(customer_id)
+2026-02-06T00:02:23.961+09:00 DEBUG 58699 --- [order-service] [       Thread-7] io.r2dbc.h2.client.SessionClient         : Request:  CREATE INDEX idx_orders_status ON orders(status)
+2026-02-06T00:02:23.961+09:00 DEBUG 58699 --- [order-service] [       Thread-7] io.r2dbc.h2.client.SessionClient         : Request:  CREATE INDEX idx_orders_created_at ON orders(created_at)
+2026-02-06T00:02:23.962+09:00 DEBUG 58699 --- [order-service] [       Thread-7] io.r2dbc.h2.client.SessionClient         : Request:  CREATE INDEX idx_order_items_order_id ON order_items(order_id)
+2026-02-06T00:02:23.962+09:00 DEBUG 58699 --- [order-service] [       Thread-7] io.r2dbc.h2.client.SessionClient         : Request:  CREATE INDEX idx_order_items_product_id ON order_items(product_id)
+2026-02-06T00:02:23.962+09:00 DEBUG 58699 --- [order-service] [       Thread-7] io.r2dbc.h2.client.SessionClient         : Request:  CREATE INDEX idx_outbox_processed ON outbox(processed)
+2026-02-06T00:02:23.962+09:00 DEBUG 58699 --- [order-service] [       Thread-7] io.r2dbc.h2.client.SessionClient         : Request:  CREATE INDEX idx_outbox_created_at ON outbox(created_at)
+2026-02-06T00:02:23.962+09:00 DEBUG 58699 --- [order-service] [       Thread-7] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.962+09:00 DEBUG 58699 --- [order-service] [       Thread-7] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@27939809 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.970+09:00  INFO 58699 --- [order-service] [    Test worker] .o.a.o.p.q.OrderR2dbcQueryRepositoryTest : Started OrderR2dbcQueryRepositoryTest in 0.214 seconds (process running for 6.364)
+2026-02-06T00:02:23.971+09:00 DEBUG 58699 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.972+09:00 DEBUG 58699 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@2e59ae8a columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.972+09:00 DEBUG 58699 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT outbox.* FROM outbox WHERE outbox.processed = $1 ORDER BY outbox.created_at ASC {1: FALSE}
+2026-02-06T00:02:23.972+09:00 DEBUG 58699 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@be61749 columns: 7 rows: 0 pos: -1
+2026-02-06T00:02:23.973+09:00 DEBUG 58699 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.973+09:00 DEBUG 58699 --- [order-service] [   scheduling-1] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@5ab9334a columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.973+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.973+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@a16f80e columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.973+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO orders (id, customer_id, customer_email, status, total_amount, currency,
+                  created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8) {1: 'order-401', 2: 'customer-401', 3: 'email1@example.com', 4: 'PENDING', 5: 10.00, 6: 'USD', 7: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:23.973418+00', 8: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:23.973418+00'}
+2026-02-06T00:02:23.974+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.974+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@6232fc95 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.974+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.974+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@162e433 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.974+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO order_items (order_id, product_id, product_name, quantity, unit_price, currency)
+VALUES ($1, $2, $3, $4, $5, $6) {1: 'order-401', 2: 'PROD-401', 3: 'Product A', 4: 1, 5: 10.00, 6: 'USD'}
+2026-02-06T00:02:23.974+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.974+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@42e5c090 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.974+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.974+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@25218c54 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.974+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO orders (id, customer_id, customer_email, status, total_amount, currency,
+                  created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8) {1: 'order-402', 2: 'customer-402', 3: 'email2@example.com', 4: 'CONFIRMED', 5: 20.00, 6: 'USD', 7: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:23.973418+00', 8: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:23.973418+00'}
+2026-02-06T00:02:23.975+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.975+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@4c4a428d columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.975+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.975+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@73e97dc4 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.975+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO order_items (order_id, product_id, product_name, quantity, unit_price, currency)
+VALUES ($1, $2, $3, $4, $5, $6) {1: 'order-402', 2: 'PROD-402', 3: 'Product B', 4: 1, 5: 20.00, 6: 'USD'}
+2026-02-06T00:02:23.975+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.975+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@72cbb805 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.975+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.975+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@87a5f58 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.975+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO orders (id, customer_id, customer_email, status, total_amount, currency,
+                  created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8) {1: 'order-403', 2: 'customer-403', 3: 'email3@example.com', 4: 'DELIVERED', 5: 30.00, 6: 'USD', 7: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:23.973418+00', 8: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:23.973418+00'}
+2026-02-06T00:02:23.975+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.975+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@15ee1971 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.975+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.975+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@57f715bc columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.975+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO order_items (order_id, product_id, product_name, quantity, unit_price, currency)
+VALUES ($1, $2, $3, $4, $5, $6) {1: 'order-403', 2: 'PROD-403', 3: 'Product C', 4: 1, 5: 30.00, 6: 'USD'}
+2026-02-06T00:02:23.975+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.975+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@5cbea6cd columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.976+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.976+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@4ed849c2 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.976+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT COUNT(*) FROM orders
+2026-02-06T00:02:23.976+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@7417b08f columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.976+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.976+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@5b2027f8 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.976+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.976+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@185b9c70 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.977+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  DELETE FROM order_items
+2026-02-06T00:02:23.977+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.977+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@423098bc columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.977+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.977+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@47c95f94 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.977+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  DELETE FROM orders
+2026-02-06T00:02:23.977+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.977+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@32a1279d columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.979+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.979+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@135c9a7b columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.979+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO orders (id, customer_id, customer_email, status, total_amount, currency,
+                  created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8) {1: 'order-001', 2: 'customer-001', 3: 'test@example.com', 4: 'PENDING', 5: 199.98, 6: 'USD', 7: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:23.979398+00', 8: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:23.979398+00'}
+2026-02-06T00:02:23.979+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.979+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@492f9cb4 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.979+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.979+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@2911f7a columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.980+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO order_items (order_id, product_id, product_name, quantity, unit_price, currency)
+VALUES ($1, $2, $3, $4, $5, $6) {1: 'order-001', 2: 'PROD-001', 3: 'Product 1', 4: 2, 5: 99.99, 6: 'USD'}
+2026-02-06T00:02:23.980+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.980+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@b5e9abb columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.980+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.980+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@3a8b9aaa columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.980+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO order_items (order_id, product_id, product_name, quantity, unit_price, currency)
+VALUES ($1, $2, $3, $4, $5, $6) {1: 'order-001', 2: 'PROD-002', 3: 'Product 2', 4: 1, 5: 50.00, 6: 'USD'}
+2026-02-06T00:02:23.980+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.980+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@70b478ce columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.980+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.980+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@48d86376 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.981+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT orders.* FROM orders WHERE orders.ID = $1 LIMIT 2 {1: 'order-001'}
+2026-02-06T00:02:23.981+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@40beeda columns: 9 rows: 1 pos: -1
+2026-02-06T00:02:23.988+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.988+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@54da902b columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.989+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.989+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@6598309b columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.989+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT order_items.* FROM order_items WHERE order_items.order_id = $1 {1: 'order-001'}
+2026-02-06T00:02:23.989+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@19d9e0d0 columns: 7 rows: 2 pos: -1
+2026-02-06T00:02:23.991+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.991+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@15ebf7a4 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.991+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.991+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@1a47ddfb columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.992+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  DELETE FROM order_items
+2026-02-06T00:02:23.992+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.992+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@70fbaa1b columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.992+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.992+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@4ca85c2d columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.992+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  DELETE FROM orders
+2026-02-06T00:02:23.992+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.992+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@622b8f8c columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.994+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.994+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@2361fd67 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.994+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO orders (id, customer_id, customer_email, status, total_amount, currency,
+                  created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8) {1: 'order-201', 2: 'customer-201', 3: 'email1@example.com', 4: 'PENDING', 5: 50.00, 6: 'USD', 7: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:23.994524+00', 8: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:23.994524+00'}
+2026-02-06T00:02:23.995+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.995+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@3878cbe5 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.995+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.995+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@dcfdaea columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.995+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO order_items (order_id, product_id, product_name, quantity, unit_price, currency)
+VALUES ($1, $2, $3, $4, $5, $6) {1: 'order-201', 2: 'PROD-201', 3: 'Product A', 4: 1, 5: 50.00, 6: 'USD'}
+2026-02-06T00:02:23.995+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.995+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@7e10d7db columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.995+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.995+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@607493c6 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.995+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO orders (id, customer_id, customer_email, status, total_amount, currency,
+                  created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8) {1: 'order-202', 2: 'customer-202', 3: 'email2@example.com', 4: 'PENDING', 5: 75.00, 6: 'USD', 7: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:23.994524+00', 8: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:23.994524+00'}
+2026-02-06T00:02:23.995+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.995+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@50bd5f66 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.995+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.995+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@7ff9a100 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.995+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO order_items (order_id, product_id, product_name, quantity, unit_price, currency)
+VALUES ($1, $2, $3, $4, $5, $6) {1: 'order-202', 2: 'PROD-202', 3: 'Product B', 4: 1, 5: 75.00, 6: 'USD'}
+2026-02-06T00:02:23.995+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.995+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@32c433cd columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.995+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.995+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@4ac4bf1 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.995+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO orders (id, customer_id, customer_email, status, total_amount, currency,
+                  created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8) {1: 'order-203', 2: 'customer-203', 3: 'email3@example.com', 4: 'CONFIRMED', 5: 100.00, 6: 'USD', 7: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:23.994524+00', 8: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:23.994524+00'}
+2026-02-06T00:02:23.995+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.995+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@5f4bb622 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.996+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.996+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@7713f921 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.996+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO order_items (order_id, product_id, product_name, quantity, unit_price, currency)
+VALUES ($1, $2, $3, $4, $5, $6) {1: 'order-203', 2: 'PROD-203', 3: 'Product C', 4: 1, 5: 100.00, 6: 'USD'}
+2026-02-06T00:02:23.996+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.996+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@2c4143ba columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.996+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.996+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@5a67e2b6 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.996+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT orders.* FROM orders WHERE orders.status = $1 {1: 'PENDING'}
+2026-02-06T00:02:23.996+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@417e53ed columns: 9 rows: 2 pos: -1
+2026-02-06T00:02:23.997+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.997+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@396d47aa columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.997+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.997+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@350cb691 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.997+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT order_items.* FROM order_items WHERE order_items.order_id = $1 {1: 'order-201'}
+2026-02-06T00:02:23.998+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@7162c5 columns: 7 rows: 1 pos: -1
+2026-02-06T00:02:23.998+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.998+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@2e96b7f6 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.998+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.998+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@759216cb columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.998+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT order_items.* FROM order_items WHERE order_items.order_id = $1 {1: 'order-202'}
+2026-02-06T00:02:23.998+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@3709549a columns: 7 rows: 1 pos: -1
+2026-02-06T00:02:23.998+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.998+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@236e5ffa columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.999+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.999+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@697af535 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.999+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  DELETE FROM order_items
+2026-02-06T00:02:23.999+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.999+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@3a579d04 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.999+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.999+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@6ea5464c columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:23.999+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  DELETE FROM orders
+2026-02-06T00:02:23.999+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:23.999+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@25d01780 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.002+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.002+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@ed870c0 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.002+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO orders (id, customer_id, customer_email, status, total_amount, currency,
+                  created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8) {1: 'order-101', 2: 'customer-002', 3: 'email1@example.com', 4: 'PENDING', 5: 50.00, 6: 'USD', 7: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:24.002203+00', 8: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:24.002203+00'}
+2026-02-06T00:02:24.002+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.002+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@3feeaea8 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.002+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.002+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@5b6bf649 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.002+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO order_items (order_id, product_id, product_name, quantity, unit_price, currency)
+VALUES ($1, $2, $3, $4, $5, $6) {1: 'order-101', 2: 'PROD-101', 3: 'Product A', 4: 1, 5: 50.00, 6: 'USD'}
+2026-02-06T00:02:24.002+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.003+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@734e5cd6 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.003+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.003+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@27eae2f2 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.003+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO orders (id, customer_id, customer_email, status, total_amount, currency,
+                  created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8) {1: 'order-102', 2: 'customer-002', 3: 'email2@example.com', 4: 'CONFIRMED', 5: 75.00, 6: 'USD', 7: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:24.002203+00', 8: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:24.002203+00'}
+2026-02-06T00:02:24.003+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.003+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@66e9e248 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.003+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.003+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@9c7db46 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.003+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO order_items (order_id, product_id, product_name, quantity, unit_price, currency)
+VALUES ($1, $2, $3, $4, $5, $6) {1: 'order-102', 2: 'PROD-102', 3: 'Product B', 4: 1, 5: 75.00, 6: 'USD'}
+2026-02-06T00:02:24.003+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.003+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@42e36092 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.003+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.003+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@5ef7a514 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.003+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO orders (id, customer_id, customer_email, status, total_amount, currency,
+                  created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8) {1: 'order-103', 2: 'other-customer', 3: 'other@example.com', 4: 'PENDING', 5: 100.00, 6: 'USD', 7: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:24.002203+00', 8: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:24.002203+00'}
+2026-02-06T00:02:24.003+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.003+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@65ba7bf2 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.004+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.004+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@29333493 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.004+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT orders.* FROM orders WHERE orders.customer_id = $1 {1: 'customer-002'}
+2026-02-06T00:02:24.004+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@48b193f0 columns: 9 rows: 2 pos: -1
+2026-02-06T00:02:24.004+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.004+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@433b9807 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.004+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.005+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@44414bd4 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.005+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT order_items.* FROM order_items WHERE order_items.order_id = $1 {1: 'order-101'}
+2026-02-06T00:02:24.005+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@6ff81b13 columns: 7 rows: 1 pos: -1
+2026-02-06T00:02:24.005+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.005+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@293c1612 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.005+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.005+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@48e25867 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.005+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT order_items.* FROM order_items WHERE order_items.order_id = $1 {1: 'order-102'}
+2026-02-06T00:02:24.005+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@5a06a235 columns: 7 rows: 1 pos: -1
+2026-02-06T00:02:24.005+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.005+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@1b9e5334 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.005+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.005+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@20a7e171 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.005+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  DELETE FROM order_items
+2026-02-06T00:02:24.006+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.006+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@3d7c059d columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.006+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.006+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@671b6f1d columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.006+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  DELETE FROM orders
+2026-02-06T00:02:24.006+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.006+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@2e6d294e columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.007+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.008+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@2f8fefc6 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.008+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO orders (id, customer_id, customer_email, status, total_amount, currency,
+                  created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8) {1: 'order-301', 2: 'customer-301', 3: 'email@example.com', 4: 'PENDING', 5: 10.00, 6: 'USD', 7: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:24.007766+00', 8: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:24.007766+00'}
+2026-02-06T00:02:24.008+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.008+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@1faaa7e1 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.008+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.008+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@5c81bb16 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.008+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO order_items (order_id, product_id, product_name, quantity, unit_price, currency)
+VALUES ($1, $2, $3, $4, $5, $6) {1: 'order-301', 2: 'PROD-1', 3: 'Product 1', 4: 1, 5: 10.00, 6: 'USD'}
+2026-02-06T00:02:24.008+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.008+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@188df7c7 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.008+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.008+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@41896c9c columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.008+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO orders (id, customer_id, customer_email, status, total_amount, currency,
+                  created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8) {1: 'order-302', 2: 'customer-302', 3: 'email@example.com', 4: 'PENDING', 5: 10.00, 6: 'USD', 7: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:24.007766+00', 8: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:24.007766+00'}
+2026-02-06T00:02:24.008+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.008+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@72653b9d columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.008+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.008+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@61fe8807 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.008+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO order_items (order_id, product_id, product_name, quantity, unit_price, currency)
+VALUES ($1, $2, $3, $4, $5, $6) {1: 'order-302', 2: 'PROD-2', 3: 'Product 2', 4: 1, 5: 10.00, 6: 'USD'}
+2026-02-06T00:02:24.009+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.009+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@310fb4d5 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.009+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.009+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@3a5051 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.009+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO orders (id, customer_id, customer_email, status, total_amount, currency,
+                  created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8) {1: 'order-303', 2: 'customer-303', 3: 'email@example.com', 4: 'PENDING', 5: 10.00, 6: 'USD', 7: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:24.007766+00', 8: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:24.007766+00'}
+2026-02-06T00:02:24.009+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.009+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@48a875b3 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.009+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.009+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@5ae09ff columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.009+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO order_items (order_id, product_id, product_name, quantity, unit_price, currency)
+VALUES ($1, $2, $3, $4, $5, $6) {1: 'order-303', 2: 'PROD-3', 3: 'Product 3', 4: 1, 5: 10.00, 6: 'USD'}
+2026-02-06T00:02:24.009+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.009+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@6480fece columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.009+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.009+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@65b8abd8 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.009+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO orders (id, customer_id, customer_email, status, total_amount, currency,
+                  created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8) {1: 'order-304', 2: 'customer-304', 3: 'email@example.com', 4: 'PENDING', 5: 10.00, 6: 'USD', 7: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:24.007766+00', 8: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:24.007766+00'}
+2026-02-06T00:02:24.009+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.009+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@19e71683 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.009+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.009+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@4c365670 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.009+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO order_items (order_id, product_id, product_name, quantity, unit_price, currency)
+VALUES ($1, $2, $3, $4, $5, $6) {1: 'order-304', 2: 'PROD-4', 3: 'Product 4', 4: 1, 5: 10.00, 6: 'USD'}
+2026-02-06T00:02:24.010+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.010+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@57e14b columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.010+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.010+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@1404534b columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.010+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO orders (id, customer_id, customer_email, status, total_amount, currency,
+                  created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8) {1: 'order-305', 2: 'customer-305', 3: 'email@example.com', 4: 'PENDING', 5: 10.00, 6: 'USD', 7: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:24.007766+00', 8: TIMESTAMP WITH TIME ZONE '2026-02-05 15:02:24.007766+00'}
+2026-02-06T00:02:24.010+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.010+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@27887cfe columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.010+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.010+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@320f451 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.010+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  INSERT INTO order_items (order_id, product_id, product_name, quantity, unit_price, currency)
+VALUES ($1, $2, $3, $4, $5, $6) {1: 'order-305', 2: 'PROD-5', 3: 'Product 5', 4: 1, 5: 10.00, 6: 'USD'}
+2026-02-06T00:02:24.010+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.010+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@2b553f2e columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.011+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.011+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@6aa65574 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.011+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT orders.* FROM orders LIMIT 2
+2026-02-06T00:02:24.011+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@559a5e7e columns: 9 rows: 2 pos: -1
+2026-02-06T00:02:24.012+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.012+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@28eb8bad columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.012+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.012+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@1af3fb00 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.012+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT order_items.* FROM order_items WHERE order_items.order_id = $1 {1: 'order-301'}
+2026-02-06T00:02:24.012+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@6184047b columns: 7 rows: 1 pos: -1
+2026-02-06T00:02:24.012+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.012+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@571850c columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.012+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.012+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@41b92ef5 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.012+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT order_items.* FROM order_items WHERE order_items.order_id = $1 {1: 'order-302'}
+2026-02-06T00:02:24.012+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@6630fdb2 columns: 7 rows: 1 pos: -1
+2026-02-06T00:02:24.012+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.012+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@15ef38a5 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.012+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.012+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@7db2df20 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.013+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT orders.* FROM orders OFFSET 2 ROWS FETCH FIRST 2 ROWS ONLY
+2026-02-06T00:02:24.013+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@2b5ed0d7 columns: 9 rows: 2 pos: -1
+2026-02-06T00:02:24.013+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.013+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@30b43024 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.013+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.013+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@40609a70 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.013+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT order_items.* FROM order_items WHERE order_items.order_id = $1 {1: 'order-303'}
+2026-02-06T00:02:24.013+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@4fe72f53 columns: 7 rows: 1 pos: -1
+2026-02-06T00:02:24.013+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.013+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@26acdb columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.013+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.013+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@323a27cb columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.013+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT order_items.* FROM order_items WHERE order_items.order_id = $1 {1: 'order-304'}
+2026-02-06T00:02:24.013+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@74a325cc columns: 7 rows: 1 pos: -1
+2026-02-06T00:02:24.013+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.013+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@de646d5 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.014+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.014+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@4d5647c4 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.014+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT orders.* FROM orders OFFSET 4 ROWS FETCH FIRST 2 ROWS ONLY
+2026-02-06T00:02:24.014+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@2a56ed77 columns: 9 rows: 1 pos: -1
+2026-02-06T00:02:24.014+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.014+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@7dfdd352 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.014+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.014+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@292a6cfd columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.014+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT order_items.* FROM order_items WHERE order_items.order_id = $1 {1: 'order-305'}
+2026-02-06T00:02:24.014+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@244160dc columns: 7 rows: 1 pos: -1
+2026-02-06T00:02:24.014+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.014+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@4e3fedfa columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.014+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.014+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@1b60fc89 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.015+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  DELETE FROM order_items
+2026-02-06T00:02:24.015+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.015+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@372bcdc6 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.015+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.015+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@5ea40c10 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.015+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  DELETE FROM orders
+2026-02-06T00:02:24.015+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.015+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@641792f0 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.017+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.017+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@35fd1646 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.017+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT orders.* FROM orders WHERE orders.ID = $1 LIMIT 2 {1: 'non-existent-id'}
+2026-02-06T00:02:24.017+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@2d651500 columns: 9 rows: 0 pos: -1
+2026-02-06T00:02:24.017+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.017+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@58445380 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.017+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.017+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@1ee957 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.017+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  DELETE FROM order_items
+2026-02-06T00:02:24.017+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.017+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@262d3026 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.017+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.017+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@65e30b24 columns: 1 rows: 1 pos: -1
+2026-02-06T00:02:24.018+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  DELETE FROM orders
+2026-02-06T00:02:24.018+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Request:  SELECT CURRENT_TIMESTAMP
+2026-02-06T00:02:24.018+09:00 DEBUG 58699 --- [order-service] [    Test worker] io.r2dbc.h2.client.SessionClient         : Response: org.h2.result.LocalResult@badbf43 columns: 1 rows: 1 pos: -1
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.5</a> at 2026. 2. 6. 오전 12:02:27</p>
+</div>
+</div>
+</body>
+</html>

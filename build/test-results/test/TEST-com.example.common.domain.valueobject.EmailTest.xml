@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.common.domain.valueobject.EmailTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-02-05T15:02:18" hostname="MacBook-Pro-3.local" time="0.078">
+  <properties/>
+  <testcase name="shouldCreateValidEmail()" classname="com.example.common.domain.valueobject.EmailTest" time="0.047"/>
+  <testcase name="[1] validEmail=user@example.com" classname="com.example.common.domain.valueobject.EmailTest" time="0.007"/>
+  <testcase name="[2] validEmail=user.name@example.co.kr" classname="com.example.common.domain.valueobject.EmailTest" time="0.0"/>
+  <testcase name="[3] validEmail=user+tag@example.com" classname="com.example.common.domain.valueobject.EmailTest" time="0.0"/>
+  <testcase name="[4] validEmail=first.last@example.museum" classname="com.example.common.domain.valueobject.EmailTest" time="0.001"/>
+  <testcase name="[5] validEmail=123@example.com" classname="com.example.common.domain.valueobject.EmailTest" time="0.0"/>
+  <testcase name="[1] invalidEmail=invalid" classname="com.example.common.domain.valueobject.EmailTest" time="0.003"/>
+  <testcase name="[2] invalidEmail=@example.com" classname="com.example.common.domain.valueobject.EmailTest" time="0.001"/>
+  <testcase name="[3] invalidEmail=test@" classname="com.example.common.domain.valueobject.EmailTest" time="0.0"/>
+  <testcase name="[4] invalidEmail=test@.com" classname="com.example.common.domain.valueobject.EmailTest" time="0.0"/>
+  <testcase name="[5] invalidEmail=" classname="com.example.common.domain.valueobject.EmailTest" time="0.001"/>
+  <testcase name="shouldTestEquality()" classname="com.example.common.domain.valueobject.EmailTest" time="0.0"/>
+  <testcase name="shouldReturnValueInToString()" classname="com.example.common.domain.valueobject.EmailTest" time="0.0"/>
+  <testcase name="shouldHaveSameHashCodeForEqualEmails()" classname="com.example.common.domain.valueobject.EmailTest" time="0.001"/>
+  <testcase name="shouldConvertToLowercase()" classname="com.example.common.domain.valueobject.EmailTest" time="0.0"/>
+  <testcase name="shouldThrowExceptionWhenEmailIsNull()" classname="com.example.common.domain.valueobject.EmailTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

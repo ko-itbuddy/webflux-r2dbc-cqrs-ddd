@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.order.domain.model.OrderTest" tests="19" skipped="0" failures="0" errors="0" timestamp="2026-02-05T15:02:25" hostname="MacBook-Pro-3.local" time="0.004">
+  <properties/>
+  <testcase name="shouldThrowExceptionWhenCreatingOrderWithNullItems()" classname="com.example.order.domain.model.OrderTest" time="0.0"/>
+  <testcase name="shouldThrowExceptionWhenApplyingDiscountToNonPendingOrder()" classname="com.example.order.domain.model.OrderTest" time="0.0"/>
+  <testcase name="shouldCancelConfirmedOrder()" classname="com.example.order.domain.model.OrderTest" time="0.0"/>
+  <testcase name="shouldReturnFinalAmountAsTotalWhenNoDiscount()" classname="com.example.order.domain.model.OrderTest" time="0.0"/>
+  <testcase name="shouldDeliverShippedOrder()" classname="com.example.order.domain.model.OrderTest" time="0.0"/>
+  <testcase name="shouldThrowExceptionWhenConfirmingNonPendingOrder()" classname="com.example.order.domain.model.OrderTest" time="0.0"/>
+  <testcase name="shouldConfirmPendingOrder()" classname="com.example.order.domain.model.OrderTest" time="0.0"/>
+  <testcase name="shouldShipPaidOrder()" classname="com.example.order.domain.model.OrderTest" time="0.0"/>
+  <testcase name="shouldCancelPendingOrder()" classname="com.example.order.domain.model.OrderTest" time="0.0"/>
+  <testcase name="shouldCalculateItemCount()" classname="com.example.order.domain.model.OrderTest" time="0.0"/>
+  <testcase name="shouldApplyDiscountToPendingOrder()" classname="com.example.order.domain.model.OrderTest" time="0.0"/>
+  <testcase name="shouldThrowExceptionWhenApplyingInvalidDiscount()" classname="com.example.order.domain.model.OrderTest" time="0.001"/>
+  <testcase name="shouldPayConfirmedOrder()" classname="com.example.order.domain.model.OrderTest" time="0.0"/>
+  <testcase name="shouldThrowExceptionWhenCancellingShippedOrder()" classname="com.example.order.domain.model.OrderTest" time="0.0"/>
+  <testcase name="shouldThrowExceptionWhenPayingNonConfirmedOrder()" classname="com.example.order.domain.model.OrderTest" time="0.0"/>
+  <testcase name="shouldReturnUnmodifiableItemsList()" classname="com.example.order.domain.model.OrderTest" time="0.0"/>
+  <testcase name="shouldThrowExceptionWhenCreatingOrderWithoutItems()" classname="com.example.order.domain.model.OrderTest" time="0.0"/>
+  <testcase name="shouldThrowExceptionWhenCancellingDeliveredOrder()" classname="com.example.order.domain.model.OrderTest" time="0.0"/>
+  <testcase name="shouldCreateOrderWithItems()" classname="com.example.order.domain.model.OrderTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

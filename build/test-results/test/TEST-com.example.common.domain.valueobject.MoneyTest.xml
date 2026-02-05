@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.common.domain.valueobject.MoneyTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-02-05T15:02:18" hostname="MacBook-Pro-3.local" time="0.029">
+  <properties/>
+  <testcase name="shouldMultiplyMoney()" classname="com.example.common.domain.valueobject.MoneyTest" time="0.002"/>
+  <testcase name="shouldThrowExceptionWhenAmountIsNegative()" classname="com.example.common.domain.valueobject.MoneyTest" time="0.0"/>
+  <testcase name="shouldApplyDiscount()" classname="com.example.common.domain.valueobject.MoneyTest" time="0.0"/>
+  <testcase name="[1] amount1=100, currency1=USD, amount2=100, currency2=USD, expected=true" classname="com.example.common.domain.valueobject.MoneyTest" time="0.002"/>
+  <testcase name="[2] amount1=100, currency1=USD, amount2=100, currency2=EUR, expected=false" classname="com.example.common.domain.valueobject.MoneyTest" time="0.0"/>
+  <testcase name="[3] amount1=100, currency1=USD, amount2=200, currency2=USD, expected=false" classname="com.example.common.domain.valueobject.MoneyTest" time="0.0"/>
+  <testcase name="shouldThrowExceptionWhenAmountIsNull()" classname="com.example.common.domain.valueobject.MoneyTest" time="0.001"/>
+  <testcase name="shouldThrowExceptionWhenAddingDifferentCurrencies()" classname="com.example.common.domain.valueobject.MoneyTest" time="0.0"/>
+  <testcase name="shouldCreateMoneyWithBigDecimal()" classname="com.example.common.domain.valueobject.MoneyTest" time="0.001"/>
+  <testcase name="shouldReturnCorrectStringRepresentation()" classname="com.example.common.domain.valueobject.MoneyTest" time="0.002"/>
+  <testcase name="shouldCreateMoneyWithDouble()" classname="com.example.common.domain.valueobject.MoneyTest" time="0.0"/>
+  <testcase name="shouldAddMoneyWithSameCurrency()" classname="com.example.common.domain.valueobject.MoneyTest" time="0.0"/>
+  <testcase name="shouldCreateZeroMoney()" classname="com.example.common.domain.valueobject.MoneyTest" time="0.0"/>
+  <testcase name="shouldThrowExceptionWhenCurrencyIsNull()" classname="com.example.common.domain.valueobject.MoneyTest" time="0.0"/>
+  <testcase name="shouldCompareMoney()" classname="com.example.common.domain.valueobject.MoneyTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

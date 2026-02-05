@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">webflux-reactive-hibernate</a> &gt; <a href="index.source.html" class="el_package">com.example.order.adapter.out.persistence.mapper</a> &gt; <span class="el_source">OrderMapper.java</span></div><h1>OrderMapper.java</h1><pre class="source lang-java linenums">package com.example.order.adapter.out.persistence.mapper;
+
+import com.example.common.domain.valueobject.Email;
+import com.example.common.domain.valueobject.Money;
+import com.example.order.adapter.out.persistence.entity.OrderEntity;
+import com.example.order.adapter.out.persistence.entity.OrderItemEntity;
+import com.example.order.domain.model.Order;
+import com.example.order.domain.model.OrderData;
+import com.example.order.domain.model.OrderItem;
+import com.example.order.domain.service.DiscountCalculationService;
+import com.example.order.domain.service.PriceValidationService;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+@Mapper(componentModel = &quot;spring&quot;, uses = {OrderItemMapper.class})
+<span class="fc" id="L23">public abstract class OrderMapper {</span>
+
+    @Autowired
+    protected DiscountCalculationService discountService;
+    
+    @Autowired
+    protected PriceValidationService priceService;
+    
+    @Autowired
+    protected OrderItemMapper itemMapper;
+
+    public Order toDomain(OrderEntity entity, List&lt;OrderItemEntity&gt; itemEntities) {
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">        if (entity == null) return null;</span>
+
+<span class="fc" id="L37">        List&lt;OrderItem&gt; items = itemMapper.toDomainList(itemEntities);</span>
+<span class="fc" id="L38">        Email customerEmail = Email.of(entity.getCustomerEmail());</span>
+<span class="fc" id="L39">        Money totalAmount = Money.of(entity.getTotalAmount(), entity.getCurrency());</span>
+
+        // Business validation
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        if (!priceService.getPriceValidator().test(totalAmount)) {</span>
+<span class="nc" id="L43">            throw new IllegalStateException(&quot;Invalid price stored in database for order: &quot; + entity.getId());</span>
+        }
+
+<span class="fc" id="L46">        return Order.reconstitute(</span>
+<span class="fc" id="L47">            entity.getId(),</span>
+<span class="fc" id="L48">            entity.getCustomerId(),</span>
+            customerEmail,
+<span class="fc" id="L50">            entity.getStatus(),</span>
+            items,
+            totalAmount,
+<span class="fc bfc" id="L53" title="All 2 branches covered.">            entity.getDiscountAmount() != null ? Money.of(entity.getDiscountAmount(), entity.getCurrency()) : null,</span>
+<span class="fc" id="L54">            entity.getCreatedAt(),</span>
+<span class="fc" id="L55">            entity.getUpdatedAt()</span>
+        );
+    }
+
+    @Mapping(target = &quot;customerEmail&quot;, source = &quot;customerEmail.value&quot;)
+    @Mapping(target = &quot;totalAmount&quot;, source = &quot;totalAmount.amount&quot;)
+    @Mapping(target = &quot;currency&quot;, source = &quot;totalAmount.currency&quot;)
+    @Mapping(target = &quot;discountAmount&quot;, source = &quot;discountAmount&quot;, qualifiedByName = &quot;mapDiscount&quot;)
+    public abstract OrderEntity toEntity(Order order);
+
+    @Named(&quot;mapDiscount&quot;)
+    protected BigDecimal mapDiscount(Money discountAmount) {
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        return discountAmount != null ? discountAmount.getAmount() : null;</span>
+    }
+
+    public List&lt;OrderItemEntity&gt; extractItemEntities(Order order) {
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">        if (order == null) return List.of();</span>
+<span class="fc" id="L72">        return itemMapper.toEntityList(order.getItems(), order.getId());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

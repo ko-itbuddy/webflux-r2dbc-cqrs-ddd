@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PollingPublisher.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">webflux-reactive-hibernate</a> &gt; <a href="index.source.html" class="el_package">com.example.order.adapter.out.messaging</a> &gt; <span class="el_source">PollingPublisher.java</span></div><h1>PollingPublisher.java</h1><pre class="source lang-java linenums">package com.example.order.adapter.out.messaging;
+
+import com.example.order.adapter.out.persistence.outbox.OutboxEvent;
+import com.example.order.adapter.out.persistence.outbox.OutboxRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
+import reactor.util.retry.Retry;
+
+import java.time.Duration;
+
+@Component
+public class PollingPublisher {
+
+<span class="fc" id="L19">    private static final Logger log = LoggerFactory.getLogger(PollingPublisher.class);</span>
+
+    private final OutboxRepository outboxRepository;
+    private final AmqpTemplate amqpTemplate;
+    private final OutboxMessageMapper messageMapper;
+
+    public PollingPublisher(OutboxRepository outboxRepository,
+                           AmqpTemplate amqpTemplate,
+<span class="fc" id="L27">                           OutboxMessageMapper messageMapper) {</span>
+<span class="fc" id="L28">        this.outboxRepository = outboxRepository;</span>
+<span class="fc" id="L29">        this.amqpTemplate = amqpTemplate;</span>
+<span class="fc" id="L30">        this.messageMapper = messageMapper;</span>
+<span class="fc" id="L31">    }</span>
+
+    @Scheduled(fixedDelay = 5000)
+    public void pollAndPublish() {
+<span class="fc" id="L35">        outboxRepository.findByProcessedFalse()</span>
+<span class="fc" id="L36">                .flatMap(this::publishEvent)</span>
+<span class="fc" id="L37">                .subscribe(</span>
+                    null,
+<span class="nc" id="L39">                    error -&gt; log.error(&quot;Failed to poll and publish outbox events&quot;, error)</span>
+                );
+<span class="fc" id="L41">    }</span>
+
+    private Mono&lt;Void&gt; publishEvent(OutboxEvent event) {
+<span class="fc" id="L44">        String routingKey = messageMapper.toRoutingKey(event.getEventType());</span>
+
+<span class="fc" id="L46">        return Mono.fromCallable(() -&gt; {</span>
+<span class="fc" id="L47">                    amqpTemplate.convertAndSend(routingKey, event.getPayload());</span>
+<span class="fc" id="L48">                    return event.getId();</span>
+                })
+<span class="fc" id="L50">                .subscribeOn(Schedulers.boundedElastic())</span>
+<span class="fc" id="L51">                .flatMap(eventId -&gt; outboxRepository.markAsProcessed(eventId))</span>
+<span class="fc" id="L52">                .retryWhen(Retry.backoff(3, Duration.ofSeconds(1))</span>
+<span class="pc" id="L53">                        .onRetryExhaustedThrow((retryBackoffSpec, retrySignal) -&gt; retrySignal.failure()))</span>
+<span class="fc" id="L54">                .onErrorResume(e -&gt; {</span>
+<span class="nc" id="L55">                    log.error(&quot;Failed to publish event: {} - {}&quot;, event.getId(), e.getMessage());</span>
+<span class="nc" id="L56">                    return Mono.empty();</span>
+                });
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Money.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">webflux-reactive-hibernate</a> &gt; <a href="index.source.html" class="el_package">com.example.common.domain.valueobject</a> &gt; <span class="el_source">Money.java</span></div><h1>Money.java</h1><pre class="source lang-java linenums">package com.example.common.domain.valueobject;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
+import java.math.BigDecimal;
+import java.util.Objects;
+
+@Getter
+<span class="pc bpc" id="L14" title="11 of 20 branches missed.">@EqualsAndHashCode</span>
+<span class="fc" id="L15">@AllArgsConstructor(access = AccessLevel.PRIVATE)</span>
+public final class Money {
+<span class="fc" id="L17">    private final BigDecimal amount;</span>
+<span class="fc" id="L18">    private final String currency;</span>
+
+    @JsonCreator
+    public static Money of(@JsonProperty(&quot;amount&quot;) Object amount, @JsonProperty(&quot;currency&quot;) String currency) {
+<span class="fc" id="L22">        Objects.requireNonNull(amount, &quot;Amount cannot be null&quot;);</span>
+<span class="fc" id="L23">        Objects.requireNonNull(currency, &quot;Currency cannot be null&quot;);</span>
+        
+        BigDecimal decimalAmount;
+<span class="pc bpc" id="L26" title="1 of 2 branches missed.">        if (amount instanceof BigDecimal) {</span>
+<span class="fc" id="L27">            decimalAmount = (BigDecimal) amount;</span>
+<span class="nc bnc" id="L28" title="All 2 branches missed.">        } else if (amount instanceof Number) {</span>
+<span class="nc" id="L29">            decimalAmount = BigDecimal.valueOf(((Number) amount).doubleValue());</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">        } else if (amount instanceof String) {</span>
+<span class="nc" id="L31">            decimalAmount = new BigDecimal((String) amount);</span>
+        } else {
+<span class="nc" id="L33">            throw new IllegalArgumentException(&quot;Amount must be a number or string&quot;);</span>
+        }
+        
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        if (decimalAmount.compareTo(BigDecimal.ZERO) &lt; 0) {</span>
+<span class="fc" id="L37">            throw new IllegalArgumentException(&quot;Amount cannot be negative&quot;);</span>
+        }
+<span class="fc" id="L39">        return new Money(decimalAmount, currency);</span>
+    }
+
+    public static Money of(BigDecimal amount, String currency) {
+<span class="fc" id="L43">        return of((Object) amount, currency);</span>
+    }
+
+    public static Money of(double amount, String currency) {
+<span class="fc" id="L47">        return of(BigDecimal.valueOf(amount), currency);</span>
+    }
+
+    public static Money zero(String currency) {
+<span class="fc" id="L51">        return new Money(BigDecimal.ZERO, currency);</span>
+    }
+
+    public Money add(Money other) {
+<span class="fc" id="L55">        validateCurrency(other);</span>
+<span class="fc" id="L56">        return new Money(this.amount.add(other.amount), this.currency);</span>
+    }
+
+    public Money multiply(int multiplier) {
+<span class="fc" id="L60">        return new Money(this.amount.multiply(BigDecimal.valueOf(multiplier)), this.currency);</span>
+    }
+
+    public Money discount(BigDecimal percentage) {
+<span class="fc" id="L64">        BigDecimal discountFactor = BigDecimal.ONE.subtract(percentage);</span>
+<span class="fc" id="L65">        return new Money(this.amount.multiply(discountFactor), this.currency);</span>
+    }
+
+    public boolean isGreaterThan(Money other) {
+<span class="fc" id="L69">        validateCurrency(other);</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        return this.amount.compareTo(other.amount) &gt; 0;</span>
+    }
+
+    private void validateCurrency(Money other) {
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        if (!this.currency.equals(other.currency)) {</span>
+<span class="fc" id="L75">            throw new IllegalArgumentException(&quot;Currency mismatch&quot;);</span>
+        }
+<span class="fc" id="L77">    }</span>
+
+    @Override
+    public String toString() {
+<span class="fc" id="L81">        return amount + &quot; &quot; + currency;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

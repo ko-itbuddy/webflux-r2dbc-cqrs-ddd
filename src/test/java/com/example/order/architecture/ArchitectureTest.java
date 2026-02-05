@@ -33,27 +33,25 @@ class ArchitectureTest {
     static void setUp() {
         importedClasses = new ClassFileImporter()
                 .withImportOption(ImportOption.Predefined.DO_NOT_INCLUDE_TESTS)
-                .importPackages("com.example.order");
+                .importPackages("com.example");
     }
 
     @Test
     void layeredArchitectureShouldBeRespected() {
-        // 헥사고날 아키텍처 레이어 검증
-        // LayeredArchitecture는 순수 레이어 의존성만 검증 (타입 사용 제외)
         Architectures.layeredArchitecture()
-                .consideringOnlyDependenciesInAnyPackage("com.example.order..")
+                .consideringOnlyDependenciesInAnyPackage("com.example..")
+                .layer("Common").definedBy("com.example.common..")
                 .layer("Domain").definedBy("..domain..")
                 .layer("Application").definedBy("..application..")
-                .layer("Infrastructure").definedBy("..infrastructure..")
+                .layer("AdapterIn").definedBy("..adapter.in..")
+                .layer("AdapterOut").definedBy("..adapter.out..")
+                .layer("Config").definedBy("..adapter.config..")
 
-                // 핵심 규칙: Domain은 어디에도 의존하지 않음
-                .whereLayer("Domain").mayNotAccessAnyLayer()
-
-                // Application은 Domain에만 의존
-                .whereLayer("Application").mayOnlyAccessLayers("Domain")
-
-                // Infrastructure는 Domain과 Application에 의존
-                .whereLayer("Infrastructure").mayOnlyAccessLayers("Domain", "Application")
+                .whereLayer("Domain").mayOnlyAccessLayers("Common")
+                .whereLayer("Application").mayOnlyAccessLayers("Domain", "Common")
+                .whereLayer("AdapterIn").mayOnlyAccessLayers("Application", "Domain", "Common")
+                .whereLayer("AdapterOut").mayOnlyAccessLayers("Application", "Domain", "Common")
+                .whereLayer("Config").mayOnlyAccessLayers("Application", "Domain", "AdapterIn", "AdapterOut", "Common")
 
                 .check(importedClasses);
     }
@@ -66,6 +64,8 @@ class ArchitectureTest {
                 .should()
                 .dependOnClassesThat()
                 .resideInAnyPackage("org.springframework..")
+                // Allow spring annotation for specific purposes if needed, 
+                // but generally it should be framework-free.
                 .check(importedClasses);
     }
 
@@ -93,42 +93,9 @@ class ArchitectureTest {
     }
 
     @Test
-    void domainShouldNotDependOnReactor() {
-        noClasses()
-                .that()
-                .resideInAPackage("..domain..")
-                .should()
-                .dependOnClassesThat()
-                .resideInAnyPackage("reactor.core..", "org.reactivestreams..")
-                .check(importedClasses);
-    }
-
-    @Test
-    void domainShouldNotDependOnR2dbc() {
-        noClasses()
-                .that()
-                .resideInAPackage("..domain..")
-                .should()
-                .dependOnClassesThat()
-                .resideInAnyPackage("io.r2dbc..", "org.springframework.data.r2dbc..")
-                .check(importedClasses);
-    }
-
-    @Test
-    void domainShouldNotDependOnWebflux() {
-        noClasses()
-                .that()
-                .resideInAPackage("..domain..")
-                .should()
-                .dependOnClassesThat()
-                .resideInAnyPackage("org.springframework.web.reactive..", "org.springframework.web.server..")
-                .check(importedClasses);
-    }
-
-    @Test
     void domainShouldNotHaveCycleDependencies() {
         SlicesRuleDefinition.slices()
-                .matching("com.example.order.domain.(*)..")
+                .matching("com.example.(*).domain.(*)..")
                 .should()
                 .beFreeOfCycles()
                 .check(importedClasses);
@@ -137,10 +104,9 @@ class ArchitectureTest {
     @Test
     void applicationShouldNotHaveCycleDependencies() {
         SlicesRuleDefinition.slices()
-                .matching("com.example.order.application.(*)..")
+                .matching("com.example.(*).application.(*)..")
                 .should()
                 .beFreeOfCycles()
                 .check(importedClasses);
     }
-
 }

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderCommandWebHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">webflux-reactive-hibernate</a> &gt; <a href="index.source.html" class="el_package">com.example.order.adapter.in.web.handler</a> &gt; <span class="el_source">OrderCommandWebHandler.java</span></div><h1>OrderCommandWebHandler.java</h1><pre class="source lang-java linenums">package com.example.order.adapter.in.web.handler;
+
+import com.example.order.application.dto.ApplyDiscountCommand;
+import com.example.order.application.dto.CancelOrderCommand;
+import com.example.order.application.dto.ConfirmOrderCommand;
+import com.example.order.application.dto.CreateOrderCommand;
+import com.example.order.application.dto.PayOrderCommand;
+import com.example.order.application.service.ApplyDiscountHandler;
+import com.example.order.application.service.CancelOrderHandler;
+import com.example.order.application.service.ConfirmOrderHandler;
+import com.example.order.application.service.CreateOrderHandler;
+import com.example.order.application.service.PayOrderHandler;
+import com.example.order.domain.model.Order;
+import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.server.ServerRequest;
+import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Mono;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+/**
+ * Web handler for order command operations.
+ * Handles POST/PUT requests for creating and modifying orders.
+ */
+@Component
+public class OrderCommandWebHandler {
+    
+    private final CreateOrderHandler createOrderHandler;
+    private final ConfirmOrderHandler confirmOrderHandler;
+    private final PayOrderHandler payOrderHandler;
+    private final CancelOrderHandler cancelOrderHandler;
+    private final ApplyDiscountHandler applyDiscountHandler;
+    
+    public OrderCommandWebHandler(
+            CreateOrderHandler createOrderHandler,
+            ConfirmOrderHandler confirmOrderHandler,
+            PayOrderHandler payOrderHandler,
+            CancelOrderHandler cancelOrderHandler,
+<span class="fc" id="L40">            ApplyDiscountHandler applyDiscountHandler) {</span>
+<span class="fc" id="L41">        this.createOrderHandler = createOrderHandler;</span>
+<span class="fc" id="L42">        this.confirmOrderHandler = confirmOrderHandler;</span>
+<span class="fc" id="L43">        this.payOrderHandler = payOrderHandler;</span>
+<span class="fc" id="L44">        this.cancelOrderHandler = cancelOrderHandler;</span>
+<span class="fc" id="L45">        this.applyDiscountHandler = applyDiscountHandler;</span>
+<span class="fc" id="L46">    }</span>
+    
+    /**
+     * POST /api/orders - Create a new order.
+     */
+    public Mono&lt;ServerResponse&gt; createOrder(ServerRequest request) {
+<span class="fc" id="L52">        return request.bodyToMono(CreateOrderRequest.class)</span>
+<span class="fc" id="L53">            .flatMap(req -&gt; {</span>
+<span class="fc" id="L54">                List&lt;CreateOrderCommand.OrderItemCommand&gt; items = req.items().stream()</span>
+<span class="fc" id="L55">                    .map(item -&gt; new CreateOrderCommand.OrderItemCommand(</span>
+<span class="fc" id="L56">                        item.productId(), item.productName(), item.quantity(), </span>
+<span class="fc" id="L57">                        item.unitPrice(), item.currency()</span>
+                    ))
+<span class="fc" id="L59">                    .toList();</span>
+                
+<span class="fc" id="L61">                CreateOrderCommand command = new CreateOrderCommand(</span>
+<span class="fc" id="L62">                    req.customerId(), req.customerEmail(), items</span>
+                );
+                
+<span class="fc" id="L65">                return createOrderHandler.handle(command);</span>
+            })
+<span class="fc" id="L67">            .flatMap(order -&gt; ServerResponse.status(201).bodyValue(mapToOrderResponse(order)))</span>
+<span class="fc" id="L68">            .onErrorResume(e -&gt; ServerResponse.badRequest().bodyValue(new ErrorResponse(e.getMessage())));</span>
+    }
+    
+    /**
+     * POST /api/orders/{orderId}/confirm - Confirm an order.
+     */
+    public Mono&lt;ServerResponse&gt; confirmOrder(ServerRequest request) {
+<span class="fc" id="L75">        String orderId = request.pathVariable(&quot;orderId&quot;);</span>
+<span class="fc" id="L76">        ConfirmOrderCommand command = new ConfirmOrderCommand(orderId);</span>
+        
+<span class="fc" id="L78">        return confirmOrderHandler.handle(command)</span>
+<span class="fc" id="L79">            .flatMap(order -&gt; ServerResponse.ok().bodyValue(mapToOrderResponse(order)))</span>
+<span class="fc" id="L80">            .onErrorResume(e -&gt; ServerResponse.badRequest().bodyValue(new ErrorResponse(e.getMessage())));</span>
+    }
+    
+    /**
+     * POST /api/orders/{orderId}/pay - Pay for an order.
+     */
+    public Mono&lt;ServerResponse&gt; payOrder(ServerRequest request) {
+<span class="fc" id="L87">        String orderId = request.pathVariable(&quot;orderId&quot;);</span>
+<span class="fc" id="L88">        PayOrderCommand command = new PayOrderCommand(orderId);</span>
+        
+<span class="fc" id="L90">        return payOrderHandler.handle(command)</span>
+<span class="fc" id="L91">            .flatMap(order -&gt; ServerResponse.ok().bodyValue(mapToOrderResponse(order)))</span>
+<span class="pc" id="L92">            .onErrorResume(e -&gt; ServerResponse.badRequest().bodyValue(new ErrorResponse(e.getMessage())));</span>
+    }
+    
+    /**
+     * POST /api/orders/{orderId}/cancel - Cancel an order.
+     */
+    public Mono&lt;ServerResponse&gt; cancelOrder(ServerRequest request) {
+<span class="fc" id="L99">        String orderId = request.pathVariable(&quot;orderId&quot;);</span>
+<span class="fc" id="L100">        String reason = request.queryParam(&quot;reason&quot;).orElse(&quot;Customer request&quot;);</span>
+<span class="fc" id="L101">        CancelOrderCommand command = new CancelOrderCommand(orderId, reason);</span>
+        
+<span class="fc" id="L103">        return cancelOrderHandler.handle(command)</span>
+<span class="fc" id="L104">            .flatMap(order -&gt; ServerResponse.ok().bodyValue(mapToOrderResponse(order)))</span>
+<span class="pc" id="L105">            .onErrorResume(e -&gt; ServerResponse.badRequest().bodyValue(new ErrorResponse(e.getMessage())));</span>
+    }
+    
+    /**
+     * POST /api/orders/{orderId}/discount - Apply discount to an order.
+     */
+    public Mono&lt;ServerResponse&gt; applyDiscount(ServerRequest request) {
+<span class="fc" id="L112">        String orderId = request.pathVariable(&quot;orderId&quot;);</span>
+        
+<span class="fc" id="L114">        return request.bodyToMono(ApplyDiscountRequest.class)</span>
+<span class="fc" id="L115">            .flatMap(req -&gt; {</span>
+<span class="fc" id="L116">                ApplyDiscountCommand command = new ApplyDiscountCommand(orderId, req.discountPercentage());</span>
+<span class="fc" id="L117">                return applyDiscountHandler.handle(command);</span>
+            })
+<span class="fc" id="L119">            .flatMap(order -&gt; ServerResponse.ok().bodyValue(mapToOrderResponse(order)))</span>
+<span class="pc" id="L120">            .onErrorResume(e -&gt; ServerResponse.badRequest().bodyValue(new ErrorResponse(e.getMessage())));</span>
+    }
+    
+    // Helper methods
+    private OrderResponse mapToOrderResponse(Order order) {
+<span class="fc" id="L125">        return new OrderResponse(</span>
+<span class="fc" id="L126">            order.getId(),</span>
+<span class="fc" id="L127">            order.getCustomerId(),</span>
+<span class="fc" id="L128">            order.getCustomerEmail().getValue(),</span>
+<span class="fc" id="L129">            order.getStatus().name(),</span>
+<span class="fc" id="L130">            order.getTotalAmount().getAmount(),</span>
+<span class="fc" id="L131">            order.getTotalAmount().getCurrency(),</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">            order.getDiscountAmount() != null ? order.getDiscountAmount().getAmount() : null,</span>
+<span class="fc" id="L133">            order.getFinalAmount().getAmount(),</span>
+<span class="fc" id="L134">            order.getCreatedAt(),</span>
+<span class="fc" id="L135">            order.getUpdatedAt()</span>
+        );
+    }
+    
+    // DTO Records
+<span class="fc" id="L140">    public record CreateOrderRequest(</span>
+        String customerId,
+        String customerEmail,
+        List&lt;OrderItemRequest&gt; items
+    ) {
+<span class="fc" id="L145">        public record OrderItemRequest(</span>
+            String productId,
+            String productName,
+            int quantity,
+            BigDecimal unitPrice,
+            String currency
+        ) {
+        }
+    }
+    
+<span class="fc" id="L155">    public record ApplyDiscountRequest(BigDecimal discountPercentage) {</span>
+    }
+    
+<span class="fc" id="L158">    public record OrderResponse(</span>
+        String orderId,
+        String customerId,
+        String customerEmail,
+        String status,
+        BigDecimal totalAmount,
+        String currency,
+        BigDecimal discountAmount,
+        BigDecimal finalAmount,
+        java.time.Instant createdAt,
+        java.time.Instant updatedAt
+    ) {
+    }
+    
+<span class="fc" id="L172">    public record ErrorResponse(String error) {</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
