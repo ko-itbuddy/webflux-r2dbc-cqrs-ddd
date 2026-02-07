@@ -1,4 +1,4 @@
-package com.example.user.domain.port;
+package com.example.user.application.port.out;
 
 import com.example.user.domain.model.User;
 import reactor.core.publisher.Mono;

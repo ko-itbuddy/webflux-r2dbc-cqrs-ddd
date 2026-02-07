@@ -2,7 +2,7 @@ package com.example.user.application.service;
 
 import com.example.user.application.dto.RegisterUserCommand;
 import com.example.user.application.port.in.RegisterUserUseCase;
-import com.example.user.domain.port.UserRepository;
+import com.example.user.application.port.out.UserRepository;
 import com.example.user.domain.model.User;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;

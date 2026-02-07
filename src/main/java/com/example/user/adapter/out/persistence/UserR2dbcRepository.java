@@ -1,7 +1,7 @@
 package com.example.user.adapter.out.persistence;
 
 import com.example.user.domain.model.User;
-import com.example.user.domain.port.UserRepository;
+import com.example.user.application.port.out.UserRepository;
 import io.smallrye.mutiny.converters.uni.UniReactorConverters;
 import org.hibernate.reactive.mutiny.Mutiny;
 import org.springframework.stereotype.Repository;
