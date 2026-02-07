@@ -1,6 +1,6 @@
 package com.example.order.domain.model;
 
-import com.example.order.domain.event.DomainEvent;
+import com.example.common.domain.event.DomainEvent;
 import com.example.common.domain.valueobject.Email;
 import com.example.common.domain.valueobject.Money;
 import org.junit.jupiter.api.Test;

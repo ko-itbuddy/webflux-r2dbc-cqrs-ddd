@@ -1,5 +1,7 @@
 package com.example.order.domain.event;
 
+import com.example.common.domain.event.DomainEvent;
+
 import com.example.common.domain.valueobject.Money;
 import java.time.Instant;
 

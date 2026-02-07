@@ -4,7 +4,7 @@ import com.example.order.application.port.in.CreateOrderUseCase;
 import com.example.order.application.dto.CreateOrderCommand;
 import com.example.order.domain.model.Order;
 import com.example.order.domain.model.OrderItem;
-import com.example.order.domain.port.OrderRepository;
+import com.example.order.application.port.out.OrderRepository;
 import com.example.common.domain.valueobject.Email;
 import com.example.common.domain.valueobject.Money;
 import org.springframework.stereotype.Service;

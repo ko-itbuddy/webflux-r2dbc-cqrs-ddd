@@ -1,7 +1,7 @@
 package com.example.order.application.service;
 
 import com.example.order.application.dto.PayOrderCommand;
-import com.example.order.domain.port.OrderRepository;
+import com.example.order.application.port.out.OrderRepository;
 import com.example.order.application.port.out.OrderQueryPort;
 import com.example.order.domain.model.Order;
 import com.example.common.domain.valueobject.Email;

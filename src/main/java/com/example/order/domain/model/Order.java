@@ -1,6 +1,7 @@
 package com.example.order.domain.model;
 
-import com.example.order.domain.event.DomainEvent;
+import com.example.common.domain.event.DomainEvent;
+import com.example.common.domain.model.BaseEntity;
 import com.example.order.domain.event.OrderCancelledEvent;
 import com.example.order.domain.event.OrderConfirmedEvent;
 import com.example.order.domain.event.OrderCreatedEvent;
@@ -13,20 +14,33 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.AccessLevel;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "orders")
+@EntityListeners(AuditingEntityListener.class)
 @Getter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Order {
+public class Order extends BaseEntity<Order> {
+    
+    private static final BigDecimal VIP_THRESHOLD = new BigDecimal("1000.00");
+    private static final BigDecimal VIP_DISCOUNT = new BigDecimal("0.10");
+    private static final BigDecimal BULK_THRESHOLD = new BigDecimal("10");
+    private static final BigDecimal BULK_DISCOUNT = new BigDecimal("0.05");
+    private static final BigDecimal FIRST_ORDER_DISCOUNT = new BigDecimal("0.03");
+    private static final BigDecimal MAX_DISCOUNT = new BigDecimal("0.15");
+    
+    private static final BigDecimal MIN_PRICE = new BigDecimal("0.01");
+    private static final BigDecimal MAX_PRICE = new BigDecimal("10000.00");
+
     @Id
     @EqualsAndHashCode.Include
     private String id;
@@ -60,15 +74,6 @@ public class Order {
     })
     private Money discountAmount;
 
-    @Column(name = "created_at")
-    private Instant createdAt;
-
-    @Column(name = "updated_at")
-    private Instant updatedAt;
-
-    @Transient // Not persisted in DB
-    private final List<DomainEvent> domainEvents = new ArrayList<>();
-    
     private Order(String id, String customerId, Email customerEmail, List<OrderItem> items) {
         this.id = id;
         this.customerId = customerId;
@@ -76,9 +81,8 @@ public class Order {
         this.items = new ArrayList<>(items);
         this.items.forEach(item -> item.setOrder(this));
         this.status = OrderStatus.PENDING;
-        this.createdAt = Instant.now();
-        this.updatedAt = this.createdAt;
         calculateTotal();
+        validatePrice();
     }
 
     private Order(String id, String customerId, Email customerEmail, OrderStatus status,
@@ -102,34 +106,47 @@ public class Order {
         }
         String orderId = UUID.randomUUID().toString();
         Order order = new Order(orderId, customerId, customerEmail, items);
-        Money finalAmount = order.getFinalAmount();
+        order.applyAutoDiscount();
+        
         order.registerEvent(new OrderCreatedEvent(
                 orderId,
                 customerEmail.getValue(),
-                finalAmount,
-                order.getCreatedAt()
+                order.getFinalAmount(),
+                Instant.now()
         ));
         return order;
     }
 
-    public void registerEvent(DomainEvent event) {
-        this.domainEvents.add(event);
+    private void validatePrice() {
+        if (totalAmount == null) return;
+        BigDecimal amount = totalAmount.getAmount();
+        if (amount.compareTo(MIN_PRICE) < 0 || amount.compareTo(MAX_PRICE) > 0) {
+            throw new BusinessException("ORDER_009", "Total price exceeds valid range");
+        }
     }
 
-    public List<DomainEvent> getDomainEvents() {
-        return Collections.unmodifiableList(new ArrayList<>(this.domainEvents));
+    public void applyAutoDiscount() {
+        BigDecimal discount = BigDecimal.ZERO;
+        if (isVipCustomer()) discount = discount.add(VIP_DISCOUNT);
+        if (isBulkOrder()) discount = discount.add(BULK_DISCOUNT);
+        
+        BigDecimal finalPercentage = discount.min(MAX_DISCOUNT);
+        if (finalPercentage.compareTo(BigDecimal.ZERO) > 0) {
+            applyDiscount(finalPercentage);
+        }
     }
 
-    public void clearDomainEvents() {
-        this.domainEvents.clear();
+    private boolean isVipCustomer() {
+        return totalAmount.getAmount().compareTo(VIP_THRESHOLD) >= 0;
     }
-    
+
+    private boolean isBulkOrder() {
+        return getItemCount() >= BULK_THRESHOLD.intValue();
+    }
+
     public void applyDiscount(BigDecimal percentage) {
         if (status != OrderStatus.PENDING) {
             throw new BusinessException("ORDER_002", "Can only apply discount to pending orders");
-        }
-        if (percentage.compareTo(BigDecimal.ZERO) < 0 || percentage.compareTo(BigDecimal.ONE) > 0) {
-            throw new BusinessException("ORDER_003", "Discount percentage must be between 0 and 1");
         }
         this.discountAmount = this.totalAmount.discount(percentage);
     }
@@ -139,8 +156,7 @@ public class Order {
             throw new BusinessException("ORDER_004", "Can only confirm pending orders");
         }
         this.status = OrderStatus.CONFIRMED;
-        this.updatedAt = Instant.now();
-        this.registerEvent(new OrderConfirmedEvent(this.id, this.updatedAt));
+        this.registerEvent(new OrderConfirmedEvent(this.id, Instant.now()));
     }
     
     public void pay() {
@@ -148,8 +164,7 @@ public class Order {
             throw new BusinessException("ORDER_005", "Can only pay confirmed orders");
         }
         this.status = OrderStatus.PAID;
-        this.updatedAt = Instant.now();
-        this.registerEvent(new OrderPaidEvent(this.id, this.updatedAt));
+        this.registerEvent(new OrderPaidEvent(this.id, Instant.now()));
     }
     
     public void ship() {
@@ -157,7 +172,6 @@ public class Order {
             throw new BusinessException("ORDER_006", "Can only ship paid orders");
         }
         this.status = OrderStatus.SHIPPED;
-        this.updatedAt = Instant.now();
     }
     
     public void deliver() {
@@ -165,7 +179,6 @@ public class Order {
             throw new BusinessException("ORDER_007", "Can only deliver shipped orders");
         }
         this.status = OrderStatus.DELIVERED;
-        this.updatedAt = Instant.now();
     }
     
     public void cancel(String reason) {
@@ -173,8 +186,7 @@ public class Order {
             throw new BusinessException("ORDER_008", "Cannot cancel shipped or delivered orders");
         }
         this.status = OrderStatus.CANCELLED;
-        this.updatedAt = Instant.now();
-        this.registerEvent(new OrderCancelledEvent(this.id, reason, this.updatedAt));
+        this.registerEvent(new OrderCancelledEvent(this.id, reason, Instant.now()));
     }
     
     private void calculateTotal() {
@@ -185,18 +197,11 @@ public class Order {
     }
     
     public Money getFinalAmount() {
-        if (discountAmount != null) {
-            return discountAmount;
-        }
-        return totalAmount;
+        return discountAmount != null ? discountAmount : totalAmount;
     }
     
     public int getItemCount() {
         return items.stream().mapToInt(OrderItem::getQuantity).sum();
-    }
-
-    public List<OrderItem> getItems() {
-        return Collections.unmodifiableList(items);
     }
 
     public static Order reconstitute(String id, String customerId, Email customerEmail,
